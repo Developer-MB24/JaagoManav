@@ -7,10 +7,8 @@ const slides = [
     titleTop: "Helping Hands",
     titleBottomAccent: "Changing Lives",
     text: "We help communities develop sustainable programs across education, health, and livelihoods.",
-    photo:
-      "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?q=80&w=1600&auto=format&fit=crop",
-    circle:
-      "https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?q=80&w=1200&auto=format&fit=crop",
+    photo: "/images/about-two-img-3.jpg",
+    circle: "/images/about-two-img-3.jpg",
   },
   {
     id: 2,
@@ -18,10 +16,8 @@ const slides = [
     titleTop: "Every Child",
     titleBottomAccent: "Learns",
     text: "Bridge schooling, literacy camps, and digital readiness for real continuity.",
-    photo:
-      "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?q=80&w=1600&auto=format&fit=crop",
-    circle:
-      "https://images.unsplash.com/photo-1520975922326-52b38a1d31b0?q=80&w=1200&auto=format&fit=crop",
+    photo: "/images/about-two-img-1.jpg",
+    circle: "/images/about-two-img-1.jpg",
   },
   {
     id: 3,
@@ -29,10 +25,8 @@ const slides = [
     titleTop: "Healthy Today",
     titleBottomAccent: "Stronger Tomorrow",
     text: "Preventive camps, screenings, and awareness drives with community volunteers.",
-    photo:
-      "https://images.unsplash.com/photo-1542736667-069246bdbc74?q=80&w=1600&auto=format&fit=crop",
-    circle:
-      "https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&w=1200&auto=format&fit=crop", // <-- added
+    photo: "/images/about-two-img-2.jpg",
+    circle: "/images/about-two-img-2.jpg",
   },
 ];
 
@@ -51,16 +45,23 @@ export default function HeroCarousel() {
 
   const play = () => {
     stop();
-    timerRef.current = setInterval(() => {
+    timerRef.current = window.setInterval(() => {
       if (!hoveredRef.current) next();
     }, 6000);
   };
-  const stop = () => timerRef.current && clearInterval(timerRef.current);
+
+  const stop = () => {
+    if (timerRef.current) {
+      window.clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+  };
 
   const next = () => {
     setIndex((i) => (i + 1) % slides.length);
     setEnterKey((k) => k + 1);
   };
+
   const prev = () => {
     setIndex((i) => (i - 1 + slides.length) % slides.length);
     setEnterKey((k) => k + 1);
@@ -73,7 +74,6 @@ export default function HeroCarousel() {
       onMouseLeave={() => (hoveredRef.current = false)}
       style={{ minHeight: "70vh" }}
     >
-      {/* Background slides */}
       <div className="absolute inset-0 -z-10">
         {slides.map((s, i) => {
           const isActive = i === index;
@@ -99,7 +99,7 @@ export default function HeroCarousel() {
       </div>
 
       <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 px-4 py-16 md:grid-cols-2 md:py-24">
-        {/* Left: text */}
+        {/* Left */}
         <div key={`text-${enterKey}`}>
           <p className="text-sm uppercase tracking-[0.2em] text-white/80 animate-[fadeDown_600ms_ease-out_forwards] opacity-0">
             {active.kicker}
@@ -118,13 +118,24 @@ export default function HeroCarousel() {
           <div className="mt-8 flex flex-wrap items-center gap-4 animate-[riseUp_700ms_300ms_cubic-bezier(.2,.9,.2,1)_forwards] opacity-0">
             <a
               href="#donate"
-              className="btn-primary bg-primary hover:bg-primary-hover"
+              className="
+                inline-flex items-center gap-3 rounded-full
+                bg-[#f27b21] px-6 py-3 text-white shadow-md
+                transition hover:bg-[#db6e1d] focus:outline-none focus:ring-2 focus:ring-white/40
+              "
             >
-              Donate Now
-              <span className="inline-grid h-5 w-5 place-items-center rounded-full bg-white/20">
-                →
+              <span className="font-semibold">Donate Now</span>
+              <span
+                className="
+                  inline-grid h-7 w-7 place-items-center rounded-full
+                  bg-white/20 ring-1 ring-white/40
+                "
+                aria-hidden="true"
+              >
+                <span className="-mt-px text-lg">→</span>
               </span>
             </a>
+
             <button
               className="group inline-flex items-center gap-3 rounded-full bg-white/10 px-5 py-3 ring-1 ring-white/30 backdrop-blur transition hover:bg-white/20 text-white"
               onClick={() => window.alert("Open your video modal here")}
@@ -165,24 +176,7 @@ export default function HeroCarousel() {
             opacity-0
           "
         >
-          {/* Rotating ring assets */}
-          <img
-            src="/images/main-slider-two-img-shape-1.png"
-            alt=""
-            className="pointer-events-none absolute inset-0 m-auto h-full w-full select-none"
-            style={{ animation: "ringSpin 18s linear infinite" }}
-            onError={(e) => (e.currentTarget.style.display = "none")}
-          />
-          <img
-            src="/images/ring-orange.png"
-            alt=""
-            className="pointer-events-none absolute inset-0 m-auto h-[86%] w-[86%] select-none"
-            style={{ animation: "ringSpinReverse 26s linear infinite" }}
-            onError={(e) => (e.currentTarget.style.display = "none")}
-          />
-
-          {/* Inner circle image*/}
-          <div className="absolute inset-0 grid place-items-center">
+          <div className="absolute inset-0 grid place-items-center z-20">
             <div
               className="
                 relative aspect-square w-[70%] overflow-hidden rounded-full
@@ -199,14 +193,31 @@ export default function HeroCarousel() {
                   h-full w-full object-cover
                   [animation:zoomPulse_2200ms_200ms_ease-out_forwards]
                 "
+                onError={(e) => (e.currentTarget.style.display = "none")}
               />
             </div>
           </div>
+
+          {/* ROTATING RINGS  */}
+          <img
+            src="/images/main-slider-two-img-shape-1.png"
+            alt=""
+            className="pointer-events-none absolute inset-0 m-auto h-full w-full select-none z-30"
+            style={{ animation: "ringSpin 18s linear infinite" }}
+            onError={(e) => (e.currentTarget.style.display = "none")}
+          />
+          <img
+            src="/images/ring-orange.png"
+            alt=""
+            className="pointer-events-none absolute inset-0 m-auto h-[86%] w-[86%] select-none z-30"
+            style={{ animation: "ringSpinReverse 26s linear infinite" }}
+            onError={(e) => (e.currentTarget.style.display = "none")}
+          />
         </div>
       </div>
 
       {/* Side arrows */}
-      <div className="pointer-events-none absolute inset-y-0 right-4 z-10 hidden flex-col items-center justify-center gap-4 md:flex">
+      <div className="pointer-events-none absolute inset-y-0 right-4 z-40 hidden flex-col items-center justify-center gap-4 md:flex">
         <button
           onClick={prev}
           className="pointer-events-auto grid h-10 w-10 place-items-center rounded-full bg-white/15 text-white ring-1 ring-white/30 backdrop-blur transition hover:bg-white/30"

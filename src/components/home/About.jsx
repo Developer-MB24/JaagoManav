@@ -2,7 +2,7 @@ import React from "react";
 
 export default function AboutUs() {
   return (
-    <section className="relative mx-auto max-w-7xl px-4 py-16 md:py-24">
+    <section className="relative mx-auto max-w-7xl px-4 py-14 md:py-20 overflow-x-hidden">
       <div className="grid items-center gap-10 md:grid-cols-2">
         {/* LEFT */}
         <div>
@@ -71,9 +71,29 @@ export default function AboutUs() {
           </div>
         </div>
 
-        {/* RIGHT: collage */}
-        <div className="relative">
-          <div className="relative ml-6 w-[88%]">
+        {/* RIGHT */}
+        <div className="relative pb-16 sm:pb-20 md:pb-24 overflow-hidden">
+          <div
+            className="
+              pointer-events-none absolute left-1/2 top-1/2 -z-10
+              -translate-x-1/2 -translate-y-1/2
+              animate-[spin_22s_linear_infinite]
+              aspect-square w-[92%] sm:w-[86%] md:w-[90%] max-w-[520px]
+            "
+            style={{
+              borderRadius: "9999px",
+              background:
+                "repeating-conic-gradient(#FF671F 0 8deg, transparent 8deg 22deg)",
+              WebkitMask:
+                "radial-gradient(circle at center, transparent 60%, black 61%)",
+              mask: "radial-gradient(circle at center, transparent 60%, black 61%)",
+              opacity: 0.85,
+              filter: "drop-shadow(0 10px 30px rgba(0,0,0,.15))",
+            }}
+            aria-hidden="true"
+          />
+
+          <div className="relative ml-4 w-[92%] sm:ml-6 sm:w-[88%]">
             <div
               className="relative overflow-hidden rounded-[20px] shadow-[0_24px_50px_rgba(2,6,23,.12)]"
               style={{
@@ -88,66 +108,41 @@ export default function AboutUs() {
               <img
                 src="/images/about/main.jpg"
                 alt="Field work"
-                className="h-[380px] w-full object-cover md:h-[420px]"
+                className="h-[280px] w-full object-cover sm:h-[340px] md:h-[420px]"
               />
             </div>
           </div>
 
-          {/* small  card on left */}
-          <div className="absolute -left-2 top-6 w-[20%]">
+          {/*  card on left */}
+          <div className="absolute -left-2 top-3 w-[30%] sm:w-[22%] md:top-6 z-30">
             <div className="overflow-hidden rounded-[20px] border-4 border-white bg-white shadow-[0_18px_40px_rgba(2,6,23,.15)]">
               <img
                 src="/images/about-two-img-1.jpg"
                 alt="Child portrait"
-                className="h-[210px] w-full object-cover"
+                className="h-[160px] w-full object-cover sm:h-[190px] md:h-[210px]"
               />
             </div>
           </div>
 
-          {/* small square card on right */}
-          <div className="absolute bottom-1 right-2 z-50 w-[25%]">
+          {/* card on right */}
+          <div className="absolute right-2 bottom-36 sm:bottom-1 z-30 w-[70%] sm:w-[28%] md:w-[25%]">
             <div className="overflow-hidden rounded-[18px] border-4 border-white bg-white shadow-[0_18px_40px_rgba(2,6,23,.15)]">
               <img
                 src="/images/about-two-img-2.jpg"
                 alt="Community"
-                className="h-[200px] w-full object-cover"
+                className="h-[140px] w-full object-cover sm:h-[170px] md:h-[200px]"
               />
             </div>
           </div>
 
-          {/* ===== middle tall card (3rd image)*/}
-          <div
-            className="absolute hidden md:block"
-            style={{
-              left: "15%",
-              top: "30%",
-              width: "420px",
-            }}
-          >
-            {/* ROTATING dotted ring */}
-            <div
-              className="pointer-events-none absolute left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 animate-[spin_14s_linear_infinite]"
-              style={{
-                width: 240,
-                height: 240,
-                borderRadius: "9999px",
-                background:
-                  "repeating-conic-gradient(#F6C445 0 8deg, transparent 8deg 22deg)",
-                WebkitMask:
-                  "radial-gradient(circle at center, transparent 72%, black 73%)",
-                mask: "radial-gradient(circle at center, transparent 72%, black 73%)",
-                opacity: 0.9,
-              }}
-            />
-
+          {/* Middle  */}
+          <div className="absolute left-1/2 top-[56%] block w-[72%] -translate-x-1/2 sm:hidden z-20">
             <div className="relative overflow-hidden rounded-[18px] border-4 border-white bg-white shadow-[0_18px_40px_rgba(2,6,23,.15)]">
               <img
                 src="/images/about-two-img-3.jpg"
                 alt="Middle"
-                className="h-[320px] w-full object-cover"
+                className="h-[220px] w-full object-cover"
               />
-
-              {/*  play button */}
               <button
                 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white p-2 shadow-lg transition hover:scale-105"
                 aria-label="Play video"
@@ -160,37 +155,48 @@ export default function AboutUs() {
             </div>
           </div>
 
-          <div className="pointer-events-none absolute left-[30%] top-[38%] hidden md:block">
-            <svg
-              className="h-44 w-[420px] animate-[arcSpin_12s_linear_infinite]"
-              viewBox="0 0 260 70"
-              fill="none"
-            >
-              <path
-                d="M2 62 C80 20, 180 20, 258 62"
-                stroke="#FF671F"
-                strokeWidth="2.5"
-                strokeDasharray="5 7"
-                opacity="0.6"
+          <div
+            className="absolute hidden sm:block z-20"
+            style={{ left: "12%", top: "32%", width: "min(88vw, 420px)" }}
+          >
+            {/*  dotted ring */}
+            <div
+              className="pointer-events-none absolute left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 animate-[spin_14s_linear_infinite]"
+              style={{
+                width: 230,
+                height: 230,
+                borderRadius: "9999px",
+                background:
+                  "repeating-conic-gradient(#F6C445 0 10deg, transparent 10deg 24deg)",
+                WebkitMask:
+                  "radial-gradient(circle at center, transparent 68%, black 69%)",
+                mask: "radial-gradient(circle at center, transparent 68%, black 69%)",
+                opacity: 0.9,
+              }}
+              aria-hidden="true"
+            />
+            <div className="relative overflow-hidden rounded-[18px] border-4 border-white bg-white shadow-[0_18px_40px_rgba(2,6,23,.15)]">
+              <img
+                src="/images/about-two-img-3.jpg"
+                alt="Middle"
+                className="h-[290px] w-full object-cover md:h-[320px]"
               />
-            </svg>
+              <button
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white p-2 shadow-lg transition hover:scale-105"
+                aria-label="Play video"
+                onClick={() => window.alert("Open video modal")}
+              >
+                <span className="grid h-12 w-12 place-items-center rounded-full bg-[#FF671F] text-white">
+                  ▶
+                </span>
+              </button>
+            </div>
           </div>
-
-          <span className="absolute -bottom-2 left-[55%] hidden rotate-3 text-[20px] font-semibold text-[#22C55E] md:block">
-            24 hour support
-          </span>
         </div>
       </div>
 
       {/* animations */}
-      <style>{`
-        @keyframes spin { to { transform: rotate(360deg); } }
-        /* slow, subtle rotation for the dashed arc */
-        @keyframes arcSpin { 
-          0% { transform: rotate(0deg); transform-origin: 50% 50%; }
-          100% { transform: rotate(360deg); transform-origin: 50% 50%; }
-        }
-      `}</style>
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </section>
   );
 }
@@ -198,7 +204,6 @@ export default function AboutUs() {
 function StatHex({ color, label, number, icon }) {
   return (
     <div className="flex items-center gap-3">
-      {/* hex */}
       <div className="relative h-12 w-12 shrink-0">
         <div
           className="absolute inset-0"

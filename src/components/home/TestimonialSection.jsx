@@ -154,11 +154,11 @@ export default function TestimonialSection({
 
       <div className="relative max-w-6xl mx-auto px-4">
         {/* Heading */}
-        <div className="text-center mb-10">
+        <div className="text-center  mb-10">
           <p className="uppercase tracking-widest text-white font-semibold text-sm">
             Our Testimonials
           </p>
-          <h2 className="text-4xl font-extrabold text-gray-900">
+          <h2 className=" mb-36 sm:text-4xl font-extrabold text-gray-900">
             Our Impact in <span className="text-gray-900">Their Words</span>
           </h2>
         </div>

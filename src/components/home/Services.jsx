@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 import {
   GraduationCap,
   Stethoscope,
@@ -62,21 +63,26 @@ function Badge({ from, to, Icon }) {
 function ServiceCard({ item }) {
   const { title, desc, cta, image, badge, arrowColor } = item;
   return (
-    <article className="group bg-white rounded-2xl shadow-[0_20px_40px_-16px_rgba(0,0,0,0.18)] overflow-hidden">
+    <article className="group bg-white rounded-2xl shadow-[0_20px_40px_-16px_rgba(0,0,0,0.18)] overflow-hidden h-full flex flex-col">
+      {/* Image */}
       <div className="relative">
-        <img src={image} alt={title} className="h-56 w-full object-cover" />
-
+        <img
+          src={image}
+          alt={title}
+          className="w-full object-cover h-48 sm:h-52 md:h-56"
+        />
         <div className="absolute -bottom-6 right-6">
           <Badge from={badge.from} to={badge.to} Icon={badge.Icon} />
         </div>
       </div>
 
-      <div className="px-6 pt-8 pb-6">
+      {/* Content */}
+      <div className="px-6 pt-8 pb-6 flex-1 flex flex-col">
         <h3 className="text-xl font-extrabold text-gray-800">{title}</h3>
         <p className="mt-3 text-gray-500 leading-relaxed">{desc}</p>
 
-        <button className="mt-5 inline-flex items-center gap-2 text-gray-700 hover:gap-3 transition-all">
-          <span className="font-medium"> {cta} </span>
+        <button className="mt-auto inline-flex items-center gap-2 text-gray-700 hover:gap-3 transition-all">
+          <span className="font-medium">{cta}</span>
           <svg
             className={`w-4 h-4 ${arrowColor}`}
             viewBox="0 0 24 24"
@@ -93,11 +99,19 @@ function ServiceCard({ item }) {
 }
 
 export default function Services() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: true,
-    align: "start",
-    skipSnaps: false,
-  });
+  const autoplay = useRef(
+    Autoplay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: true })
+  );
+
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      loop: true,
+      align: "start",
+      skipSnaps: false,
+    },
+    [autoplay.current]
+  );
+
   const [selected, setSelected] = useState(0);
 
   const onSelect = useCallback(() => {
@@ -116,6 +130,7 @@ export default function Services() {
   return (
     <section className="py-16">
       <div className="max-w-6xl mx-auto px-4">
+        {/* Heading */}
         <div className="text-center mb-10">
           <div className="text-sm tracking-widest uppercase font-semibold text-orange-500">
             <span className="relative">
@@ -133,12 +148,18 @@ export default function Services() {
         </div>
 
         {/* Carousel */}
-        <div className="overflow-hidden" ref={emblaRef}>
-          <div className="flex -ml-4">
-            {services.map((s, i) => (
+        <div className="overflow-hidden touch-pan-y" ref={emblaRef}>
+          <div className="flex -ml-4 items-stretch">
+            {services.map((s) => (
               <div
                 key={s.title}
-                className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
+                className="
+                  pl-4
+                  basis-full              /* mobile: 1 card per view */
+                  sm:basis-1/2            /* ≥640px: 2 per view */
+                  lg:basis-1/3            /* ≥1024px: 3 per view */
+                  xl:basis-1/4            /* ≥1280px: 4 per view */
+                "
               >
                 <ServiceCard item={s} />
               </div>
