@@ -5,6 +5,7 @@ import Account from "./pages/Account.jsx";
 
 const Home = lazy(() => import("./pages/Home.jsx"));
 const Blog = lazy(() => import("./pages/Blog.jsx"));
+// const Account = lazy(() => import("./pages/Account.jsx"));
 
 function NotFound() {
   return (
@@ -26,9 +27,9 @@ export default function App() {
           <Route index element={<Home />} />
 
           {/* /blog */}
-          <Route path="blog" element={<Blog />} />
+          <Route path="/blog" element={<Blog />} />
           {/* /account */}
-          <Route path="account" element={<Account />} />
+          <Route path="/account" element={<Account />} />
 
           {/* 404 */}
           <Route path="*" element={<NotFound />} />
