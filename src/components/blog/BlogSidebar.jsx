@@ -25,7 +25,7 @@ export default function BlogSidebar({
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Search.."
-            className="w-full border border-slate-200 rounded-full py-2.5 px-4 pr-11 text-sm outline-none focus:border-orange-500"
+            className="w-full border border-slate-200 rounded-full py-2.5 px-4 pr-11 text-sm outline-none focus:border-[#FF9933]"
           />
           <button
             type="submit"
@@ -56,7 +56,7 @@ export default function BlogSidebar({
           {categories.map(([label, count]) => (
             <li
               key={label}
-              className="flex items-center justify-between py-2 text-slate-600 hover:text-orange-500 transition"
+              className="flex items-center justify-between py-2 text-slate-600 hover:text-[#FF9933] transition"
             >
               <span>{label}</span>
               <span className="text-slate-400">{count}</span>
@@ -79,7 +79,7 @@ export default function BlogSidebar({
                 <p className="text-xs text-slate-400">{r.date}</p>
                 <Link
                   to={r.link}
-                  className="text-sm font-medium text-slate-800 hover:text-orange-500 line-clamp-2"
+                  className="text-sm font-medium text-slate-800 hover:text-[#FF9933] line-clamp-2"
                 >
                   {r.title}
                 </Link>
@@ -98,7 +98,7 @@ export default function BlogSidebar({
               to={`/tag/${encodeURIComponent(
                 t.toLowerCase().replace(/\s+/g, "-")
               )}`}
-              className="text-xs rounded-full border border-slate-200 px-3 py-1.5 text-slate-600 hover:border-orange-500 hover:text-orange-500 transition"
+              className="text-xs rounded-full border border-slate-200 px-3 py-1.5 text-slate-600 hover:border-[#FF9933] hover:text-[#FF9933] transition"
             >
               {t}
             </Link>

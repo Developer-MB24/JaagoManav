@@ -49,7 +49,7 @@ const items = [
 ];
 
 const Stars = () => (
-  <div className="flex items-center justify-center gap-1 text-amber-400">
+  <div className="flex items-center justify-center gap-1 text-[#FF9933]">
     {Array.from({ length: 5 }).map((_, i) => (
       <Star key={i} className="w-4 h-4 fill-current" />
     ))}
@@ -168,7 +168,7 @@ export default function TestimonialSection({
           <button
             onClick={() => embla && embla.scrollPrev()}
             disabled={!canPrev}
-            className="absolute -left-4 md:-left-10 top-1/2 -translate-y-1/2 z-10 grid place-items-center w-10 h-10 rounded-full bg-orange-500 text-white shadow disabled:opacity-40"
+            className="absolute -left-4 md:-left-10 top-1/2 -translate-y-1/2 z-10 grid place-items-center w-10 h-10 rounded-full bg-[#FF9933] text-white shadow disabled:opacity-40"
             aria-label="Previous testimonial"
           >
             <ChevronLeft className="w-5 h-5" />
@@ -176,7 +176,7 @@ export default function TestimonialSection({
           <button
             onClick={() => embla && embla.scrollNext()}
             disabled={!canNext}
-            className="absolute -right-4 md:-right-10 top-1/2 -translate-y-1/2 z-10 grid place-items-center w-10 h-10 rounded-full bg-orange-500 text-white shadow disabled:opacity-40"
+            className="absolute -right-4 md:-right-10 top-1/2 -translate-y-1/2 z-10 grid place-items-center w-10 h-10 rounded-full bg-[#FF9933] text-white shadow disabled:opacity-40"
             aria-label="Next testimonial"
           >
             <ChevronRight className="w-5 h-5" />

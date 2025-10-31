@@ -12,15 +12,15 @@ const ITEMS = [
   {
     icon: UtensilsCrossed,
     text: "CHARITY FOR FOODS",
-    color: "text-orange-400",
+    color: "text-[#FFFFFF]",
   },
   {
     icon: GraduationCap,
     text: "CHARITY FOR EDUCATION",
-    color: "text-amber-400",
+    color: "text-[#138808]",
   },
-  { icon: Droplets, text: "CHARITY FOR WATER", color: "text-emerald-400" },
-  { icon: Stethoscope, text: "CHARITY FOR MEDICAL", color: "text-fuchsia-400" },
+  { icon: Droplets, text: "CHARITY FOR WATER", color: "text-[#FF9933]" },
+  { icon: Stethoscope, text: "CHARITY FOR MEDICAL", color: "text-[#000080]" },
 ];
 
 function Row({ items }) {

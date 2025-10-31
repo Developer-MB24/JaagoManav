@@ -10,7 +10,7 @@ export default function ContactSection() {
         className="absolute inset-0 -z-20"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(11,42,36,0.92), rgba(11,42,36,0.92)), url('/images/about-two-img-2.jpg')",
+            "linear-gradient(rgba(19,136,8,0.92), rgba(19,136,8,0.92)), url('/images/about-two-img-2.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           WebkitMaskImage: "url('/images/contact-curve.png')",
@@ -27,11 +27,11 @@ export default function ContactSection() {
       {/* CONTENT */}
       <div className="relative z-10 mx-auto max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-10 px-4 md:px-8 py-24 md:py-6 items-start">
         <div className="text-white">
-          <p className="uppercase text-sm tracking-[0.2em] text-[#f27b21] mb-3">
+          <p className="uppercase text-sm tracking-[0.2em] text-[#FF9933] mb-3">
             Our Contact
           </p>
           <h2 className="text-4xl md:text-5xl font-extrabold leading-tight mb-4">
-            Join With Us To As <span className="text-[#f27b21]">Volenteer</span>{" "}
+            Join With Us To As <span className="text-[#FF9933]">Volenteer</span>{" "}
             Contact Now!
           </h2>
           <p className="text-white/85 mb-8">
@@ -82,7 +82,7 @@ export default function ContactSection() {
 
             <button
               type="submit"
-              className="inline-flex items-center gap-3 rounded-full border border-[#f27b21] px-6 py-3 text-white uppercase tracking-wide transition hover:bg-[#f27b21]"
+              className="inline-flex items-center bg-[#f27b21] gap-3 rounded-full border border-[#f27b21] px-6 py-3 text-white uppercase tracking-wide transition hover:bg-[#f27b21]"
             >
               <span>Send A Message</span>
               <span className="grid h-8 w-8 place-items-center rounded-full bg-white/15 ring-1 ring-white/30">
@@ -109,8 +109,8 @@ export default function ContactSection() {
       </div>
 
       {/* orange base strip */}
-      <div className="absolute bottom-0 right-0 h-[95px] w-1/2 bg-[#f27b21] -z-40">
-        <div className="relative bg-[#f27b21] text-white rounded-tl-[28px] px-6 md:pl-24 py-5 flex flex-col sm:flex-row gap-6 sm:gap-10 items-center shadow-[0_10px_35px_rgba(242,123,33,0.35)] mt-8 md:mt-0">
+      <div className="absolute bottom-0 right-0 h-[95px] w-1/2 bg-[#FF9933] -z-40">
+        <div className="relative bg-[#FF9933] text-white rounded-tl-[28px] px-6 md:pl-24 py-5 flex flex-col sm:flex-row gap-6 sm:gap-10 items-center shadow-[0_10px_35px_rgba(242,123,33,0.35)] mt-8 md:mt-0">
           <div className="flex items-center gap-3">
             <div className="grid h-10 w-10 place-items-center rounded-full border border-white/40">
               <span>📞</span>

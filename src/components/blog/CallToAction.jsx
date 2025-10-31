@@ -4,8 +4,8 @@ export default function CallToAction({
   title = (
     <>
       We Are{" "}
-      <span className="text-orange-600 font-bold">Non profit charity</span>{" "}
-      <span className="text-emerald-600 font-bold">world</span> Organization
+      <span className="text-[#FF9933] font-bold">Non profit charity</span>{" "}
+      <span className="text-[#138808] font-bold">world</span> Organization
     </>
   ),
   subtitle = (
@@ -45,7 +45,7 @@ export default function CallToAction({
           <div className="relative z-10 mt-6">
             <button className="inline-flex items-center gap-3 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 border border-slate-200 shadow hover:shadow-md transition">
               {buttonText}
-              <span className="inline-grid place-items-center h-7 w-7 rounded-full bg-[#f27b21] text-white text-base leading-none">
+              <span className="inline-grid place-items-center h-7 w-7 rounded-full bg-[#FF9933] text-white text-base leading-none">
                 •
               </span>
             </button>

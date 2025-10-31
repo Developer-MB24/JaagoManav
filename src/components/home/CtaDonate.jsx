@@ -15,7 +15,7 @@ export default function CtaDonate({
             backgroundPosition: "center",
           }}
         />
-        <div className="absolute inset-0 bg-[#0c3b33]/75" />
+        <div className="absolute inset-0 bg-[#138808]/40" />
 
         <div className="relative z-10 grid place-items-center text-center min-h-[320px] sm:min-h-[360px] md:min-h-[400px] px-6">
           <h2 className="max-w-3xl text-white font-extrabold leading-tight text-3xl sm:text-4xl md:text-5xl">
@@ -25,13 +25,13 @@ export default function CtaDonate({
 
           <div className="relative mt-6 sm:mt-8">
             <button
-              className="group relative inline-flex items-center gap-3 rounded-full border border-orange-400/80 bg-white/10 px-6 py-3 text-white font-semibold backdrop-blur
-                         hover:bg-orange-500 hover:border-orange-500 transition-all
+              className="group relative inline-flex items-center gap-3 rounded-full border border-[#FF9933] bg-white/10 px-6 py-3 text-white font-semibold backdrop-blur
+                         hover:bg-[#FF9933] hover:border-[#FF9933] transition-all
                          hover:-translate-y-0.5 hover:shadow-[0_12px_30px_-8px_rgba(249,115,22,.65)]"
             >
               <span>Donate Now</span>
 
-              <span className="relative grid place-items-center w-8 h-8 rounded-full bg-white text-orange-600">
+              <span className="relative grid place-items-center w-8 h-8 rounded-full bg-white text-[#FF9933]">
                 <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
                 <span className="absolute inset-0 rounded-full border border-white/60 animate-[pulseRing_1.8s_ease-out_infinite]" />
               </span>

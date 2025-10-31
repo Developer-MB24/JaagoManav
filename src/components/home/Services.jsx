@@ -14,15 +14,15 @@ const services = [
     desc: "With schools closed in Nsw and Victoria, and childcare.",
     cta: "Read More",
     image: "/images/about-two-img-1.jpg",
-    badge: { from: "#1dd1a1", to: "#10b981", Icon: GraduationCap },
-    arrowColor: "text-emerald-500",
+    badge: { from: "#FF9933", to: "#FF9933", Icon: GraduationCap },
+    arrowColor: "#FF9933",
   },
   {
     title: "Medicine For Africans",
     desc: "With schools closed in Nsw and Victoria, and childcare.",
     cta: "Read More",
     image: "/images/about-two-img-2.jpg",
-    badge: { from: "#a78bfa", to: "#7c3aed", Icon: Stethoscope },
+    badge: { from: " #000080", to: " #000080", Icon: Stethoscope },
     arrowColor: "text-violet-500",
   },
   {
@@ -30,7 +30,7 @@ const services = [
     desc: "With schools closed in Nsw and Victoria, and childcare.",
     cta: "Read More",
     image: "/images/about-two-img-3.jpg",
-    badge: { from: "#ff8a5b", to: "#ff6b4a", Icon: Droplets },
+    badge: { from: "#138808", to: "#138808", Icon: Droplets },
     arrowColor: "text-rose-500",
   },
   {
@@ -143,7 +143,7 @@ export default function Services() {
       <div className="max-w-6xl mx-auto px-4">
         {/* Heading */}
         <div className="text-center mb-10">
-          <div className="text-sm tracking-widest uppercase font-semibold text-orange-500">
+          <div className="text-sm tracking-widest uppercase font-semibold text-[#FF9933]">
             <span className="relative">
               <span className="after:absolute after:left-1/2 after:-bottom-1 after:-translate-x-1/2 after:w-20 after:h-[2px] after:bg-orange-400">
                 Our Service
@@ -151,8 +151,8 @@ export default function Services() {
             </span>
           </div>
 
-          <h2 className="mt-3 text-4xl md:text-5xl font-extrabold leading-tight text-gray-900">
-            We Do it for all <span className="text-orange-500">charity</span>
+          <h2 className="mt-3 text-4xl md:text-5xl font-extrabold leading-tight text-[#138808]">
+            We Do it for all <span className="text-[#FF9933]">charity</span>
             <br />
             Service Now
           </h2>
@@ -187,7 +187,7 @@ export default function Services() {
               aria-label={`Go to slide ${i + 1}`}
               className={`size-3 rounded-full transition-all ${
                 selected === i
-                  ? "bg-orange-500 scale-110"
+                  ? "bg-[#FF9933] scale-110"
                   : "bg-orange-200 hover:bg-orange-300"
               }`}
             />

@@ -7,21 +7,21 @@ const events = [
     date: "03 Sep 2025",
     city: "African city",
     img: "/images/about-two-img-1.jpg",
-    gradient: { from: "#ff7a6a", to: "#ff9f6a" },
+    gradient: { from: "#FF9933", to: "#FF9933" },
   },
   {
     title: "Donation Drive",
     date: "03 Sep 2025",
     city: "African city",
     img: "/images/about-two-img-2.jpg",
-    gradient: { from: "#ffd95e", to: "#f4b500" },
+    gradient: { from: "#000080", to: "#000080" },
   },
   {
     title: "Event Of Shares",
     date: "03 Sep 2025",
     city: "African city",
     img: "/images/about-two-img-3.jpg",
-    gradient: { from: "#58e0c0", to: "#12b886" },
+    gradient: { from: "#138808", to: "#138808" },
   },
 ];
 
@@ -122,11 +122,11 @@ export default function EventsSection() {
       <div className="max-w-6xl mx-auto px-4">
         {/* Heading */}
         <div className="text-center mb-10">
-          <p className="uppercase tracking-widest text-orange-500 font-semibold text-sm">
+          <p className="uppercase tracking-widest text-[#FF9933] font-semibold text-sm">
             Our Events
           </p>
-          <h2 className="text-4xl font-extrabold text-gray-900">
-            Our Best Popular <span className="text-orange-500">Upcoming</span>
+          <h2 className="text-4xl font-extrabold text-[#138808]">
+            Our Best Popular <span className="text-[#FF9933]">Upcoming</span>
             <br /> Events.
           </h2>
         </div>

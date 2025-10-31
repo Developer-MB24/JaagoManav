@@ -3,7 +3,7 @@ import React from "react";
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="relative overflow-hidden bg-[#0b2a24] text-white">
+    <footer className="relative overflow-hidden bg-[#138808]/65 text-white">
       <div className="pointer-events-none absolute inset-0 -z-10">
         <img
           src="/images/about-two-img-3.jpg"

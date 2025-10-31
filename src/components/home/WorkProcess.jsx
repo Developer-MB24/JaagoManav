@@ -25,8 +25,8 @@ const ITEMS = [
     subtitle: "Support Charity Today",
     photo: "/images/about-two-img-1.jpg",
     iconClass: "icon-financing",
-    circleColor: "#FFFFFF",
-    hexColor: "#F6C445",
+    circleColor: "#000080",
+    hexColor: "#000080",
     leftHand: "/images/process-one-shape-1.png",
     rightHand: "/images/process-one-shape-1-1.png",
   },
@@ -108,11 +108,11 @@ export default function WorkProcess() {
     >
       <div className="container mx-auto px-4">
         <div className="text-center">
-          <span className="uppercase tracking-[0.25em] text-[#046A38]">
+          <span className="uppercase tracking-[0.25em] text-[#138808]">
             Work Process
           </span>
           <h2 className="mt-2 text-3xl md:text-4xl font-extrabold text-slate-900">
-            Our Donating Work <span className="text-[#f27b21]">Process</span>
+            Our Donating Work <span className="text-[#FF9933]">Process</span>
           </h2>
         </div>
 

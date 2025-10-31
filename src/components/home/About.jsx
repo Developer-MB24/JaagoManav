@@ -11,14 +11,14 @@ export default function AboutUs() {
       <div className="grid items-center gap-10 md:grid-cols-2">
         {/* LEFT */}
         <div>
-          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-[#FF671F] underline underline-offset-4">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-[#FF9933] underline underline-offset-4">
             About Us
           </p>
 
-          <h2 className="text-3xl font-extrabold leading-tight text-[#0E3B2E] md:text-5xl">
+          <h2 className="text-3xl font-extrabold leading-tight text-[#138808] md:text-5xl">
             We Believe This Give For
             <br />
-            Poor People <span className="text-[#FF671F]">Changing Lives</span>
+            Poor People <span className="text-[#FF9933]">Changing Lives</span>
           </h2>
 
           <p className="mt-4 max-w-xl text-slate-600">
@@ -30,7 +30,7 @@ export default function AboutUs() {
           {/* stats row */}
           <div className="mt-8 grid gap-6 sm:grid-cols-3">
             <StatHex
-              color="#FF671F"
+              color="#FF9933"
               label="Donate Now"
               number="6272+"
               icon="/images/icons/donate.svg"
@@ -53,10 +53,10 @@ export default function AboutUs() {
           <div className="mt-8 flex flex-wrap items-center gap-5">
             <a
               href="#donate"
-              className="group inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-6 py-3 text-[#0E3B2E] shadow-sm transition hover:shadow-md"
+              className="group inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-6 py-3 text-[#138808] shadow-sm transition hover:shadow-md"
             >
               Donate Now
-              <span className="grid h-8 w-8 place-items-center rounded-full bg-[#FF671F] text-white transition group-hover:translate-x-0.5">
+              <span className="grid h-8 w-8 place-items-center rounded-full bg-[#FF9933] text-white transition group-hover:translate-x-0.5">
                 →
               </span>
             </a>
@@ -69,7 +69,7 @@ export default function AboutUs() {
                 className="h-10 w-10 rounded-full object-cover ring-2 ring-white"
               />
               <div className="leading-tight">
-                <p className="font-semibold text-[#0E3B2E]">Dianne Russell</p>
+                <p className="font-semibold text-[#138808]">Dianne Russell</p>
                 <p className="text-xs text-slate-500">Founder</p>
               </div>
             </div>
@@ -93,7 +93,7 @@ export default function AboutUs() {
             style={{
               borderRadius: "9999px",
               background:
-                "repeating-conic-gradient(#FF671F 0 8deg, transparent 8deg 22deg)",
+                "repeating-conic-gradient(#FF9933 0 8deg, transparent 8deg 22deg)",
               WebkitMask:
                 "radial-gradient(circle at center, transparent 60%, black 61%)",
               mask: "radial-gradient(circle at center, transparent 60%, black 61%)",
@@ -158,7 +158,7 @@ export default function AboutUs() {
                 aria-label="Play video"
                 onClick={() => window.alert("Open video modal")}
               >
-                <span className="grid h-12 w-12 place-items-center rounded-full bg-[#FF671F] text-white">
+                <span className="grid h-12 w-12 place-items-center rounded-full bg-[#FF9933] text-white">
                   ▶
                 </span>
               </button>
@@ -196,7 +196,7 @@ export default function AboutUs() {
                 aria-label="Play video"
                 onClick={() => window.alert("Open video modal")}
               >
-                <span className="grid h-12 w-12 place-items-center rounded-full bg-[#FF671F] text-white">
+                <span className="grid h-12 w-12 place-items-center rounded-full bg-[#FF9933] text-white">
                   ▶
                 </span>
               </button>
@@ -258,7 +258,7 @@ function StatHex({ color, label, number, icon }) {
       </div>
 
       <div className="leading-tight">
-        <p className="text-sm font-semibold text-[#0E3B2E]">{label}</p>
+        <p className="text-sm font-semibold text-[#138808]">{label}</p>
         <p className="text-[15px] font-semibold" style={{ color }}>
           {number}
         </p>

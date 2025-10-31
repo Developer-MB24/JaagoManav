@@ -11,29 +11,29 @@ const volunteers = [
     name: "Jessica Brown",
     role: "Volunteer",
     img: "/images/about-two-img-1.jpg",
-    accent: "from-orange-500 to-orange-400",
-    border: "ring-orange-400",
+    accent: "bg-[#FF9933]", // India Saffron
+    border: "ring-[#FF9933]",
   },
   {
     name: "James Fuller",
     role: "Founder",
     img: "/images/about-two-img-2.jpg",
-    accent: "from-emerald-500 to-emerald-400",
-    border: "ring-emerald-400",
+    accent: "bg-[#000080]", // White
+    border: "ring-[#000080]", // Navy ring for visibility
   },
   {
     name: "Jasmet Mangat",
     role: "Manager",
     img: "/images/about-two-img-3.jpg",
-    accent: "from-emerald-500 to-emerald-400",
-    border: "ring-emerald-400",
+    accent: "bg-[#138808]", // India Green
+    border: "ring-[#138808]",
   },
   {
     name: "Tim Southe",
     role: "Founder",
     img: "/images/about-two-img-1.jpg",
-    accent: "from-fuchsia-500 to-violet-500",
-    border: "ring-violet-400",
+    accent: "bg-[#000080]", // Navy Blue
+    border: "ring-[#000080]",
   },
 ];
 
@@ -131,11 +131,11 @@ export default function VolunteerSection() {
       <div className="max-w-6xl mx-auto px-4">
         {/* Heading */}
         <div className="text-center mb-10">
-          <p className="uppercase tracking-widest text-orange-500 font-semibold text-sm">
+          <p className="uppercase tracking-widest text-[#FF9933] font-semibold text-sm">
             Expert Volunteer
           </p>
-          <h2 className="text-4xl font-extrabold text-gray-900">
-            Meet Our <span className="text-orange-500">Volunteer</span>
+          <h2 className="text-4xl font-extrabold text-[#138808]">
+            Meet Our <span className="text-[#FF9933]">Volunteer</span>
           </h2>
         </div>
 

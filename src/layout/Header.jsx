@@ -41,7 +41,7 @@ export default function Header() {
     "relative inline-flex items-center gap-1.5 font-semibold text-white/95 hover:text-white transition-colors";
 
   const underline = (isActive) =>
-    `pointer-events-none absolute left-0 -bottom-1 h-[2px] bg-[#f27b21] transition-all duration-300 ${
+    `pointer-events-none absolute left-0 -bottom-1 h-[2px] bg-[#138808] transition-all duration-300 ${
       isActive ? "w-full" : "w-0 group-hover:w-full"
     }`;
 
@@ -68,7 +68,7 @@ export default function Header() {
     <div
       role="menu"
       className={[
-        "absolute left-0 mt-3 w-64 rounded-2xl border border-white/10 bg-[#0f3b32] p-2 shadow-lg",
+        "absolute left-0 mt-3 w-64 rounded-2xl border border-white/10 bg-[#138808] p-2 shadow-lg",
         "transition-all duration-200 origin-top will-change-transform",
         open === id
           ? "opacity-100 translate-y-0 scale-100"
@@ -111,7 +111,7 @@ export default function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0b2a24]/90 backdrop-blur supports-[backdrop-filter]:bg-[#0b2a24]/80">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#138808]/90 backdrop-blur supports-[backdrop-filter]:bg-[[#138808]]/65">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3">

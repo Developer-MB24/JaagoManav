@@ -113,7 +113,7 @@ export default function HeroCarousel() {
                 loading={i === 0 ? "eager" : "lazy"}
                 decoding="async"
               />
-              <div className="absolute inset-0 bg-[#0b2a24]/70" />
+              <div className="absolute inset-0 bg-[#138808]/20" />
             </div>
           );
         })}
@@ -129,7 +129,7 @@ export default function HeroCarousel() {
           <h1 className="mt-3 text-4xl font-extrabold leading-tight text-white md:text-6xl">
             {active.titleTop}
             <br />
-            <span className="text-primary">{active.titleBottomAccent}</span>
+            <span className="text-[#FF9933]">{active.titleBottomAccent}</span>
           </h1>
 
           <p className="mt-5 max-w-xl text-base leading-relaxed text-white/85 md:text-lg">
@@ -139,7 +139,7 @@ export default function HeroCarousel() {
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <a
               href="#donate"
-              className="inline-flex items-center gap-3 rounded-full bg-[#f27b21] px-6 py-3 text-white shadow-md transition hover:bg-[#db6e1d] focus:outline-none focus:ring-2 focus:ring-white/40"
+              className="inline-flex items-center gap-3 rounded-full bg-[#FF9933] px-6 py-3 text-white shadow-md transition hover:bg-[#FF9933] focus:outline-none focus:ring-2 focus:ring-white/40"
             >
               <span className="font-semibold">Donate Now</span>
               <span
@@ -159,7 +159,7 @@ export default function HeroCarousel() {
                 aria-hidden
                 className="pointer-events-none absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 [animation:glowExpand_700ms_ease-out]"
               />
-              <span className="relative grid h-10 w-10 place-items-center rounded-full bg-white text-primary transition-transform duration-300 group-hover:scale-105">
+              <span className="relative grid h-10 w-10 place-items-center rounded-full bg-white text-[#FF9933] transition-transform duration-300 group-hover:scale-105">
                 ▶
               </span>
             </button>

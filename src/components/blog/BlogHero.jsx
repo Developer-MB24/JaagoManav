@@ -18,7 +18,7 @@ export default function BlogHero({
         className="absolute inset-0 w-full h-full object-cover"
       />
 
-      <div className="absolute inset-0 bg-[#0e3b37]/80" />
+      <div className="absolute inset-0 bg-[#138808]/20" />
 
       <div className="relative z-10 mx-auto max-w-6xl px-4 h-full flex items-end">
         <div className="pb-16 md:pb-20">

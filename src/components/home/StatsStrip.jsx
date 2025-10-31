@@ -41,8 +41,8 @@ export default function Statsstrip() {
           <StatCard
             value="220K"
             label="Poor Educate"
-            colorFrom="#ff6b4a"
-            colorTo="#ff904a"
+            colorFrom="#FF9933"
+            colorTo="#FF9933"
             Icon={HeartHandshake}
             delay={0.0}
           />
@@ -52,8 +52,8 @@ export default function Statsstrip() {
           <StatCard
             value="95M+"
             label="Fund Raised"
-            colorFrom="#ffd748"
-            colorTo="#ffc938"
+            colorFrom="#000080"
+            colorTo="#000080"
             Icon={HandCoins}
             delay={0.1}
           />
@@ -63,8 +63,8 @@ export default function Statsstrip() {
           <StatCard
             value="150K"
             label="Team Member"
-            colorFrom="#39e0b0"
-            colorTo="#20c997"
+            colorFrom="#000080"
+            colorTo="#138808"
             Icon={Users2}
             delay={0.2}
           />
@@ -74,8 +74,8 @@ export default function Statsstrip() {
           <StatCard
             value="32M+"
             label="Donate now"
-            colorFrom="#8b5cf6"
-            colorTo="#7c3aed"
+            colorFrom="#138808"
+            colorTo="#138808"
             Icon={HandHeart}
             delay={0.3}
           />

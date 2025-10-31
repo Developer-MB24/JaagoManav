@@ -59,7 +59,7 @@ function PostCard({ p, idx }) {
         <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
           <button
             type="button"
-            className="pointer-events-auto inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-[#0c3b33] shadow-md hover:bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
+            className="pointer-events-auto inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-[#138808] shadow-md hover:bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
             aria-label="Open"
           >
             <Plus className="h-6 w-6" />
@@ -67,7 +67,7 @@ function PostCard({ p, idx }) {
         </div>
 
         <div className="absolute top-4 left-4 inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-[12px] font-medium">
-          <CalendarDays className="w-4 h-4 text-orange-500" />
+          <CalendarDays className="w-4 h-4 text-[#FF9933]" />
           <span className="text-gray-700">{p.date}</span>
         </div>
 
@@ -87,10 +87,10 @@ function PostCard({ p, idx }) {
       {/* Content */}
       <div className="px-6 pt-5 pb-6">
         <div className="mb-3 flex items-center gap-6 text-[13px]">
-          <span className="inline-flex items-center gap-2 text-emerald-600">
+          <span className="inline-flex items-center gap-2 text-[#138808]">
             <User2 className="w-4 h-4" /> {p.author}
           </span>
-          <span className="inline-flex items-center gap-2 text-orange-500">
+          <span className="inline-flex items-center gap-2 text-[#FF9933]">
             <MessageCircle className="w-4 h-4" /> Comment
           </span>
         </div>
@@ -104,7 +104,7 @@ function PostCard({ p, idx }) {
           form aliquet sollicitudin.
         </p>
 
-        <button className="mt-4 inline-flex items-center gap-2 text-emerald-700 font-semibold hover:text-orange-600 transition">
+        <button className="mt-4 inline-flex items-center gap-2 text-[#138808] font-semibold hover:text-orange-600 transition">
           Read More <ArrowRight className="w-4 h-4" />
         </button>
       </div>
@@ -117,13 +117,13 @@ export default function BlogNewsSection() {
     <section className="py-16">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-10">
-          <p className="uppercase tracking-widest text-orange-500 font-semibold text-sm">
+          <p className="uppercase tracking-widest text-[#FF9933] font-semibold text-sm">
             News and Blogs
           </p>
-          <h2 className="text-4xl font-extrabold text-[#0c3b33]">
+          <h2 className="text-4xl font-extrabold text-[#138808]">
             We Articles From Blog
             <br />
-            <span className="text-orange-500">News and Story</span>
+            <span className="text-[#FF9933]">News and Story</span>
           </h2>
         </div>
 

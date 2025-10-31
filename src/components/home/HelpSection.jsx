@@ -8,14 +8,14 @@ export default function HelpSection() {
     {
       id: "education",
       label: "Education Help",
-      color: "bg-orange-500 text-white",
+      color: "bg-[#FF9933] text-white",
     },
     {
       id: "treatment",
       label: "Treatment Help",
-      color: "bg-white text-green-800",
+      color: "bg-[#FF9933] text-white",
     },
-    { id: "food", label: "Healthy Food", color: "bg-white text-green-800" },
+    { id: "food", label: "Healthy Food", color: "bg-[#FF9933] text-white" },
   ];
 
   const content = {
@@ -25,12 +25,12 @@ export default function HelpSection() {
         {
           title: "Child Deserves Better Healthy Foods",
           desc: "Category that involves giving financial or material support.",
-          color: "text-orange-500",
+          color: "text-[#FF9933]",
         },
         {
           title: "Childhood Education Development Support",
           desc: "Category that involves giving financial or material support.",
-          color: "text-green-600",
+          color: "text-[#138808]",
         },
       ],
     },
@@ -40,12 +40,12 @@ export default function HelpSection() {
         {
           title: "Free Medical Checkups for Children",
           desc: "Providing health checkup and medical support for underprivileged children.",
-          color: "text-orange-500",
+          color: "text-[#FF9933]",
         },
         {
           title: "Health Equipment Support",
           desc: "Providing necessary tools, medicines, and financial aid for treatment.",
-          color: "text-green-600",
+          color: "text-[#138808]",
         },
       ],
     },
@@ -55,12 +55,12 @@ export default function HelpSection() {
         {
           title: "Nutritional Food for Needy Kids",
           desc: "Helping children get daily nutritious food for better growth.",
-          color: "text-orange-500",
+          color: "text-[#FF9933]",
         },
         {
           title: "Hunger-Free Mission",
           desc: "Ensuring every child gets a proper meal every day.",
-          color: "text-green-600",
+          color: "text-[#138808]",
         },
       ],
     },
@@ -73,12 +73,12 @@ export default function HelpSection() {
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Heading */}
         <div className="text-center mb-12">
-          <p className="text-orange-500 italic font-semibold tracking-wide">
+          <p className="text-[#FF9933] italic font-semibold tracking-wide">
             WE TAKE CARE THEM
           </p>
-          <h2 className="text-4xl font-extrabold text-green-900">
+          <h2 className="text-4xl font-extrabold text-[#138808]">
             We Always Help The{" "}
-            <span className="text-orange-500">Needy People</span>
+            <span className="text-[#FF9933]">Needy People</span>
           </h2>
         </div>
 
@@ -92,7 +92,7 @@ export default function HelpSection() {
                 className={`rounded-xl py-4 font-semibold text-lg shadow transition-all duration-300 ${
                   activeTab === tab.id
                     ? tab.color
-                    : "bg-green-50 text-green-900 hover:bg-green-100"
+                    : "bg-green-50 text-[#138808] hover:bg-green-100"
                 }`}
               >
                 {tab.label}
@@ -108,7 +108,7 @@ export default function HelpSection() {
               className="rounded-xl w-full md:w-1/2 object-cover shadow-lg"
             />
             <div>
-              <h3 className="text-2xl font-bold text-green-900 mb-4">
+              <h3 className="text-2xl font-bold text-[#138808] mb-4">
                 How You Can Help Us?
               </h3>
               <ul className="space-y-5">
