@@ -165,12 +165,12 @@ export default function Services() {
               <div
                 key={s.title}
                 className="
-                  pl-4
-                  basis-full              
-                  sm:basis-1/2            
-                  lg:basis-1/3            
-                  xl:basis-1/4            
-                "
+          pl-4
+          flex-[0_0_100%]       
+          sm:flex-[0_0_50%]      
+          lg:flex-[0_0_33.333%]  
+          xl:flex-[0_0_25%]      
+        "
               >
                 <ServiceCard item={s} />
               </div>
