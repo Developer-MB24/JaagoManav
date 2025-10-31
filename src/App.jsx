@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import MainLayout from "./layout/MainLayout.jsx";
+import Account from "./pages/Account.jsx";
 
 const Home = lazy(() => import("./pages/Home.jsx"));
 const Blog = lazy(() => import("./pages/Blog.jsx"));
@@ -26,6 +27,8 @@ export default function App() {
 
           {/* /blog */}
           <Route path="blog" element={<Blog />} />
+          {/* /account */}
+          <Route path="account" element={<Account />} />
 
           {/* 404 */}
           <Route path="*" element={<NotFound />} />

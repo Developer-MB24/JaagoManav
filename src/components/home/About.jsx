@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 export default function AboutUs() {
+  const [ref, inView] = useInView(0.15);
+
   return (
-    <section className="relative mx-auto max-w-7xl px-4 py-14 md:py-20 overflow-x-hidden">
+    <section
+      ref={ref}
+      className="relative mx-auto max-w-7xl px-4 py-14 md:py-20 overflow-x-hidden"
+    >
       <div className="grid items-center gap-10 md:grid-cols-2">
         {/* LEFT */}
         <div>
@@ -72,7 +77,12 @@ export default function AboutUs() {
         </div>
 
         {/* RIGHT */}
-        <div className="relative pb-16 sm:pb-20 md:pb-24 overflow-hidden">
+        <div
+          className={[
+            "relative pb-16 sm:pb-20 md:pb-24 overflow-hidden transition-transform duration-[900ms] ease-[cubic-bezier(0.25,0.9,0.25,1)]",
+            inView ? "translate-x-0 opacity-100" : "translate-x-24 opacity-0",
+          ].join(" ")}
+        >
           <div
             className="
               pointer-events-none absolute left-1/2 top-1/2 -z-10
@@ -135,7 +145,7 @@ export default function AboutUs() {
             </div>
           </div>
 
-          {/* Middle  */}
+          {/* Middle */}
           <div className="absolute left-1/2 top-[56%] block w-[72%] -translate-x-1/2 sm:hidden z-20">
             <div className="relative overflow-hidden rounded-[18px] border-4 border-white bg-white shadow-[0_18px_40px_rgba(2,6,23,.15)]">
               <img
@@ -159,7 +169,7 @@ export default function AboutUs() {
             className="absolute hidden sm:block z-20"
             style={{ left: "12%", top: "32%", width: "min(88vw, 420px)" }}
           >
-            {/*  dotted ring */}
+            {/* dotted ring */}
             <div
               className="pointer-events-none absolute left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 animate-[spin_14s_linear_infinite]"
               style={{
@@ -195,10 +205,28 @@ export default function AboutUs() {
         </div>
       </div>
 
-      {/* animations */}
-      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+      <style>{`
+        @keyframes spin { to { transform: rotate(360deg); } }
+      `}</style>
     </section>
   );
+}
+
+/** ---------- Scroll Animation ---------- */
+function useInView(threshold = 0.2) {
+  const ref = React.useRef(null);
+  const [inView, setInView] = React.useState(false);
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => e.isIntersecting && setInView(true),
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+  return [ref, inView];
 }
 
 function StatHex({ color, label, number, icon }) {

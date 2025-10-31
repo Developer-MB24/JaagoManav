@@ -1,3 +1,4 @@
+import React from "react";
 import {
   GraduationCap,
   Droplets,
@@ -5,40 +6,35 @@ import {
   UtensilsCrossed,
 } from "lucide-react";
 
+const MASK_DATA = null;
+
 const ITEMS = [
-  {
-    icon: GraduationCap,
-    text: "CHARITY FOR EDUCATION",
-    color: "text-amber-400",
-    iconColor: "text-amber-400",
-  },
-  {
-    icon: Droplets,
-    text: "CHARITY FOR WATER",
-    color: "text-emerald-400",
-    iconColor: "text-emerald-400",
-  },
-  {
-    icon: Stethoscope,
-    text: "CHARITY FOR MEDICAL",
-    color: "text-fuchsia-400",
-    iconColor: "text-fuchsia-400",
-  },
   {
     icon: UtensilsCrossed,
     text: "CHARITY FOR FOODS",
     color: "text-orange-400",
-    iconColor: "text-orange-400",
   },
+  {
+    icon: GraduationCap,
+    text: "CHARITY FOR EDUCATION",
+    color: "text-amber-400",
+  },
+  { icon: Droplets, text: "CHARITY FOR WATER", color: "text-emerald-400" },
+  { icon: Stethoscope, text: "CHARITY FOR MEDICAL", color: "text-fuchsia-400" },
 ];
 
 function Row({ items }) {
   return (
-    <div className="flex items-center gap-16 px-10">
+    <div className="flex items-center px-10">
       {items.map((it, i) => (
-        <div key={i} className="flex items-center gap-3 shrink-0">
-          <it.icon className={`w-6 h-6 ${it.iconColor}`} />
-          <span className={`font-extrabold tracking-wide ${it.color}`}>
+        <div
+          key={i}
+          className="flex items-center gap-5 shrink-0 ml-5 first:ml-0"
+        >
+          <it.icon className={`h-[35px] w-[35px] ${it.color}`} />
+          <span
+            className={`text-[12px] leading-[30px] font-extrabold tracking-wide uppercase ${it.color}`}
+          >
             {it.text}
           </span>
         </div>
@@ -50,36 +46,59 @@ function Row({ items }) {
 export default function CharityStrip({
   bgImage = "/images/process-1-1.jpg",
   speedSec = 30,
+  maskImage = MASK_DATA,
 }) {
   return (
-    <section
-      className="relative w-full"
-      style={{
-        backgroundImage: `url(${bgImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-[#0e3b35]/85" />
-
-      {/* Marquee */}
-      <div className="relative overflow-hidden py-3">
+    <section className="relative w-full pt-[120px]">
+      <div
+        className="relative z-[3] bg-black py-[35px] overflow-hidden"
+        style={
+          maskImage
+            ? {
+                WebkitMaskImage: maskImage,
+                maskImage: maskImage,
+                WebkitMaskRepeat: "no-repeat",
+                maskRepeat: "no-repeat",
+                WebkitMaskPosition: "center center",
+                maskPosition: "center center",
+                WebkitMaskSize: "cover",
+                maskSize: "cover",
+              }
+            : undefined
+        }
+      >
         <div
-          className="flex min-w-[300%] animate-[marquee_var(--speed)_linear_infinite]"
-          style={{ ["--speed"]: `${speedSec}s` }}
-        >
-          <Row items={ITEMS} />
-          <Row items={ITEMS} />
-          <Row items={ITEMS} />
-          <Row items={ITEMS} />
+          className="absolute inset-0 -z-[1]"
+          style={{
+            backgroundImage: `url(${bgImage})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            opacity: 0.15,
+            mixBlendMode: "luminosity",
+          }}
+        />
+
+        <div className="relative overflow-hidden">
+          <div
+            className="flex min-w-[300%] animate-[marquee_var(--speed)_linear_infinite]"
+            style={{ ["--speed"]: `${speedSec}s` }}
+          >
+            <Row items={ITEMS} />
+            <Row items={ITEMS} />
+            <Row items={ITEMS} />
+            <Row items={ITEMS} />
+          </div>
         </div>
       </div>
 
-      <style>{`
+      <style jsx>{`
         @keyframes marquee {
-          0%   { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
         }
       `}</style>
     </section>

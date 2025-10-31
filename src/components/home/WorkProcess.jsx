@@ -1,4 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
+import { UserRound, HandCoins, Handshake } from "lucide-react";
+
+const ICON_MAP = {
+  "icon-user-1": UserRound,
+  "icon-financing": HandCoins,
+  "icon-kindness": Handshake,
+};
 
 const ITEMS = [
   {
@@ -6,30 +13,33 @@ const ITEMS = [
     title: "Awareness & Engagement",
     subtitle: "Support Charity Today",
     photo: "/images/process-1-1.jpg",
-    color: "#FF671F",
-    step: "01",
-    leftHand: "/images/process-one-shape-1-1.png",
-    rightHand: "/images/process-one-shape-1.png",
+    iconClass: "icon-user-1",
+    circleColor: "#FF9933",
+    hexColor: "#FF9933",
+    leftHand: "/images/process-one-shape-1.png",
+    rightHand: "/images/process-one-shape-1-1.png",
   },
   {
     id: 2,
     title: "Donation Collection",
     subtitle: "Support Charity Today",
-    photo: "/images/process-1-3.jpg",
-    color: "#F6C445",
-    step: "02",
-    leftHand: "/images/process-two-shape-left.png",
-    rightHand: "/images/process-two-shape-right.png",
+    photo: "/images/about-two-img-1.jpg",
+    iconClass: "icon-financing",
+    circleColor: "#FFFFFF",
+    hexColor: "#F6C445",
+    leftHand: "/images/process-one-shape-1.png",
+    rightHand: "/images/process-one-shape-1-1.png",
   },
   {
     id: 3,
     title: "Impact And Accountability",
     subtitle: "Support Charity Today",
-    photo: "/images/process-1-1.jpg",
-    color: "#046A38",
-    step: "03",
-    leftHand: "/images/process-three-shape-left.png",
-    rightHand: "/images/process-three-shape-right.png",
+    photo: "/images/process-1-3.jpg",
+    iconClass: "icon-kindness",
+    circleColor: "#138808", // green
+    hexColor: "#138808",
+    leftHand: "/images/process-one-shape-1.png",
+    rightHand: "/images/process-one-shape-1-1.png",
   },
 ];
 
@@ -89,134 +99,120 @@ function HeartPhoto({ src }) {
 }
 
 export default function WorkProcess() {
-  const [rootRef, inView] = useInView(0.1);
+  const [rootRef, inView] = useInView(0.12);
 
   return (
-    <section ref={rootRef} className="mx-auto max-w-6xl px-4 py-16 md:py-24">
-      <div className="text-center">
-        <p className="text-xs tracking-[0.25em] uppercase text-primary underline underline-offset-4 decoration-primary/60">
-          Work Process
-        </p>
-        <h2 className="mt-2 text-3xl md:text-4xl font-extrabold text-slate-900">
-          Our Donating Work <span className="text-primary">Process</span>
-        </h2>
+    <section
+      ref={rootRef}
+      className="process-one relative z-[1] py-28 md:py-28"
+    >
+      <div className="container mx-auto px-4">
+        <div className="text-center">
+          <span className="uppercase tracking-[0.25em] text-[#046A38]">
+            Work Process
+          </span>
+          <h2 className="mt-2 text-3xl md:text-4xl font-extrabold text-slate-900">
+            Our Donating Work <span className="text-[#f27b21]">Process</span>
+          </h2>
+        </div>
+
+        {/* Cards */}
+        <ul className="row mt-12 grid list-unstyled gap-10 md:grid-cols-3">
+          {ITEMS.map((item, idx) => {
+            const Icon = ICON_MAP[item.iconClass] || UserRound;
+            return (
+              <li
+                key={item.id}
+                className={[
+                  idx === 0 ? "a-inRight" : idx === 1 ? "a-inUp" : "a-inLeft",
+                  inView ? "a-play" : "",
+                ].join(" ")}
+                style={{ animationDelay: `${idx * 0.12}s` }}
+              >
+                <div className="process-one__single-inner relative">
+                  <div className="process-one__single relative">
+                    <div className="process-one__img relative mx-auto z-[1]">
+                      <HeartPhoto src={item.photo} />
+
+                      <div
+                        className="process-one__icon"
+                        style={{
+                          backgroundColor: item.circleColor,
+                          border: "3px solid white",
+                        }}
+                      >
+                        <Icon
+                          size={38}
+                          strokeWidth={2.3}
+                          color={
+                            item.circleColor === "#FFFFFF"
+                              ? "#138808"
+                              : "#FFFFFF"
+                          }
+                        />
+                      </div>
+                    </div>
+
+                    <div className="process-one__shape-1">
+                      <img src={item.leftHand} alt="" />
+                    </div>
+                    <div className="process-one__shape-2">
+                      <img src={item.rightHand} alt="" />
+                    </div>
+                  </div>
+
+                  <div
+                    className="process-one__count-inner"
+                    style={{ backgroundColor: `${item.hexColor}33` }}
+                  >
+                    <div
+                      className="process-one__count"
+                      style={{ backgroundColor: item.hexColor }}
+                    >
+                      <span className="count-text text-white text-[30px] leading-[30px] font-bold">
+                        {String(idx + 1).padStart(2, "0")}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Text */}
+                  <div className="process-one__content text-center mt-6">
+                    <h3 className="text-[24px] leading-[34px] font-bold capitalize text-slate-900">
+                      {item.title}
+                    </h3>
+                    <p className="text-slate-600">{item.subtitle}</p>
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
       </div>
 
-      <div className="mt-12 grid gap-10 md:grid-cols-3">
-        {ITEMS.map((item, idx) => (
-          <Card key={item.id} item={item} index={idx} inView={inView} />
-        ))}
-      </div>
-
-      {/* keyframes */}
       <style>{`
-        @keyframes inLeft   { 0%{opacity:0;transform:translateX(-28px)} 100%{opacity:1;transform:translateX(0)} }
-        @keyframes inRight  { 0%{opacity:0;transform:translateX( 28px)} 100%{opacity:1;transform:translateX(0)} }
-        @keyframes inUp     { 0%{opacity:0;transform:translateY( 28px)} 100%{opacity:1;transform:translateY(0)} }
-        @keyframes floatY   { 0%{transform:translateY(0)} 50%{transform:translateY(-6px)} 100%{transform:translateY(0)} }
+        .process-one__img{max-width:300px;margin:0 auto;position:relative;}
+        .process-one__icon{
+          position:absolute;left:50%;transform:translateX(-50%);
+          bottom:20px;z-index:3;width:80px;height:80px;
+          display:flex;align-items:center;justify-content:center;
+          border-radius:9999px;box-shadow:0 12px 24px rgba(0,0,0,.15);
+        }
+        .process-one__shape-1,.process-one__shape-2{
+          position:absolute;bottom:-30px;opacity:.20;
+        }
+        .process-one__shape-1{left:67px;}
+        .process-one__shape-2{right:67px;}
+        .process-one__count-inner{
+          position:relative;z-index:2;display:flex;align-items:center;justify-content:center;
+          width:90px;height:70px;margin:-20px auto 0;padding:5px;
+          clip-path:polygon(25% 0%,75% 0%,100% 50%,75% 100%,25% 100%,0% 50%);
+        }
+        .process-one__count{
+          display:flex;align-items:center;justify-content:center;
+          width:80px;height:60px;
+          clip-path:polygon(25% 0%,75% 0%,100% 50%,75% 100%,25% 100%,0% 50%);
+        }
       `}</style>
     </section>
-  );
-}
-
-function Card({ item, index, inView }) {
-  const [hovered, setHovered] = useState(false);
-
-  const anim = index === 0 ? "inLeft" : index === 1 ? "inUp" : "inRight";
-
-  return (
-    <article
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className={[
-        "group relative flex flex-col items-center text-center rounded-3xl p-6",
-        "transition-transform duration-300 will-change-transform hover:-translate-y-1",
-      ].join(" ")}
-      style={{
-        animation: inView
-          ? `${anim} 720ms cubic-bezier(.2,.9,.2,1) forwards`
-          : "none",
-        opacity: 0,
-        animationDelay: inView ? `${140 + index * 120}ms` : "0ms",
-      }}
-    >
-      {/* stack area */}
-      <div className="relative w-[86%] max-w-[420px]">
-        <div className="pointer-events-none absolute -bottom-1 left-1/2 z-0 -translate-x-1/2">
-          <img
-            src={item.leftHand}
-            alt=""
-            className="absolute bottom-0"
-            style={{
-              width: "68%",
-              left: "-74%",
-              transform: `translateY(${hovered ? -4 : -2}px)`,
-              transition: "transform 450ms ease",
-              opacity: 0.95,
-            }}
-          />
-          <img
-            src={item.rightHand}
-            alt=""
-            className="absolute bottom-0"
-            style={{
-              width: "68%",
-              left: "70%",
-              transform: `translateY(${hovered ? -4 : -2}px)`,
-              transition: "transform 450ms ease",
-              opacity: 0.95,
-            }}
-          />
-        </div>
-
-        <div className="relative z-10 mx-auto aspect-[1.05/1] w-full overflow-hidden shadow-soft rounded-[28px]">
-          <HeartPhoto src={item.photo} />
-        </div>
-
-        <div
-          className="absolute -bottom-6 left-1/2 z-20 -translate-x-1/2"
-          style={{
-            animation: inView ? "floatY 3s ease-in-out infinite" : "none",
-          }}
-        >
-          <Hex color={item.color} text={item.step} />
-        </div>
-      </div>
-
-      <h3 className="mt-12 text-xl font-semibold text-slate-900">
-        {item.title}
-      </h3>
-      <p className="mt-2 text-slate-600">{item.subtitle}</p>
-    </article>
-  );
-}
-
-function Hex({ color, text }) {
-  return (
-    <div
-      className="relative grid h-16 w-28 place-items-center"
-      aria-hidden="true"
-    >
-      <div
-        className="absolute inset-0"
-        style={{
-          clipPath:
-            "polygon(25% 6%, 75% 6%, 100% 50%, 75% 94%, 25% 94%, 0% 50%)",
-          background: `${color}22`,
-          filter: "blur(0.6px)",
-        }}
-      />
-      <div
-        className="absolute inset-1 grid place-items-center text-white font-semibold"
-        style={{
-          clipPath:
-            "polygon(25% 6%, 75% 6%, 100% 50%, 75% 94%, 25% 94%, 0% 50%)",
-          background: color,
-          boxShadow: "0 12px 24px rgba(0,0,0,.15)",
-        }}
-      >
-        <span className="text-lg leading-none">{text}</span>
-      </div>
-    </div>
   );
 }

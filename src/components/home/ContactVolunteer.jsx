@@ -1,130 +1,139 @@
-import { Mail, Phone, MessageCircleMore, ArrowRight } from "lucide-react";
+import React from "react";
+import { motion } from "framer-motion";
 
-export default function ContactVolunteer({
-  leftImage = "/images/process-1-3.jpg",
-  rightImage = "/images/about-two-img-1.jpg",
-}) {
+export default function ContactSection() {
   return (
-    <section className="relative w-full bg-white">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 pt-8 pb-28">
-        {/* Top two cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Left card */}
-          <div className="relative rounded-2xl overflow-hidden min-h-[520px]">
-            <img
-              src={leftImage}
-              alt="Volunteer"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-black/30" />
-            <div className="relative z-10 p-6 sm:p-7 md:p-8 lg:p-9 text-white">
-              <p className="text-sm tracking-widest italic font-semibold text-orange-400">
-                OUR CONTACT
-              </p>
-              <h2 className="mt-2 text-3xl lg:text-4xl font-extrabold leading-tight">
-                Join With Us To As{" "}
-                <span className="text-orange-400">Volunteer</span>
-                <br /> Contact Now!
-              </h2>
-              <p className="mt-3 text-white/85 max-w-md">
-                Charity address a range of simply application and infrastructure
-                this of passages of available.
-              </p>
+    <section className="relative overflow-hidden min-h-[800px] md:min-h-[300px]">
+      <div className=" inset-0 bg-white -z-30" />
 
-              <form className="mt-5 space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    placeholder="Your Name"
-                    className="h-12 rounded-md bg-white/10 backdrop-blur-md border border-white/30 text-white placeholder-white/80 px-4 outline-none focus:border-orange-400"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Email Address"
-                    className="h-12 rounded-md bg-white/10 backdrop-blur-md border border-white/30 text-white placeholder-white/80 px-4 outline-none focus:border-orange-400"
-                  />
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <input
-                    type="tel"
-                    placeholder="Phone Number"
-                    className="h-12 rounded-md bg-white/10 backdrop-blur-md border border-white/30 text-white placeholder-white/80 px-4 outline-none focus:border-orange-400"
-                  />
-                  <select
-                    className="h-12 rounded-md bg-white/10 backdrop-blur-md border border-white/30 text-white/95 px-4 outline-none focus:border-orange-400"
-                    defaultValue=""
-                  >
-                    <option value="" disabled className="text-gray-300">
-                      Service Type
-                    </option>
-                    <option>Education Help</option>
-                    <option>Treatment Help</option>
-                    <option>Healthy Food</option>
-                  </select>
-                </div>
-                <textarea
-                  rows={3}
-                  placeholder="Message"
-                  className="rounded-md bg-white/10 backdrop-blur-md border border-white/30 text-white placeholder-white/80 px-4 py-3 outline-none focus:border-orange-400"
-                />
-                <button
-                  type="button"
-                  className="inline-flex items-center gap-3 rounded-full bg-orange-500 text-white font-semibold px-5 py-3 shadow-[0_10px_30px_-10px_rgba(249,115,22,0.8)] hover:bg-orange-600 transition"
+      <div
+        className="absolute inset-0 -z-20"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(11,42,36,0.92), rgba(11,42,36,0.92)), url('/images/about-two-img-2.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          WebkitMaskImage: "url('/images/contact-curve.png')",
+          maskImage: "url('/images/contact-curve.png')",
+          WebkitMaskSize: "cover",
+          maskSize: "cover",
+          WebkitMaskRepeat: "no-repeat",
+          maskRepeat: "no-repeat",
+          WebkitMaskPosition: "center",
+          maskPosition: "center",
+        }}
+      />
+
+      {/* CONTENT */}
+      <div className="relative z-10 mx-auto max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-10 px-4 md:px-8 py-24 md:py-6 items-start">
+        <div className="text-white">
+          <p className="uppercase text-sm tracking-[0.2em] text-[#f27b21] mb-3">
+            Our Contact
+          </p>
+          <h2 className="text-4xl md:text-5xl font-extrabold leading-tight mb-4">
+            Join With Us To As <span className="text-[#f27b21]">Volenteer</span>{" "}
+            Contact Now!
+          </h2>
+          <p className="text-white/85 mb-8">
+            Charity address a range of simply application and infrastructure
+            this of passages of available.
+          </p>
+
+          <form className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <input
+                type="text"
+                placeholder="Your Name"
+                className="h-[55px] w-full bg-transparent border border-white/15 rounded-md px-4 text-white/80 placeholder-white/60 focus:outline-none"
+              />
+              <input
+                type="email"
+                placeholder="Email Address"
+                className="h-[55px] w-full bg-transparent border border-white/15 rounded-md px-4 text-white/80 placeholder-white/60 focus:outline-none"
+              />
+              <input
+                type="text"
+                placeholder="Phone Number"
+                className="h-[55px] w-full bg-transparent border border-white/15 rounded-md px-4 text-white/80 placeholder-white/60 focus:outline-none"
+              />
+              <div className="relative">
+                <select
+                  defaultValue=""
+                  className="h-[55px] w-full appearance-none bg-transparent border border-white/15 rounded-md px-4 pr-10 text-white/80 focus:outline-none"
                 >
-                  Send A Message
-                  <span className="grid place-items-center w-8 h-8 rounded-full bg-white text-orange-600">
-                    <ArrowRight className="w-4 h-4" />
-                  </span>
-                </button>
-              </form>
+                  <option value="" className="text-black">
+                    Service Type
+                  </option>
+                  <option className="text-black">Type Of Service 01</option>
+                  <option className="text-black">Type Of Service 02</option>
+                  <option className="text-black">Type Of Service 03</option>
+                  <option className="text-black">Type Of Service 04</option>
+                </select>
+                <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/70">
+                  ▾
+                </span>
+              </div>
             </div>
-          </div>
 
-          {/* Right image card */}
-          <div className="rounded-2xl overflow-hidden min-h-[520px]">
-            <img
-              src={rightImage}
-              alt="Children"
-              className="w-full h-full object-cover"
+            <textarea
+              placeholder="Message"
+              className="w-full h-[150px] bg-transparent border border-white/15 rounded-md px-4 py-3 text-white/80 placeholder-white/60 focus:outline-none"
+            />
+
+            <button
+              type="submit"
+              className="inline-flex items-center gap-3 rounded-full border border-[#f27b21] px-6 py-3 text-white uppercase tracking-wide transition hover:bg-[#f27b21]"
+            >
+              <span>Send A Message</span>
+              <span className="grid h-8 w-8 place-items-center rounded-full bg-white/15 ring-1 ring-white/30">
+                →
+              </span>
+            </button>
+          </form>
+        </div>
+
+        {/* RIGHT column */}
+        <div className="relative flex flex-col justify-between h-full">
+          <div className="flex-1 flex items-start justify-center md:justify-end">
+            <motion.img
+              src="/images/about-two-img-1.jpg"
+              alt="Volunteers"
+              className="w-[420px] md:w-[480px] lg:w-[380px] h-auto md:h-[520px] object-cover mt-16 rounded-md"
+              initial={{ opacity: 0, x: 120 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             />
           </div>
         </div>
+      </div>
 
-        <div className="pointer-events-none">
-          <div className="pointer-events-auto absolute left-1/2 -translate-x-1/2 bottom-6 w-[92%] max-w-5xl">
-            <div className="rounded-[28px] bg-orange-500 text-white px-6 sm:px-8 py-6 shadow-[0_20px_50px_-12px_rgba(249,115,22,0.6)]">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {/* Call */}
-                <div className="flex items-start gap-4">
-                  <div className="grid place-items-center w-10 h-10 rounded-full bg-black/25 shrink-0">
-                    <Phone className="w-5 h-5" />
-                  </div>
-                  <div className="leading-tight">
-                    <p className="text-white/85 text-sm">Call Us Any Time:</p>
-                    <p className="font-bold">+088 (246) 642-27-10</p>
-                  </div>
-                </div>
-                {/* Live Chat */}
-                <div className="flex items-start gap-4">
-                  <div className="grid place-items-center w-10 h-10 rounded-full bg-black/25 shrink-0">
-                    <MessageCircleMore className="w-5 h-5" />
-                  </div>
-                  <div className="leading-tight">
-                    <p className="text-white/85 text-sm">Live Chat:</p>
-                    <p className="font-bold">We’re online now</p>
-                  </div>
-                </div>
-                {/* Email */}
-                <div className="flex items-start gap-4">
-                  <div className="grid place-items-center w-10 h-10 rounded-full bg-black/25 shrink-0">
-                    <Mail className="w-5 h-5" />
-                  </div>
-                  <div className="leading-tight">
-                    <p className="text-white/85 text-sm">Email Us:</p>
-                    <p className="font-bold">example@mail.com</p>
-                  </div>
-                </div>
-              </div>
+      {/* orange base strip */}
+      <div className="absolute bottom-0 right-0 h-[95px] w-1/2 bg-[#f27b21] -z-40">
+        <div className="relative bg-[#f27b21] text-white rounded-tl-[28px] px-6 md:pl-24 py-5 flex flex-col sm:flex-row gap-6 sm:gap-10 items-center shadow-[0_10px_35px_rgba(242,123,33,0.35)] mt-8 md:mt-0">
+          <div className="flex items-center gap-3">
+            <div className="grid h-10 w-10 place-items-center rounded-full border border-white/40">
+              <span>📞</span>
+            </div>
+            <div>
+              <p className="text-white/90 text-sm">Call Us Any Time:</p>
+              <h4 className="font-semibold leading-tight">
+                <a href="tel:+0882466422710">+088 (246) 642-27-10</a>
+              </h4>
+            </div>
+          </div>
+
+          <div className="hidden sm:block h-10 w-px bg-white/35" />
+
+          <div className="flex items-center gap-3">
+            <div className="grid h-10 w-10 place-items-center rounded-full border border-white/40">
+              <span>✉️</span>
+            </div>
+            <div>
+              <p className="text-white/90 text-sm">Email Us:</p>
+              <h4 className="font-semibold leading-tight">
+                <a href="mailto:example@mail.com">example@mail.com</a>
+              </h4>
             </div>
           </div>
         </div>

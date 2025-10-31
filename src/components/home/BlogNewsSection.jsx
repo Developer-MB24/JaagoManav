@@ -1,4 +1,10 @@
-import { CalendarDays, User2, MessageCircle, ArrowRight } from "lucide-react";
+import {
+  CalendarDays,
+  User2,
+  MessageCircle,
+  ArrowRight,
+  Plus,
+} from "lucide-react";
 
 const POSTS = [
   {
@@ -43,14 +49,23 @@ function PostCard({ p, idx }) {
 
   return (
     <article className="group rounded-2xl bg-white shadow-[0_18px_50px_-18px_rgba(0,0,0,0.18)] overflow-hidden transition">
-      {/* Image */}
       <div className="relative h-64">
         <img
           src={p.img}
           alt={p.title}
-          className="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-[1.04]"
+          className="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-[1.03] group-hover:blur-sm"
         />
-        {/* date */}
+
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <button
+            type="button"
+            className="pointer-events-auto inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-[#0c3b33] shadow-md hover:bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
+            aria-label="Open"
+          >
+            <Plus className="h-6 w-6" />
+          </button>
+        </div>
+
         <div className="absolute top-4 left-4 inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-[12px] font-medium">
           <CalendarDays className="w-4 h-4 text-orange-500" />
           <span className="text-gray-700">{p.date}</span>
@@ -71,7 +86,6 @@ function PostCard({ p, idx }) {
 
       {/* Content */}
       <div className="px-6 pt-5 pb-6">
-        {/* meta */}
         <div className="mb-3 flex items-center gap-6 text-[13px]">
           <span className="inline-flex items-center gap-2 text-emerald-600">
             <User2 className="w-4 h-4" /> {p.author}
@@ -102,7 +116,6 @@ export default function BlogNewsSection() {
   return (
     <section className="py-16">
       <div className="max-w-6xl mx-auto px-4">
-        {/* Heading */}
         <div className="text-center mb-10">
           <p className="uppercase tracking-widest text-orange-500 font-semibold text-sm">
             News and Blogs
@@ -114,7 +127,6 @@ export default function BlogNewsSection() {
           </h2>
         </div>
 
-        {/* Grid */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {POSTS.map((p, i) => (
             <PostCard key={p.title} p={p} idx={i} />

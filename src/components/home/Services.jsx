@@ -47,23 +47,37 @@ const services = [
 function Badge({ from, to, Icon }) {
   return (
     <div
-      className="relative grid place-items-center w-12 h-12 drop-shadow"
+      className="
+        relative grid place-items-center w-12 h-12 drop-shadow
+        transition-transform duration-300 group-hover:scale-110
+      "
       style={{
         clipPath: "polygon(25% 4%, 75% 4%, 100% 50%, 75% 96%, 25% 96%, 0% 50%)",
         backgroundImage: `linear-gradient(135deg, ${from}, ${to})`,
       }}
     >
-      <div className="grid place-items-center w-8 h-8 rounded-xl bg-white/95">
-        <Icon className="w-5 h-5 text-gray-800" />
+      <div
+        className="
+          grid place-items-center w-8 h-8 rounded-xl 
+          bg-white/95 transition-colors duration-300
+          group-hover:bg-[radial-gradient(circle_at_center,var(--hoverFrom),var(--hoverTo))]
+        "
+        style={{
+          "--hoverFrom": from,
+          "--hoverTo": to,
+        }}
+      >
+        <Icon className="w-5 h-5 text-gray-800 transition-colors duration-300 group-hover:text-white" />
       </div>
     </div>
   );
 }
 
+/** ---------- ServiceCard ---------- */
 function ServiceCard({ item }) {
   const { title, desc, cta, image, badge, arrowColor } = item;
   return (
-    <article className="group bg-white rounded-2xl shadow-[0_20px_40px_-16px_rgba(0,0,0,0.18)] overflow-hidden h-full flex flex-col">
+    <article className="group bg-white rounded-2xl shadow-[0_20px_40px_-16px_rgba(0,0,0,0.18)] overflow-hidden h-full flex flex-col transition-transform duration-300 hover:-translate-y-2">
       {/* Image */}
       <div className="relative">
         <img
@@ -98,17 +112,14 @@ function ServiceCard({ item }) {
   );
 }
 
+/** ---------- Services Section ---------- */
 export default function Services() {
   const autoplay = useRef(
     Autoplay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: true })
   );
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
-    {
-      loop: true,
-      align: "start",
-      skipSnaps: false,
-    },
+    { loop: true, align: "start", skipSnaps: false },
     [autoplay.current]
   );
 
@@ -155,10 +166,10 @@ export default function Services() {
                 key={s.title}
                 className="
                   pl-4
-                  basis-full              /* mobile: 1 card per view */
-                  sm:basis-1/2            /* ≥640px: 2 per view */
-                  lg:basis-1/3            /* ≥1024px: 3 per view */
-                  xl:basis-1/4            /* ≥1280px: 4 per view */
+                  basis-full              
+                  sm:basis-1/2            
+                  lg:basis-1/3            
+                  xl:basis-1/4            
                 "
               >
                 <ServiceCard item={s} />
