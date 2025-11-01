@@ -94,7 +94,7 @@ export default function Account() {
   };
 
   return (
-    <section className="min-h-screen bg-[#FFFFFF] py-10">
+    <section className="min-h-[100svh] md:min-h-screen bg-[#FFFFFF] py-10">
       <div className="max-w-3xl mx-auto px-4">
         <div className="text-center mb-6">
           <img
@@ -222,6 +222,7 @@ export default function Account() {
             <Input name="location" placeholder="City / Area" required />
           </div>
 
+          {/* Permanent Address */}
           <div className="mb-6">
             <Label title="Permanent Address" required />
             <Input
@@ -229,6 +230,18 @@ export default function Account() {
               placeholder="House no., Street, Area"
               required
             />
+
+            {/* NEW: City & State for Permanent Address */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+              <div>
+                <Label title="City" />
+                <Input name="permanentCity" placeholder="City" />
+              </div>
+              <div>
+                <Label title="State" />
+                <Input name="permanentState" placeholder="State" />
+              </div>
+            </div>
           </div>
 
           <label className="flex items-center gap-2 mb-2">
@@ -236,13 +249,20 @@ export default function Account() {
               type="checkbox"
               onChange={(e) => {
                 if (e.target.checked) {
-                  const perm = document.querySelector(
-                    'input[name="permanentAddress"]'
-                  )?.value;
-                  const current = document.querySelector(
-                    'input[name="currentAddress"]'
-                  );
-                  if (current && typeof perm === "string") current.value = perm;
+                  const get = (name) =>
+                    document.querySelector(`input[name="${name}"]`);
+
+                  const permAddr = get("permanentAddress")?.value || "";
+                  const permCity = get("permanentCity")?.value || "";
+                  const permState = get("permanentState")?.value || "";
+
+                  const currentAddr = get("currentAddress");
+                  const cityInput = get("city");
+                  const stateInput = get("state");
+
+                  if (currentAddr) currentAddr.value = permAddr;
+                  if (cityInput) cityInput.value = permCity;
+                  if (stateInput) stateInput.value = permState;
                 }
               }}
             />
