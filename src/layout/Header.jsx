@@ -80,8 +80,8 @@ export default function Header() {
     </div>
   );
 
-  // Reusable lists
   const serviceLinks = [
+    ["Service", "/service"],
     ["Education", "/education"],
     ["Health", "/health"],
     ["Agriculture", "/agriculture"],
@@ -124,7 +124,7 @@ export default function Header() {
           </div>
         </Link>
 
-        {/* Desktop Nav */}
+        {/* Desktop  */}
         <nav ref={navRef} className="hidden items-center gap-8 md:flex">
           {/* Home */}
           <div className="group">
@@ -231,7 +231,6 @@ export default function Header() {
           </div>
         </nav>
 
-        {/* Right actions (desktop) */}
         <div className="hidden items-center gap-5 md:flex">
           <button
             aria-label="Search"
@@ -286,7 +285,7 @@ export default function Header() {
         </button>
       </div>
 
-      {/* ===== Mobile */}
+      {/*  Mobile */}
 
       <div
         className={[
@@ -298,7 +297,6 @@ export default function Header() {
         onClick={() => setMobileOpen(false)}
       />
 
-      {/* Drawer */}
       <aside
         className={[
           "fixed right-0 top-0 z-[70] h-screen w-[84%] max-w-xs bg-[#0f3b32] text-white md:hidden",
