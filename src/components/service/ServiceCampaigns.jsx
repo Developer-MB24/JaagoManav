@@ -72,7 +72,6 @@ const DATA = [
   },
 ];
 
-/* --------------------- Helpers --------------------- */
 const fadeUp = {
   hidden: { opacity: 0, y: 80 },
   show: { opacity: 1, y: 0, transition: { duration: 0.9, ease: "easeOut" } },
@@ -110,7 +109,6 @@ function Progress({ value }) {
   );
 }
 
-/* Card displaying  */
 function Card({ item, active, onHover, onLeave }) {
   const percent = Math.min(100, Math.round((item.raised / item.goal) * 100));
   return (
@@ -187,7 +185,7 @@ function Card({ item, active, onHover, onLeave }) {
           </div>
           <div className="mt-4 flex items-center justify-between">
             <button
-              className="inline-flex items-center gap-3 rounded-full px-5 py-3 text-sm font-semibold"
+              className="inline-flex items-center gap-3 rounded-full xl:px-5 xl:py-3 text-sm font-semibold"
               style={{
                 backgroundColor: "#FF9933",
                 color: "#000080",
@@ -239,9 +237,9 @@ function Card({ item, active, onHover, onLeave }) {
               </span>
             </div>
           </div>
-          <div className="mt-4 flex items-center justify-between">
+          <div className="mt-4 flex items-center gap-2 justify-between">
             <button
-              className="inline-flex items-center gap-3 rounded-full px-5 py-3 text-sm font-semibold"
+              className="inline-flex items-center xl:gap-3 rounded-full  xl:px-5 xl:py-3 text-sm font-semibold"
               style={{
                 backgroundColor: "#FF9933",
                 color: "#000080",

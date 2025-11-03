@@ -31,7 +31,9 @@ function useCountUp(target = 0, start = false, { duration = 1500 } = {}) {
       if (p < 1) rafRef.current = requestAnimationFrame(tick);
     }
     rafRef.current = requestAnimationFrame(tick);
-    return () => rafRef.current && cancelAnimationFrame(rafRef.current);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
   }, [start, target, duration]);
 
   return value;
@@ -70,11 +72,11 @@ function Stat({ icon: Icon, value = "0", label = "" }) {
       >
         <Icon size={22} color="#000080" />
       </div>
-      <div className="text-2xl md:text-3xl font-bold text-[#003366] mt-2">
+      <div className="text-2xl lg:text-3xl font-bold text-[#003366] mt-2">
         {rolled}
         <span>{suffix}</span>
       </div>
-      <div className="text-sm md:text-base text-[#000080] mt-1 font-medium">
+      <div className="text-sm lg:text-base text-[#000080] mt-1 font-medium">
         {label}
       </div>
     </motion.div>
@@ -103,16 +105,22 @@ export default function ServiceAboutExact({
   return (
     <section className="relative w-full bg-white font-serif pt-4">
       <div
-        className="mx-auto max-w-screen-2xl grid grid-cols-1 md:grid-cols-[520px_1fr] gap-6 md:gap-0 px-4 sm:px-6 lg:px-20 items-center"
+        className="
+          mx-auto max-w-screen-2xl
+          grid grid-cols-1 lg:grid-cols-[520px_1fr]
+          gap-6 lg:gap-0
+          px-4 sm:px-6 lg:px-20
+          items-center
+        "
         style={{ minHeight: 520 }}
       >
         {/* LEFT COLUMN */}
         <div
-          className="relative flex-shrink-0 flex justify-center md:justify-start items-start  md:pb-0"
+          className="relative flex-shrink-0 flex justify-center lg:justify-start items-start lg:pb-0"
           style={{ minHeight: 430 }}
         >
           {/* Primary image card */}
-          <div className="rounded-[24px] md:rounded-[32px] overflow-hidden w-[88vw] max-w-[360px] h-[60vw] max-h-[400px] md:w-[355px] md:h-[400px] bg-gray-200 shadow-lg relative z-[1]">
+          <div className="rounded-[24px] lg:rounded-[32px] overflow-hidden w-[88vw] max-w-[360px] h-[60vw] max-h-[400px] lg:w-[355px] lg:h-[400px] bg-gray-200 shadow-lg relative z-[1]">
             <img
               src={primaryImage}
               alt="Primary"
@@ -120,26 +128,26 @@ export default function ServiceAboutExact({
             />
           </div>
 
-          {/* Badge (Years of experience) */}
+          {/* Badge */}
           <div
-            className="absolute right-2 top-2 md:right-[-18px] md:top-[36px] z-20 px-5 md:px-7 py-2.5 md:py-3 rounded-xl bg-[#FFE184] text-[#003366] text-center shadow font-extrabold flex flex-col items-center"
+            className="absolute right-2 top-2 lg:right-[-18px] lg:top-[36px] z-20 px-5 lg:px-7 py-2.5 lg:py-3 rounded-xl bg-[#FFE184] text-[#003366] text-center shadow font-extrabold flex flex-col items-center"
             style={{ fontSize: 22, minWidth: 112 }}
           >
-            <span className="text-xl md:text-2xl font-extrabold">
+            <span className="text-xl lg:text-2xl font-extrabold">
               {badgeYear}
             </span>
-            <span className="text-xs md:text-sm font-medium mt-1">
+            <span className="text-xs lg:text-sm font-medium mt-1">
               Years of experience
             </span>
           </div>
 
           {/* Award label */}
           <div
-            className="absolute left-2 top-[65%] md:left-[-45px] md:top-[218px] flex items-center gap-2 bg-[#075343] text-white px-4 md:px-5 py-2.5 md:py-3 rounded-lg shadow-lg z-20"
+            className="absolute left-2 top-[65%] lg:left-[-45px] lg:top-[218px] flex items-center gap-2 bg-[#138808] text-white px-4 lg:px-5 py-2.5 lg:py-3 rounded-lg shadow-lg z-20"
             style={{ fontSize: 13 }}
           >
             <Award size={18} color="#FFBF4B" />
-            <div className="flex flex-col text-xs md:text-sm">
+            <div className="flex flex-col text-xs lg:text-sm">
               <span className="font-semibold">2024–We are the</span>
               <span className="opacity-90">best award winner</span>
             </div>
@@ -149,28 +157,12 @@ export default function ServiceAboutExact({
           <div
             className="
               relative z-30 mt-24 mx-auto w-[260px] h-[300px]
-              md:absolute md:mt-0 md:mx-0 md:w-[245px] md:h-[360px]
-              md:left-[298px] md:top-[160px] overflow-hidden
+              lg:absolute lg:mt-0 lg:mx-0 lg:w-[245px] lg:h-[360px]
+              lg:left-[298px] lg:top-[160px] overflow-hidden
             "
             style={{
               borderRadius: "150px 150px 12px 12px",
-              borderTopLeftRadius: "150px",
-              borderTopRightRadius: "150px",
-              borderBottomRightRadius: "12px",
-              borderBottomLeftRadius: "12px",
               border: "4px solid #fff",
-              borderTopWidth: "4px",
-              borderRightWidth: "4px",
-              borderBottomWidth: "4px",
-              borderLeftWidth: "4px",
-              borderTopStyle: "solid",
-              borderRightStyle: "solid",
-              borderBottomStyle: "solid",
-              borderLeftStyle: "solid",
-              borderTopColor: "#fff",
-              borderRightColor: "#fff",
-              borderBottomColor: "#fff",
-              borderLeftColor: "#fff",
               boxShadow: "0 10px 60px rgba(0,0,0,0.16)",
               background: "#fff",
             }}
@@ -205,7 +197,6 @@ export default function ServiceAboutExact({
               }}
               aria-label="Play video"
             >
-              {/* Pulsing ring (keeps shadow fixed) */}
               <motion.span
                 className="pointer-events-none absolute inset-0 rounded-full"
                 animate={{
@@ -227,9 +218,8 @@ export default function ServiceAboutExact({
             </motion.button>
           </div>
 
-          {/* dotted accent */}
           <div
-            className="absolute left-2 md:left-[8px] bottom-[-10px] md:bottom-[-14px] z-[1]"
+            className="absolute left-2 lg:left-[8px] bottom-[-10px] lg:bottom-[-14px] z-[1]"
             style={{
               width: 95,
               height: 23,
@@ -240,30 +230,29 @@ export default function ServiceAboutExact({
           />
         </div>
 
-        {/* RIGHT COLUMN */}
-        <div className="flex flex-col md:pl-9 md:pr-3 justify-center items-start md:ml-14 pl-1 pr-1 sm:pl-3 sm:pr-3 ml-0">
+        <div className="flex flex-col lg:pl-9 lg:pr-3 justify-center items-start lg:ml-14 pl-1 pr-1 sm:pl-3 sm:pr-3 ml-0">
           {/* Kicker */}
           <div className="flex items-center gap-2 mb-2 mt-2">
             <Leaf size={20} color="#138808" />
-            <span className="text-[#138808] text-base md:text-lg font-semibold">
+            <span className="text-[#138808] text-base lg:text-lg font-semibold">
               About Us
             </span>
           </div>
 
           {/* Title */}
           <h2
-            className="text-[1.85rem] md:text-[2.98rem] leading-tight font-extrabold text-[#003366] mb-4 md:mb-6 mt-2 md:mt-3"
+            className="text-[1.85rem] lg:text-[2.98rem] leading-tight font-extrabold text-[#003366] mb-4 lg:mb-6 mt-2 lg:mt-3"
             style={{ letterSpacing: "-0.5px", lineHeight: "1.12" }}
           >
             {title}
           </h2>
 
           {/* Tabs */}
-          <div className="flex flex-wrap gap-3 md:gap-6 mb-4 md:mb-6 mt-1 md:mt-2">
+          <div className="flex flex-wrap gap-3 lg:gap-6 mb-4 lg:mb-6 mt-1 lg:mt-2">
             {tabs.map((t, i) => (
               <button
                 key={t}
-                className="px-5 md:px-7 py-2 rounded-full font-bold text-[#004083] text-[0.98rem] md:text-[1.05rem] border transition"
+                className="px-5 lg:px-7 py-2 rounded-full font-bold text-[#004083] text-[0.98rem] lg:text-[1.05rem] border transition"
                 style={
                   i === activeTabIndex
                     ? {
@@ -285,16 +274,16 @@ export default function ServiceAboutExact({
           </div>
 
           {/* Body */}
-          <div className="mb-4 md:mb-5 max-w-xl text-[#555] text-[1rem] md:text-[1.10rem] leading-relaxed">
+          <div className="mb-4 lg:mb-5 max-w-xl text-[#555] text-[1rem] lg:text-[1.10rem] leading-relaxed">
             The implant fixture is first placed, so that it likely to then a
             dental prosthetic is added then dental prosthetic.
           </div>
 
-          <ul className="space-y-4 md:space-y-5 pb-1 md:pb-2">
+          <ul className="space-y-4 lg:space-y-5 pb-1 lg:pb-2">
             {bullets.map((b) => (
               <li
                 key={b}
-                className="flex items-center gap-3 md:gap-4 text-[#003366] font-bold text-[1rem] md:text-[1.04rem]"
+                className="flex items-center gap-3 lg:gap-4 text-[#003366] font-bold text-[1rem] lg:text-[1.04rem]"
               >
                 <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[rgba(19,136,8,0.10)] border border-green-200">
                   <Check size={17} color="#138808" />
@@ -305,13 +294,13 @@ export default function ServiceAboutExact({
           </ul>
 
           {/* CTA */}
-          <div className="flex gap-4 md:gap-6 items-center flex-wrap mt-4 md:mt-5">
+          <div className="flex gap-4 lg:gap-6 items-center flex-wrap mt-4 lg:mt-5">
             <button
-              className="inline-flex items-center gap-2 rounded-full px-8 md:px-10 py-3.5 md:py-4 font-extrabold text-[1.05rem] md:text-[1.25rem] shadow-lg transition"
+              className="inline-flex items-center gap-2 rounded-full px-8 lg:px-10 py-3.5 lg:py-4 font-extrabold text-[1.05rem] lg:text-[1.25rem] shadow-lg transition"
               style={{ background: "#FFBF4B", color: "#003366" }}
             >
               Explore More
-              <span className="grid h-8 w-8 md:h-9 md:w-9 place-items-center rounded-full bg-[rgba(0,0,128,0.09)]">
+              <span className="grid h-8 w-8 lg:h-9 lg:w-9 place-items-center rounded-full bg-[rgba(0,0,128,0.09)]">
                 <ArrowRight size={20} />
               </span>
             </button>
@@ -320,7 +309,7 @@ export default function ServiceAboutExact({
                 <span className="grid h-8 w-8 place-items-center rounded-full bg-white border border-[#FFD975]">
                   <Star size={18} color="#138808" />
                 </span>
-                <span className="text-sm md:text-md font-bold text-[#003366] ml-1">
+                <span className="text-sm lg:text-md font-bold text-[#003366] ml-1">
                   Trustpilot
                 </span>
               </span>
@@ -331,13 +320,13 @@ export default function ServiceAboutExact({
                     <Star
                       key={i}
                       size={18}
-                      className="md:size-[19px]"
+                      className="lg:size-[19px]"
                       color="#FFBF4B"
                       fill="#FFBF4B"
                     />
                   ))}
               </div>
-              <span className="text-sm md:text-md text-gray-500 ml-2 md:ml-3 font-medium">
+              <span className="text-sm lg:text-md text-gray-500 ml-2 lg:ml-3 font-medium">
                 Excellent 4.9 out of 5
               </span>
             </div>
@@ -345,8 +334,7 @@ export default function ServiceAboutExact({
         </div>
       </div>
 
-      {/* Stats Row */}
-      <div className="mx-auto max-w-7xl grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 pt-8 md:pt-12 pb-6 md:pb-7 px-4 sm:px-6 lg:px-14">
+      <div className="mx-auto max-w-7xl grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 pt-8 lg:pt-12 pb-6 lg:pb-7 px-4 sm:px-6 lg:px-14">
         {stats.map((s) => (
           <Stat key={s.label} icon={s.icon} value={s.value} label={s.label} />
         ))}
