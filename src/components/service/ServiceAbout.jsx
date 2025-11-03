@@ -36,6 +36,7 @@ function useCountUp(target = 0, start = false, { duration = 1500 } = {}) {
 
   return value;
 }
+
 function splitNumberAndSuffix(v) {
   const s = String(v);
   let i = 0;
@@ -44,6 +45,7 @@ function splitNumberAndSuffix(v) {
   const suffix = s.slice(i);
   return [num, suffix];
 }
+
 function Stat({ icon: Icon, value = "0", label = "" }) {
   const [num, suffix] = splitNumberAndSuffix(value);
   const ref = useRef(null);
@@ -68,11 +70,13 @@ function Stat({ icon: Icon, value = "0", label = "" }) {
       >
         <Icon size={22} color="#000080" />
       </div>
-      <div className="text-3xl font-bold text-[#003366] mt-2">
+      <div className="text-2xl md:text-3xl font-bold text-[#003366] mt-2">
         {rolled}
         <span>{suffix}</span>
       </div>
-      <div className="text-base text-[#000080] mt-1 font-medium">{label}</div>
+      <div className="text-sm md:text-base text-[#000080] mt-1 font-medium">
+        {label}
+      </div>
     </motion.div>
   );
 }
@@ -99,14 +103,16 @@ export default function ServiceAboutExact({
   return (
     <section className="relative w-full bg-white font-serif pt-4">
       <div
-        className="mx-auto max-w-screen-2xl grid grid-cols-1 md:grid-cols-[520px_1fr] gap-0 px-2 lg:px-20 items-center"
+        className="mx-auto max-w-screen-2xl grid grid-cols-1 md:grid-cols-[520px_1fr] gap-6 md:gap-0 px-4 sm:px-6 lg:px-20 items-center"
         style={{ minHeight: 520 }}
       >
+        {/* LEFT COLUMN */}
         <div
-          className="relative flex-shrink-0 flex justify-start items-start"
+          className="relative flex-shrink-0 flex justify-center md:justify-start items-start  md:pb-0"
           style={{ minHeight: 430 }}
         >
-          <div className="rounded-[32px] overflow-hidden w-[355px] h-[400px] bg-gray-200 shadow-lg relative z-[1]">
+          {/* Primary image card */}
+          <div className="rounded-[24px] md:rounded-[32px] overflow-hidden w-[88vw] max-w-[360px] h-[60vw] max-h-[400px] md:w-[355px] md:h-[400px] bg-gray-200 shadow-lg relative z-[1]">
             <img
               src={primaryImage}
               alt="Primary"
@@ -114,37 +120,59 @@ export default function ServiceAboutExact({
             />
           </div>
 
+          {/* Badge (Years of experience) */}
           <div
-            className="absolute right-[-18px] top-[36px] z-20 px-7 py-3 rounded-xl bg-[#FFE184] text-[#003366] text-center shadow font-extrabold flex flex-col items-center"
-            style={{ fontSize: 27, minWidth: 120 }}
+            className="absolute right-2 top-2 md:right-[-18px] md:top-[36px] z-20 px-5 md:px-7 py-2.5 md:py-3 rounded-xl bg-[#FFE184] text-[#003366] text-center shadow font-extrabold flex flex-col items-center"
+            style={{ fontSize: 22, minWidth: 112 }}
           >
-            <span className="text-2xl font-extrabold">{badgeYear}</span>
-            <span className="text-sm font-medium mt-1">
+            <span className="text-xl md:text-2xl font-extrabold">
+              {badgeYear}
+            </span>
+            <span className="text-xs md:text-sm font-medium mt-1">
               Years of experience
             </span>
           </div>
 
+          {/* Award label */}
           <div
-            className="absolute left-[-45px] top-[218px] flex items-center gap-2 bg-[#075343] text-white px-5 py-3 rounded-lg shadow-lg z-20"
-            style={{ fontSize: 14 }}
+            className="absolute left-2 top-[65%] md:left-[-45px] md:top-[218px] flex items-center gap-2 bg-[#075343] text-white px-4 md:px-5 py-2.5 md:py-3 rounded-lg shadow-lg z-20"
+            style={{ fontSize: 13 }}
           >
-            <Award size={19} color="#FFBF4B" />
-            <div className="flex flex-col text-sm">
+            <Award size={18} color="#FFBF4B" />
+            <div className="flex flex-col text-xs md:text-sm">
               <span className="font-semibold">2024–We are the</span>
               <span className="opacity-90">best award winner</span>
             </div>
           </div>
 
+          {/* Secondary overlay image card */}
           <div
-            className="absolute left-[98px] top-[218px] z-30"
+            className="
+              relative z-30 mt-24 mx-auto w-[260px] h-[300px]
+              md:absolute md:mt-0 md:mx-0 md:w-[245px] md:h-[360px]
+              md:left-[298px] md:top-[160px] overflow-hidden
+            "
             style={{
-              width: 245,
-              height: 220,
-              overflow: "hidden",
-              borderRadius: "70px 70px 130px 130px/75px 75px 160px 160px",
+              borderRadius: "150px 150px 12px 12px",
+              borderTopLeftRadius: "150px",
+              borderTopRightRadius: "150px",
+              borderBottomRightRadius: "12px",
+              borderBottomLeftRadius: "12px",
+              border: "4px solid #fff",
+              borderTopWidth: "4px",
+              borderRightWidth: "4px",
+              borderBottomWidth: "4px",
+              borderLeftWidth: "4px",
+              borderTopStyle: "solid",
+              borderRightStyle: "solid",
+              borderBottomStyle: "solid",
+              borderLeftStyle: "solid",
+              borderTopColor: "#fff",
+              borderRightColor: "#fff",
+              borderBottomColor: "#fff",
+              borderLeftColor: "#fff",
               boxShadow: "0 10px 60px rgba(0,0,0,0.16)",
               background: "#fff",
-              border: "none",
             }}
           >
             <img
@@ -152,25 +180,56 @@ export default function ServiceAboutExact({
               alt="Overlay"
               className="w-full h-full object-cover"
             />
-            {/* Play button  */}
+
+            {/* Play button */}
             <motion.button
-              className="absolute left-1/2 top-3/4 flex items-center justify-center rounded-full shadow-lg border-4 border-white"
+              className="absolute flex items-center justify-center rounded-full border border-[var(--light-color)]"
               style={{
-                width: "62px",
-                height: "62px",
-                backgroundColor: "rgba(255,255,255,0.85)",
+                width: 72,
+                height: 72,
+                textAlign: "center",
+                top: "50%",
+                left: "50%",
                 transform: "translate(-50%, -50%)",
+                color: "var(--light-color)",
+                fontWeight: 500,
+                fontSize: 18,
+                lineHeight: "28px",
+                backdropFilter: "blur(13px)",
+                padding: "20px 18px",
+                borderRadius: "100%",
+                background: "rgba(255, 255, 255, 0.016)",
+                transition: "0.3s linear",
+                boxShadow:
+                  "rgba(0, 0, 0, 0) 0px 0px 0px 3.39167px, rgba(0, 0, 0, 0) 0px 0px 0px 30px",
               }}
               aria-label="Play video"
-              animate={{ scale: [1, 1.18, 1], opacity: [1, 0.85, 1] }}
-              transition={{ repeat: Infinity, duration: 2, ease: "easeOut" }}
             >
-              <Play size={30} color="#004083" />
+              {/* Pulsing ring (keeps shadow fixed) */}
+              <motion.span
+                className="pointer-events-none absolute inset-0 rounded-full"
+                animate={{
+                  boxShadow: [
+                    "0 0 0 0 rgba(0,64,131,0.35)",
+                    "0 0 0 15px rgba(0,64,131,0.0)",
+                    "0 0 0 30px rgba(0,64,131,0.0)",
+                  ],
+                  opacity: [1, 0.8, 1],
+                }}
+                transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
+              />
+              <motion.span
+                animate={{ scale: [1, 1.18, 1], opacity: [1, 0.85, 1] }}
+                transition={{ repeat: Infinity, duration: 2, ease: "easeOut" }}
+              >
+                <Play size={26} color="#004083" />
+              </motion.span>
             </motion.button>
           </div>
 
+          {/* dotted accent */}
           <div
-            className="absolute left-[8px] bottom-[-14px] z-[1]"
+            className="absolute left-2 md:left-[8px] bottom-[-10px] md:bottom-[-14px] z-[1]"
             style={{
               width: 95,
               height: 23,
@@ -182,27 +241,29 @@ export default function ServiceAboutExact({
         </div>
 
         {/* RIGHT COLUMN */}
-        <div className="flex flex-col pl-9 pr-3 justify-center items-start ml-14">
+        <div className="flex flex-col md:pl-9 md:pr-3 justify-center items-start md:ml-14 pl-1 pr-1 sm:pl-3 sm:pr-3 ml-0">
           {/* Kicker */}
-          <div className="flex items-center gap-2 mb-3 mt-2">
-            <Leaf size={22} color="#138808" />
-            <span className="text-[#138808] text-lg font-semibold">
+          <div className="flex items-center gap-2 mb-2 mt-2">
+            <Leaf size={20} color="#138808" />
+            <span className="text-[#138808] text-base md:text-lg font-semibold">
               About Us
             </span>
           </div>
+
           {/* Title */}
           <h2
-            className="text-[2.98rem] leading-tight font-extrabold text-[#003366] mb-6 mt-3"
-            style={{ letterSpacing: "-1px", lineHeight: "1.05" }}
+            className="text-[1.85rem] md:text-[2.98rem] leading-tight font-extrabold text-[#003366] mb-4 md:mb-6 mt-2 md:mt-3"
+            style={{ letterSpacing: "-0.5px", lineHeight: "1.12" }}
           >
             {title}
           </h2>
+
           {/* Tabs */}
-          <div className="flex gap-6 mb-6 mt-2">
+          <div className="flex flex-wrap gap-3 md:gap-6 mb-4 md:mb-6 mt-1 md:mt-2">
             {tabs.map((t, i) => (
               <button
                 key={t}
-                className={`px-7 py-2 rounded-full font-bold text-[#004083] text-[1.05rem] border transition`}
+                className="px-5 md:px-7 py-2 rounded-full font-bold text-[#004083] text-[0.98rem] md:text-[1.05rem] border transition"
                 style={
                   i === activeTabIndex
                     ? {
@@ -222,17 +283,18 @@ export default function ServiceAboutExact({
               </button>
             ))}
           </div>
+
           {/* Body */}
-          <div className="mb-5 max-w-xl text-[#555] text-[1.10rem] leading-relaxed">
+          <div className="mb-4 md:mb-5 max-w-xl text-[#555] text-[1rem] md:text-[1.10rem] leading-relaxed">
             The implant fixture is first placed, so that it likely to then a
             dental prosthetic is added then dental prosthetic.
           </div>
 
-          <ul className="space-y-5 pb-2">
+          <ul className="space-y-4 md:space-y-5 pb-1 md:pb-2">
             {bullets.map((b) => (
               <li
                 key={b}
-                className="flex items-center gap-4 text-[#003366] font-bold text-[1.04rem]"
+                className="flex items-center gap-3 md:gap-4 text-[#003366] font-bold text-[1rem] md:text-[1.04rem]"
               >
                 <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[rgba(19,136,8,0.10)] border border-green-200">
                   <Check size={17} color="#138808" />
@@ -241,23 +303,24 @@ export default function ServiceAboutExact({
               </li>
             ))}
           </ul>
-          {/* CTA  */}
-          <div className="flex gap-6 items-center flex-wrap mt-5">
+
+          {/* CTA */}
+          <div className="flex gap-4 md:gap-6 items-center flex-wrap mt-4 md:mt-5">
             <button
-              className="inline-flex items-center gap-2 rounded-full px-10 py-4 font-extrabold text-[1.25rem] shadow-lg transition"
+              className="inline-flex items-center gap-2 rounded-full px-8 md:px-10 py-3.5 md:py-4 font-extrabold text-[1.05rem] md:text-[1.25rem] shadow-lg transition"
               style={{ background: "#FFBF4B", color: "#003366" }}
             >
               Explore More
-              <span className="grid h-9 w-9 place-items-center rounded-full bg-[rgba(0,0,128,0.09)]">
+              <span className="grid h-8 w-8 md:h-9 md:w-9 place-items-center rounded-full bg-[rgba(0,0,128,0.09)]">
                 <ArrowRight size={20} />
               </span>
             </button>
             <div className="flex items-center gap-3">
               <span className="inline-flex items-center gap-1">
                 <span className="grid h-8 w-8 place-items-center rounded-full bg-white border border-[#FFD975]">
-                  <Star size={19} color="#138808" />
+                  <Star size={18} color="#138808" />
                 </span>
-                <span className="text-md font-bold text-[#003366] ml-1">
+                <span className="text-sm md:text-md font-bold text-[#003366] ml-1">
                   Trustpilot
                 </span>
               </span>
@@ -265,19 +328,26 @@ export default function ServiceAboutExact({
                 {Array(5)
                   .fill(0)
                   .map((_, i) => (
-                    <Star key={i} size={19} color="#FFBF4B" fill="#FFBF4B" />
+                    <Star
+                      key={i}
+                      size={18}
+                      className="md:size-[19px]"
+                      color="#FFBF4B"
+                      fill="#FFBF4B"
+                    />
                   ))}
               </div>
-              <span className="text-md text-gray-500 ml-3 font-medium">
+              <span className="text-sm md:text-md text-gray-500 ml-2 md:ml-3 font-medium">
                 Excellent 4.9 out of 5
               </span>
             </div>
           </div>
         </div>
       </div>
-      {/* Stats Row  */}
-      <div className="mx-auto max-w-7xl grid grid-cols-2 md:grid-cols-4 gap-8 pt-12 pb-7 px-6 lg:px-14">
-        {stats.map((s, idx) => (
+
+      {/* Stats Row */}
+      <div className="mx-auto max-w-7xl grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 pt-8 md:pt-12 pb-6 md:pb-7 px-4 sm:px-6 lg:px-14">
+        {stats.map((s) => (
           <Stat key={s.label} icon={s.icon} value={s.value} label={s.label} />
         ))}
       </div>
