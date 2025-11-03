@@ -123,7 +123,7 @@ function ServicesPortalDropdown({ anchorRef, onClose }) {
         width: pos.width,
         position: "fixed",
       }}
-      className="z-[1000] origin-top-left rounded-xl border border-white/30 bg-[#18871f] text-white shadow-lg ring-1 ring-black/5"
+      className="z-[1000] origin-top-left rounded-xl border border-white/30 bg-[#000080] text-white shadow-lg ring-1 ring-black/5"
     >
       <ul className="py-2">
         {items.map((label) => (
@@ -161,7 +161,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full overflow-visible border-b border-black/5 bg-[#63ad5b] text-white shadow-sm">
+    <header className="sticky top-0 z-50 w-full overflow-visible border-b border-black/5 bg-[#000080] text-white shadow-sm">
       <nav className="mx-auto flex max-w-screen-2xl items-center justify-between gap-6 px-4 py-3 md:px-6 lg:px-8">
         {/* Logo */}
         <a href="#" className="shrink-0 rounded-2xl border border-white/50 p-2">
