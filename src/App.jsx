@@ -4,6 +4,7 @@ import MainLayout from "./layout/MainLayout.jsx";
 import Account from "./pages/Account.jsx";
 import Service from "./pages/Service.jsx";
 import About from "./pages/About.jsx";
+import Whoweare from "./pages/WhoWeAre.jsx";
 
 const Home = lazy(() => import("./pages/Home.jsx"));
 const Blog = lazy(() => import("./pages/Blog.jsx"));
@@ -38,6 +39,9 @@ export default function App() {
 
         {/* /about */}
         <Route path="/about" element={<About />} />
+
+        {/* /whoweare */}
+        <Route path="/whoweare" element={<Whoweare />} />
 
         {/* 404 */}
         <Route path="*" element={<NotFound />} />

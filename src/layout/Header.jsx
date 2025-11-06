@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 
+/* --- icons unchanged --- */
 const ChevronDown = (props) => (
   <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" {...props}>
     <path d="M5.23 7.21a.75.75 0 011.06.02L10 10.06l3.71-2.83a.75.75 0 11.92 1.18l-4.2 3.2a.75.75 0 01-.92 0l-4.2-3.2a.75.75 0 01-.02-1.2z" />
@@ -57,6 +58,7 @@ const ArrowRight = (p) => (
   </svg>
 );
 
+/* --- utils & dropdown unchanged --- */
 function useOnClickOutside(refs, handler) {
   useEffect(() => {
     function onClick(e) {
@@ -156,6 +158,7 @@ function ServicesPortalDropdown({ anchorRef, onClose }) {
   return createPortal(menu, document.body);
 }
 
+/* ------------------ HEADER (updated bg) ------------------ */
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
@@ -170,18 +173,17 @@ export default function Header() {
   }, []);
 
   return (
-    <header
-      className="sticky top-0 z-50 w-full"
-      style={{
-        background:
-          "linear-gradient(90deg, #FF9933 0%, #FF9933 33.333%, #FFFFFF 33.333%, #FFFFFF 66.666%, #138808 66.666%, #138808 100%)",
-      }}
-    >
-      <nav
-        className="mx-auto flex max-w-screen-2xl items-center justify-between gap-6 px-4 py-3 md:px-6 lg:px-8
-                      backdrop-blur-sm rounded-none
-                      text-white"
-      >
+    <header className="sticky top-0 z-50 w-full relative overflow-hidden">
+      {/* tricolor gradient overlays (top orange, bottom green) */}
+      <div className="absolute inset-0 pointer-events-none -z-10">
+        <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-[#FF9933] to-transparent opacity-30 animate-slideDown" />
+        <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-[#138808] to-transparent opacity-30 animate-slideUp" />
+      </div>
+
+      {/* optional subtle base to improve contrast on transparent pages */}
+      <div className="absolute inset-0 -z-20 bg-black/10 backdrop-blur-[2px]" />
+
+      <nav className="mx-auto flex max-w-screen-2xl items-center justify-between gap-6 px-4 py-3 md:px-6 lg:px-8 text-white">
         <div className="flex w-full items-center justify-between gap-6 rounded-2xl bg-black/25 px-3 py-2 ring-1 ring-white/20">
           {/* Logo */}
           <Link
@@ -248,8 +250,8 @@ export default function Header() {
               )}
             </div>
 
-            <Link to="/donations" className="hover:text-[#FFE9CC]">
-              Donations
+            <Link to="/whoweare" className="hover:text-[#FFE9CC]">
+              WhoWeAre
             </Link>
             <Link to="/shop" className="hover:text-[#FFE9CC]">
               Shop
@@ -393,6 +395,20 @@ export default function Header() {
           </div>
         </div>
       )}
+
+      {/* local keyframes for header overlays */}
+      <style>{`
+        @keyframes slideDown {
+          0% { transform: translateY(-24px); opacity: .45; }
+          100% { transform: translateY(0); opacity: .30; }
+        }
+        @keyframes slideUp {
+          0% { transform: translateY(24px); opacity: .45; }
+          100% { transform: translateY(0); opacity: .30; }
+        }
+        .animate-slideDown { animation: slideDown 7s ease-in-out infinite alternate; }
+        .animate-slideUp   { animation: slideUp   7s ease-in-out infinite alternate; }
+      `}</style>
     </header>
   );
 }

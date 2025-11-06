@@ -78,7 +78,7 @@ export default function ServiceHero({
     <section
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="relative w-full min-h-[92vh] overflow-hidden bg-[#134A43] text-white font-serif"
+      className="relative w-full min-h-[92vh] overflow-hidden bg-[#138808] text-white font-serif"
       aria-label="Hero"
     >
       <div className="absolute inset-0">
@@ -201,7 +201,7 @@ export default function ServiceHero({
               rotateY,
               transformStyle: "preserve-3d",
               backgroundColor: "#FF9933",
-              color: "#134A43",
+              color: "#138808",
             }}
             onClick={onCTAClick}
             className="relative inline-flex items-center gap-3 rounded-full px-6 py-3 font-semibold shadow-xl ring-1 focus:outline-none"
