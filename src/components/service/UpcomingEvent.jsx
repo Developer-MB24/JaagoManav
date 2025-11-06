@@ -28,7 +28,6 @@ export default function UpcomingEvent({
         }
       `}</style>
 
-      {/* Eyebrow */}
       <div className="text-center mb-2">
         <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-xs sm:text-sm font-semibold text-[var(--india)] ring-1 ring-emerald-100">
           <Sprout className="h-4 w-4" />
@@ -62,7 +61,6 @@ function EventCard({ event, onJoin }) {
 
   return (
     <article className="rounded-2xl bg-[#FAFCF8] ring-1 ring-slate-200 shadow-soft overflow-hidden card-hover">
-      {/* Top info */}
       <div className="px-4 sm:px-6 md:px-8 pt-5 sm:pt-6">
         <div className="flex items-start sm:items-center justify-between gap-3">
           {/* date */}
@@ -85,7 +83,6 @@ function EventCard({ event, onJoin }) {
             </div>
           </div>
 
-          {/* avatars + joined */}
           <div className="flex items-center gap-2 sm:gap-3">
             <OverlappingAvatars urls={avatars} />
             <div className="text-right">

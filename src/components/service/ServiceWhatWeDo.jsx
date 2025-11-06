@@ -30,18 +30,18 @@ const fadeUp = {
   show: { opacity: 1, y: 0, transition: { duration: 0.9, ease: "easeOut" } },
 };
 
-function ServiceCard({ item, index }) {
+function ServiceCard({ item }) {
   return (
     <motion.article
       variants={fadeUp}
-      className="group relative overflow-hidden rounded-xl"
+      className="group relative overflow-hidden rounded-2xl"
       style={{
-        boxShadow: "0 0 0 1px rgba(0,0,128,0.15)",
-        backgroundColor: "#00000000",
+        boxShadow: "0 0 0 1px rgba(19,136,8,0.14)",
+        backgroundColor: "transparent",
       }}
     >
       {/* Image */}
-      <div className="relative h-80 w-full overflow-hidden rounded-xl">
+      <div className="relative h-80 w-full overflow-hidden rounded-2xl">
         <motion.img
           src={item.image}
           alt={item.title}
@@ -54,9 +54,10 @@ function ServiceCard({ item, index }) {
         <div
           className="absolute right-4 top-4 rounded-full px-3 py-1 text-sm backdrop-blur"
           style={{
-            color: "#000080",
-            backgroundColor: "rgba(255,255,255,0.75)",
-            boxShadow: "0 0 0 1px rgba(0,0,128,0.15)",
+            color: "#134A43",
+            backgroundColor: "rgba(255,255,255,0.78)",
+            boxShadow: "0 0 0 1px rgba(19,136,8,0.18)",
+            fontWeight: 700,
           }}
         >
           No – {item.id}
@@ -66,30 +67,26 @@ function ServiceCard({ item, index }) {
           className="absolute inset-x-4 bottom-4 rounded-xl p-5"
           style={{
             background:
-              "linear-gradient(135deg, rgba(0,0,128,0.85), rgba(0,0,128,0.55))",
+              "linear-gradient(135deg, rgba(19,136,8,0.88), rgba(19,136,8,0.58))",
             boxShadow: "0 10px 24px rgba(0,0,0,0.25)",
+            backdropFilter: "blur(6px)",
           }}
           initial={{ y: 20 }}
           whileHover={{ y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
           <h3 className="text-lg font-extrabold text-white">{item.title}</h3>
-          <p className="mt-1 text-sm text-white/85">{item.desc}</p>
+          <p className="mt-1 text-sm text-white/90">{item.desc}</p>
 
-          <motion.a
+          <a
             href={item.href}
-            className="mt-4 inline-flex items-center gap-3 rounded-full px-5 py-3 text-sm font-semibold"
+            className="mt-4 inline-flex items-center gap-3 rounded-full px-5 py-3 text-sm font-semibold opacity-0 translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0"
             style={{
               background:
                 "linear-gradient(90deg, #FF9933 0%, #FFFFFF 50%, #138808 100%)",
-              color: "#000080",
+              color: "#134A43",
               boxShadow: "0 0 0 2px rgba(255,153,51,0.35)",
             }}
-            initial={{ opacity: 0, y: 12 }}
-            whileHover={{ opacity: 1, y: 0 }}
-            animate={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 0 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
           >
             <span
               className="rounded-full px-3 py-1 text-xs font-bold"
@@ -99,15 +96,11 @@ function ServiceCard({ item, index }) {
             </span>
             <span
               className="grid h-8 w-8 place-items-center rounded-full"
-              style={{ backgroundColor: "rgba(0,0,128,0.10)" }}
+              style={{ backgroundColor: "rgba(19,136,8,0.12)" }}
             >
-              <ArrowRight size={16} color="#000080" />
+              <ArrowRight size={16} color="#134A43" />
             </span>
-          </motion.a>
-
-          <style>{`
-            .group:hover a { opacity: 1 !important; transform: translateY(0) !important; }
-          `}</style>
+          </a>
         </motion.div>
       </div>
     </motion.article>
@@ -129,15 +122,13 @@ export default function ServiceWhatWeDo({
   ctaHref = "#",
 }) {
   return (
-    <section
-      className="relative w-full py-16 font-serif"
-      style={{
-        background:
-          "radial-gradient(1200px 800px at 10% -10%, rgba(19,136,8,0.25), transparent 60%), linear-gradient(0deg, rgba(0,0,128,0.75), rgba(0,0,128,0.75))",
-      }}
-    >
-      <div className="mx-auto max-w-7xl px-6 lg:px-12">
-        {/* Top row */}
+    <section className="relative w-full py-16 font-serif overflow-hidden ">
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <div className="absolute top-0 left-0 w-full h-56 bg-gradient-to-b from-[#FF9933] to-transparent opacity-25 animate-slideDown" />
+        <div className="absolute bottom-0 left-0 w-full h-56 bg-gradient-to-t from-[#138808] to-transparent opacity-25 animate-slideUp" />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12">
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -147,18 +138,21 @@ export default function ServiceWhatWeDo({
         >
           <div>
             <div className="mb-3 inline-flex items-center gap-2">
-              <Leaf size={18} color="#138808" />
-              <span className="text-sm" style={{ color: "#138808" }}>
+              <Leaf size={18} color="#FF9933" />
+              <span
+                className="text-sm font-semibold"
+                style={{ color: "#FF9933" }}
+              >
                 {tagline}
               </span>
             </div>
-            <h2 className="text-4xl font-extrabold leading-tight text-white md:text-5xl">
+            <h2 className="text-4xl font-extrabold leading-tight text-black md:text-5xl">
               {heading}
             </h2>
           </div>
 
           <div className="flex flex-col items-start md:items-end">
-            <p className="max-w-lg text-white/85">{quote}</p>
+            <p className="max-w-lg text-black/85">{quote}</p>
             <a
               href={ctaHref}
               className="mt-4 inline-flex items-center gap-2 text-sm font-semibold"
@@ -169,7 +163,6 @@ export default function ServiceWhatWeDo({
           </div>
         </motion.div>
 
-        {/* Cards */}
         <motion.div
           className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
           initial="hidden"
@@ -177,11 +170,24 @@ export default function ServiceWhatWeDo({
           viewport={{ once: true, amount: 0.25 }}
           transition={{ staggerChildren: 0.18 }}
         >
-          {items.map((it, idx) => (
-            <ServiceCard key={it.id} item={it} index={idx} />
+          {items.map((it) => (
+            <ServiceCard key={it.id} item={it} />
           ))}
         </motion.div>
       </div>
+
+      <style>{`
+        @keyframes slideDown {
+          0%   { transform: translateY(-25%); }
+          100% { transform: translateY(0%); }
+        }
+        @keyframes slideUp {
+          0%   { transform: translateY(25%); }
+          100% { transform: translateY(0%); }
+        }
+        .animate-slideDown { animation: slideDown 14s ease-in-out infinite alternate; }
+        .animate-slideUp   { animation: slideUp   14s ease-in-out infinite alternate; }
+      `}</style>
     </section>
   );
 }

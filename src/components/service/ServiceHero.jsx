@@ -78,10 +78,9 @@ export default function ServiceHero({
     <section
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="relative w-full min-h-[92vh] overflow-hidden bg-[#000080] text-white font-serif"
+      className="relative w-full min-h-[92vh] overflow-hidden bg-[#134A43] text-white font-serif"
       aria-label="Hero"
     >
-      {/* Background slides */}
       <div className="absolute inset-0">
         {slides.map((src, i) => (
           <motion.div
@@ -100,8 +99,14 @@ export default function ServiceHero({
         ))}
       </div>
 
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,128,0.7),rgba(0,0,128,0.55),rgba(0,0,128,0.2))]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_left,rgba(19,136,8,0.28),transparent_60%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,153,51,0.45),rgba(19,136,8,0.35),rgba(0,0,0,0.15))]" />
+
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_left,rgba(19,136,8,0.3),transparent_60%)]" />
+
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-[#FF9933] to-transparent opacity-30 animate-slideDown" />
+        <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-[#138808] to-transparent opacity-30 animate-slideUp" />
+      </div>
 
       {[0, 1, 2, 3, 4, 5].map((i) => (
         <motion.div
@@ -130,14 +135,13 @@ export default function ServiceHero({
 
       {/* Content */}
       <div className="relative z-10 mx-auto flex max-w-7xl flex-col px-6 pb-16 pt-28 md:px-10 lg:px-12">
-        {/* Pill */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
           className="mb-6 inline-flex items-center gap-2 rounded-full px-4 py-2 backdrop-blur-sm ring-1 w-fit"
           style={{
-            backgroundColor: "rgba(0,0,128,0.3)",
+            backgroundColor: "rgba(19,136,8,0.25)",
             borderColor: "rgba(255,255,255,0.25)",
           }}
         >
@@ -182,7 +186,6 @@ export default function ServiceHero({
           {subtitle}
         </motion.p>
 
-        {/* CTA  */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -198,7 +201,7 @@ export default function ServiceHero({
               rotateY,
               transformStyle: "preserve-3d",
               backgroundColor: "#FF9933",
-              color: "#000080",
+              color: "#134A43",
             }}
             onClick={onCTAClick}
             className="relative inline-flex items-center gap-3 rounded-full px-6 py-3 font-semibold shadow-xl ring-1 focus:outline-none"
@@ -206,7 +209,7 @@ export default function ServiceHero({
             <span>{ctaLabel}</span>
             <span
               className="grid h-9 w-9 place-items-center rounded-full"
-              style={{ backgroundColor: "rgba(0,0,128,0.1)" }}
+              style={{ backgroundColor: "rgba(19,136,8,0.1)" }}
             >
               <ArrowRight size={18} />
             </span>
@@ -217,7 +220,6 @@ export default function ServiceHero({
             />
           </motion.button>
 
-          {/* Avatars + stat */}
           <div className="flex items-center gap-4">
             <div className="-space-x-3">
               {avatars.slice(0, 3).map((a, i) => (
@@ -249,7 +251,7 @@ export default function ServiceHero({
         </motion.div>
       </div>
 
-      {/* social*/}
+      {/* Socials */}
       <div className="absolute right-4 top-1/2 hidden -translate-y-1/2 flex-col items-center gap-3 md:flex">
         <div className="rotate-90 text-xs tracking-widest text-white/70">
           Join Social.
@@ -262,7 +264,7 @@ export default function ServiceHero({
             whileHover={{ scale: 1.1, y: -2 }}
             className="grid h-10 w-10 place-items-center rounded-full ring-1 hover:opacity-90"
             style={{
-              backgroundColor: "rgba(0,0,128,0.35)",
+              backgroundColor: "rgba(19,136,8,0.35)",
               borderColor: "rgba(255,255,255,0.15)",
             }}
           >
@@ -271,7 +273,6 @@ export default function ServiceHero({
         ))}
       </div>
 
-      {/* Pager */}
       <div className="absolute bottom-6 right-6 hidden items-center gap-3 md:flex">
         {slides.map((_, d) => (
           <button
@@ -306,6 +307,19 @@ export default function ServiceHero({
             "linear-gradient(90deg, rgba(255,255,255,0.12), transparent)",
         }}
       />
+
+      <style>{`
+        @keyframes slideDown {
+          0%   { transform: translateY(-25%); }
+          100% { transform: translateY(0%); }
+        }
+        @keyframes slideUp {
+          0%   { transform: translateY(25%); }
+          100% { transform: translateY(0%); }
+        }
+        .animate-slideDown { animation: slideDown 14s ease-in-out infinite alternate; }
+        .animate-slideUp   { animation: slideUp   14s ease-in-out infinite alternate; }
+      `}</style>
     </section>
   );
 }

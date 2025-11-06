@@ -70,13 +70,19 @@ function Stat({ icon: Icon, value = "0", label = "" }) {
           boxShadow: "0 0 0 2px rgba(255,153,51,0.28)",
         }}
       >
-        <Icon size={22} color="#000080" />
+        <Icon size={22} color="#134A43" />
       </div>
-      <div className="text-2xl lg:text-3xl font-bold text-[#003366] mt-2">
+      <div
+        className="text-2xl lg:text-3xl font-bold mt-2"
+        style={{ color: "#134A43" }}
+      >
         {rolled}
         <span>{suffix}</span>
       </div>
-      <div className="text-sm lg:text-base text-[#000080] mt-1 font-medium">
+      <div
+        className="text-sm lg:text-base mt-1 font-medium"
+        style={{ color: "#138808" }}
+      >
         {label}
       </div>
     </motion.div>
@@ -103,15 +109,14 @@ export default function ServiceAboutExact({
   ],
 }) {
   return (
-    <section className="relative w-full bg-white font-serif pt-4">
+    <section className="relative w-full overflow-hidden bg-white font-serif pt-4">
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <div className="absolute top-0 left-0 w-full h-56 bg-gradient-to-b from-[#FF9933] to-transparent opacity-25 animate-slideDown" />
+        <div className="absolute bottom-0 left-0 w-full h-56 bg-gradient-to-t from-[#138808] to-transparent opacity-25 animate-slideUp" />
+      </div>
+
       <div
-        className="
-          mx-auto max-w-screen-2xl
-          grid grid-cols-1 lg:grid-cols-[520px_1fr]
-          gap-6 lg:gap-0
-          px-4 sm:px-6 lg:px-20
-          items-center
-        "
+        className="relative z-10 mx-auto max-w-screen-2xl grid grid-cols-1 lg:grid-cols-[520px_1fr] gap-6 lg:gap-0 px-4 sm:px-6 lg:px-20 items-center"
         style={{ minHeight: 520 }}
       >
         {/* LEFT COLUMN */}
@@ -119,7 +124,6 @@ export default function ServiceAboutExact({
           className="relative flex-shrink-0 flex justify-center lg:justify-start items-start lg:pb-0"
           style={{ minHeight: 430 }}
         >
-          {/* Primary image card */}
           <div className="rounded-[24px] lg:rounded-[32px] overflow-hidden w-[88vw] max-w-[360px] h-[60vw] max-h-[400px] lg:w-[355px] lg:h-[400px] bg-gray-200 shadow-lg relative z-[1]">
             <img
               src={primaryImage}
@@ -130,7 +134,7 @@ export default function ServiceAboutExact({
 
           {/* Badge */}
           <div
-            className="absolute right-2 top-2 lg:right-[-18px] lg:top-[36px] z-20 px-5 lg:px-7 py-2.5 lg:py-3 rounded-xl bg-[#FFE184] text-[#003366] text-center shadow font-extrabold flex flex-col items-center"
+            className="absolute right-2 top-2 lg:right-[-18px] lg:top-[36px] z-20 px-5 lg:px-7 py-2.5 lg:py-3 rounded-xl bg-[#FFE184] text-[#134A43] text-center shadow font-extrabold flex flex-col items-center"
             style={{ fontSize: 22, minWidth: 112 }}
           >
             <span className="text-xl lg:text-2xl font-extrabold">
@@ -141,7 +145,6 @@ export default function ServiceAboutExact({
             </span>
           </div>
 
-          {/* Award label */}
           <div
             className="absolute left-2 top-[65%] lg:left-[-45px] lg:top-[218px] flex items-center gap-2 bg-[#138808] text-white px-4 lg:px-5 py-2.5 lg:py-3 rounded-lg shadow-lg z-20"
             style={{ fontSize: 13 }}
@@ -153,7 +156,6 @@ export default function ServiceAboutExact({
             </div>
           </div>
 
-          {/* Secondary overlay image card */}
           <div
             className="
               relative z-30 mt-24 mx-auto w-[260px] h-[300px]
@@ -173,9 +175,8 @@ export default function ServiceAboutExact({
               className="w-full h-full object-cover"
             />
 
-            {/* Play button */}
             <motion.button
-              className="absolute flex items-center justify-center rounded-full border border-[var(--light-color)]"
+              className="absolute flex items-center justify-center rounded-full"
               style={{
                 width: 72,
                 height: 72,
@@ -183,17 +184,18 @@ export default function ServiceAboutExact({
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
-                color: "var(--light-color)",
+                color: "#138808",
                 fontWeight: 500,
                 fontSize: 18,
                 lineHeight: "28px",
                 backdropFilter: "blur(13px)",
                 padding: "20px 18px",
                 borderRadius: "100%",
-                background: "rgba(255, 255, 255, 0.016)",
+                background: "rgba(255, 255, 255, 0.08)",
+                border: "1px solid rgba(19,136,8,0.35)",
                 transition: "0.3s linear",
                 boxShadow:
-                  "rgba(0, 0, 0, 0) 0px 0px 0px 3.39167px, rgba(0, 0, 0, 0) 0px 0px 0px 30px",
+                  "rgba(0,0,0,0) 0px 0px 0px 3.3px, rgba(0,0,0,0) 0px 0px 0px 30px",
               }}
               aria-label="Play video"
             >
@@ -201,11 +203,11 @@ export default function ServiceAboutExact({
                 className="pointer-events-none absolute inset-0 rounded-full"
                 animate={{
                   boxShadow: [
-                    "0 0 0 0 rgba(0,64,131,0.35)",
-                    "0 0 0 15px rgba(0,64,131,0.0)",
-                    "0 0 0 30px rgba(0,64,131,0.0)",
+                    "0 0 0 0 rgba(19,136,8,0.35)",
+                    "0 0 0 15px rgba(19,136,8,0.0)",
+                    "0 0 0 30px rgba(19,136,8,0.0)",
                   ],
-                  opacity: [1, 0.8, 1],
+                  opacity: [1, 0.85, 1],
                 }}
                 transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
               />
@@ -213,7 +215,7 @@ export default function ServiceAboutExact({
                 animate={{ scale: [1, 1.18, 1], opacity: [1, 0.85, 1] }}
                 transition={{ repeat: Infinity, duration: 2, ease: "easeOut" }}
               >
-                <Play size={26} color="#004083" />
+                <Play size={26} color="#138808" />
               </motion.span>
             </motion.button>
           </div>
@@ -223,15 +225,15 @@ export default function ServiceAboutExact({
             style={{
               width: 95,
               height: 23,
-              background: "radial-gradient(#003366 1.1px, transparent 1.1px)",
+              background: "radial-gradient(#138808 1.1px, transparent 1.1px)",
               backgroundSize: "7px 7px",
-              opacity: 0.1,
+              opacity: 0.12,
             }}
           />
         </div>
 
-        <div className="flex flex-col lg:pl-9 lg:pr-3 justify-center items-start lg:ml-14 pl-1 pr-1 sm:pl-3 sm:pr-3 ml-0">
-          {/* Kicker */}
+        {/* RIGHT COLUMN */}
+        <div className="relative z-10 flex flex-col lg:pl-9 lg:pr-3 justify-center items-start lg:ml-14 pl-1 pr-1 sm:pl-3 sm:pr-3 ml-0">
           <div className="flex items-center gap-2 mb-2 mt-2">
             <Leaf size={20} color="#138808" />
             <span className="text-[#138808] text-base lg:text-lg font-semibold">
@@ -241,8 +243,12 @@ export default function ServiceAboutExact({
 
           {/* Title */}
           <h2
-            className="text-[1.85rem] lg:text-[2.98rem] leading-tight font-extrabold text-[#003366] mb-4 lg:mb-6 mt-2 lg:mt-3"
-            style={{ letterSpacing: "-0.5px", lineHeight: "1.12" }}
+            className="text-[1.85rem] lg:text-[2.98rem] leading-tight font-extrabold mb-4 lg:mb-6 mt-2 lg:mt-3"
+            style={{
+              letterSpacing: "-0.5px",
+              lineHeight: "1.12",
+              color: "#134A43",
+            }}
           >
             {title}
           </h2>
@@ -252,19 +258,21 @@ export default function ServiceAboutExact({
             {tabs.map((t, i) => (
               <button
                 key={t}
-                className="px-5 lg:px-7 py-2 rounded-full font-bold text-[#004083] text-[0.98rem] lg:text-[1.05rem] border transition"
+                className="px-5 lg:px-7 py-2 rounded-full font-bold text-[0.98rem] lg:text-[1.05rem] border transition"
                 style={
                   i === activeTabIndex
                     ? {
                         background: "#fff",
-                        borderColor: "#FFBF4B",
+                        borderColor: "#FF9933",
                         borderWidth: 2,
+                        color: "#134A43",
                       }
                     : {
                         background: "#fff",
                         borderColor: "#fff",
                         borderWidth: 2,
-                        opacity: 0.82,
+                        color: "#557070",
+                        opacity: 0.9,
                       }
                 }
               >
@@ -274,7 +282,7 @@ export default function ServiceAboutExact({
           </div>
 
           {/* Body */}
-          <div className="mb-4 lg:mb-5 max-w-xl text-[#555] text-[1rem] lg:text-[1.10rem] leading-relaxed">
+          <div className="mb-4 lg:mb-5 max-w-xl text-[#4b5563] text-[1rem] lg:text-[1.10rem] leading-relaxed">
             The implant fixture is first placed, so that it likely to then a
             dental prosthetic is added then dental prosthetic.
           </div>
@@ -283,7 +291,8 @@ export default function ServiceAboutExact({
             {bullets.map((b) => (
               <li
                 key={b}
-                className="flex items-center gap-3 lg:gap-4 text-[#003366] font-bold text-[1rem] lg:text-[1.04rem]"
+                className="flex items-center gap-3 lg:gap-4 font-bold text-[1rem] lg:text-[1.04rem]"
+                style={{ color: "#134A43" }}
               >
                 <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[rgba(19,136,8,0.10)] border border-green-200">
                   <Check size={17} color="#138808" />
@@ -297,10 +306,13 @@ export default function ServiceAboutExact({
           <div className="flex gap-4 lg:gap-6 items-center flex-wrap mt-4 lg:mt-5">
             <button
               className="inline-flex items-center gap-2 rounded-full px-8 lg:px-10 py-3.5 lg:py-4 font-extrabold text-[1.05rem] lg:text-[1.25rem] shadow-lg transition"
-              style={{ background: "#FFBF4B", color: "#003366" }}
+              style={{ background: "#FF9933", color: "#134A43" }}
             >
               Explore More
-              <span className="grid h-8 w-8 lg:h-9 lg:w-9 place-items-center rounded-full bg-[rgba(0,0,128,0.09)]">
+              <span
+                className="grid h-8 w-8 lg:h-9 lg:w-9 place-items-center rounded-full"
+                style={{ background: "rgba(19,136,8,0.10)" }}
+              >
                 <ArrowRight size={20} />
               </span>
             </button>
@@ -309,7 +321,10 @@ export default function ServiceAboutExact({
                 <span className="grid h-8 w-8 place-items-center rounded-full bg-white border border-[#FFD975]">
                   <Star size={18} color="#138808" />
                 </span>
-                <span className="text-sm lg:text-md font-bold text-[#003366] ml-1">
+                <span
+                  className="text-sm lg:text-md font-bold"
+                  style={{ color: "#134A43" }}
+                >
                   Trustpilot
                 </span>
               </span>
@@ -334,11 +349,25 @@ export default function ServiceAboutExact({
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 pt-8 lg:pt-12 pb-6 lg:pb-7 px-4 sm:px-6 lg:px-14">
+      {/* Stats */}
+      <div className="relative z-10 mx-auto max-w-7xl grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 pt-8 lg:pt-12 pb-6 lg:pb-7 px-4 sm:px-6 lg:px-14">
         {stats.map((s) => (
           <Stat key={s.label} icon={s.icon} value={s.value} label={s.label} />
         ))}
       </div>
+
+      <style>{`
+        @keyframes slideDown {
+          0%   { transform: translateY(-25%); }
+          100% { transform: translateY(0%); }
+        }
+        @keyframes slideUp {
+          0%   { transform: translateY(25%); }
+          100% { transform: translateY(0%); }
+        }
+        .animate-slideDown { animation: slideDown 14s ease-in-out infinite alternate; }
+        .animate-slideUp   { animation: slideUp   14s ease-in-out infinite alternate; }
+      `}</style>
     </section>
   );
 }

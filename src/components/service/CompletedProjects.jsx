@@ -1,6 +1,5 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 
-/* --- data (keep yours) --- */
 const projects = [
   {
     id: "No – 03",
@@ -50,14 +49,16 @@ const ArrowRight = ({ className = "w-5 h-5" }) => (
   </svg>
 );
 
-/* --- CARD: tuned to match the reference exactly --- */
+/* --- CARD --- */
 const ProjectCard = ({ item }) => {
   return (
-    <div className="relative overflow-hidden  rounded-[36px] shadow-[0_20px_40px_rgba(0,0,0,0.35)] ring-1 ring-black/20 bg-neutral-900/30">
+    <div className="relative overflow-hidden rounded-[36px] shadow-[0_20px_40px_rgba(0,0,0,0.35)] ring-1 ring-black/20 bg-neutral-900/30">
       {/* Image */}
       <div
         className="w-full h-[300px] bg-cover bg-center sm:h-[340px] md:h-[380px] lg:h-[600px] rounded-t-[36px]"
         style={{ backgroundImage: `url('${item.image}')` }}
+        role="img"
+        aria-label={item.title}
       />
 
       {/* Top-right badge */}
@@ -84,14 +85,14 @@ const ProjectCard = ({ item }) => {
             {item.blurb}
           </p>
 
-          {/* Gold pill CTA with inner round arrow chip */}
           <button
             type="button"
             className="
-              mt-6 inline-flex items-center rounded-full
+              group/cta mt-6 inline-flex items-center rounded-full
               bg-gradient-to-b from-[#f6c544] to-[#d6a323]
               px-6 py-3 text-sm font-extrabold text-black
               ring-1 ring-black/10 shadow-[0_10px_20px_rgba(0,0,0,0.25)]
+              transition
             "
           >
             View All Projects
@@ -99,6 +100,8 @@ const ProjectCard = ({ item }) => {
               className="
                 ml-3 inline-flex h-10 w-10 items-center justify-center rounded-full
                 bg-black/10 ring-1 ring-black/10
+                transition-transform duration-500
+                group-hover/cta:rotate-[360deg]
               "
             >
               <ArrowRight className="w-4 h-4" />
@@ -107,14 +110,12 @@ const ProjectCard = ({ item }) => {
         </div>
       </div>
 
-      {/* Vignettes to match the soft edge glow */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(80%_140%_at_50%_82%,rgba(0,0,0,0.55)_0%,transparent_60%)]" />
     </div>
   );
 };
 
-/* --- Section with carousel behavior (keeps your previous layout) --- */
 const CompletedProjects = () => {
   const trackRef = useRef(null);
   const [progress, setProgress] = useState(0);
@@ -131,15 +132,29 @@ const CompletedProjects = () => {
     return () => el.removeEventListener("scroll", onScroll);
   }, []);
 
-  const scrollByViewport = (dir = 1) => {
+  const scrollByViewport = useCallback((dir = 1) => {
     const el = trackRef.current;
     if (!el) return;
     el.scrollBy({ left: el.clientWidth * 0.9 * dir, behavior: "smooth" });
-  };
+  }, []);
+
+  // keyboard nav
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "ArrowLeft") scrollByViewport(-1);
+      if (e.key === "ArrowRight") scrollByViewport(1);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [scrollByViewport]);
 
   return (
-    <section className="relative overflow-hidden bg-[#000080] text-white">
-      {/* paint/wave */}
+    <section className="relative overflow-hidden  text-black">
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <div className="absolute top-0 left-0 w-full h-56 bg-gradient-to-b from-[#FF9933] to-transparent opacity-25 animate-slideDown" />
+        <div className="absolute bottom-0 left-0 w-full h-56 bg-gradient-to-t from-[#138808] to-transparent opacity-25 animate-slideUp" />
+      </div>
+
       <svg
         aria-hidden="true"
         className="pointer-events-none absolute -top-6 left-1/2 z-0 h-24 w-[140%] -translate-x-1/2 opacity-25"
@@ -174,27 +189,51 @@ const CompletedProjects = () => {
           <div className="md:self-start">
             <button
               type="button"
-              className="inline-flex items-center gap-3 rounded-full bg-white/15 px-6 py-3 text-sm font-extrabold text-white ring-1 ring-white/20 transition hover:bg-white/20"
+              className="group inline-flex items-center gap-3 rounded-full bg-white/15 px-6 py-3 text-sm font-extrabold text-black ring-1 ring-white/20 transition hover:bg-white/20"
             >
               View All Projects
-              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#f6c544] text-black">
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#f6c544] text-black transition-transform duration-500 group-hover:rotate-[360deg]">
                 <ArrowRight className="w-4 h-4" />
               </span>
             </button>
           </div>
         </div>
 
+        {/* controls */}
+        <div className="mt-6 hidden justify-end gap-3 md:flex">
+          <button
+            aria-label="Previous projects"
+            onClick={() => scrollByViewport(-1)}
+            className="rounded-full bg-white/15 p-3 ring-1 ring-white/20 hover:bg-white/20 transition"
+          >
+            <span className="inline-block -rotate-180">
+              <ArrowRight className="w-5 h-5" />
+            </span>
+          </button>
+          <button
+            aria-label="Next projects"
+            onClick={() => scrollByViewport(1)}
+            className="rounded-full bg-white/15 p-3 ring-1 ring-white/20 hover:bg-white/20 transition"
+          >
+            <ArrowRight className="w-5 h-5" />
+          </button>
+        </div>
+
         {/* carousel */}
-        <div className="relative mt-10 sm:mt-12">
+        <div className="relative mt-8 sm:mt-10">
           <div
             ref={trackRef}
-            className="flex gap-6 lg:gap-8 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2 [-ms-overflow-style:none] [scrollbar-width:none]"
+            className="
+              hide-scrollbar
+              flex gap-6 lg:gap-8 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2
+            "
+            role="region"
+            aria-label="Completed projects carousel"
           >
-            <style>{`.hide-scrollbar::-webkit-scrollbar{display:none}`}</style>
             {projects.map((p, idx) => (
               <div
                 key={idx}
-                className="hide-scrollbar snap-start shrink-0 w-[88%] sm:w-[70%] md:w-[55%] lg:w-[32%]"
+                className="snap-start shrink-0 w-[88%] sm:w-[70%] md:w-[55%] lg:w-[32%]"
               >
                 <ProjectCard item={p} />
               </div>
@@ -210,6 +249,25 @@ const CompletedProjects = () => {
           </div>
         </div>
       </div>
+
+      <style>{`
+        .hide-scrollbar {
+          -ms-overflow-style: none; /* IE/Edge */
+          scrollbar-width: none;    /* Firefox */
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
+        @keyframes slideDown {
+          0% { transform: translateY(-25%); }
+          100% { transform: translateY(0%); }
+        }
+        @keyframes slideUp {
+          0% { transform: translateY(25%); }
+          100% { transform: translateY(0%); }
+        }
+        .animate-slideDown { animation: slideDown 16s ease-in-out infinite alternate; }
+        .animate-slideUp   { animation: slideUp   16s ease-in-out infinite alternate; }
+      `}</style>
     </section>
   );
 };

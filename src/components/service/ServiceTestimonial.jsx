@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useCallback,
+} from "react";
 
 const COLORS = {
   orange: "#FF9933",
@@ -43,73 +49,106 @@ const PARTNERS = [
   { name: "Spectranet 4G", logoUrl: "" },
 ];
 
-/* ------------------------------------------------------------------------- */
-
 export default function ServiceTestimonial({
   testimonials = TESTIMONIALS,
   partners = PARTNERS,
   onWriteReview = () => {},
   onBecomePartner = () => {},
-  slideEveryMs = 4500, // testimonial auto-slide speed
+  slideEveryMs = 4500,
 }) {
-  /* ===== Testimonial slider state ===== */
   const [idx, setIdx] = useState(0);
   const [paused, setPaused] = useState(false);
   const len = testimonials.length;
 
+  const go = useCallback(
+    (dir = 1) => setIdx((i) => (i + dir + len) % len),
+    [len]
+  );
+
   useEffect(() => {
     if (paused || len <= 1) return;
-    const id = setInterval(
-      () => setIdx((i) => (i + 1) % len),
-      Math.max(1800, slideEveryMs)
-    );
+    const id = setInterval(() => go(1), Math.max(1800, slideEveryMs));
     return () => clearInterval(id);
-  }, [paused, len, slideEveryMs]);
+  }, [paused, len, slideEveryMs, go]);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "ArrowLeft") go(-1);
+      if (e.key === "ArrowRight") go(1);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [go]);
 
   const prev = (idx - 1 + len) % len;
   const next = (idx + 1) % len;
 
-  // Partners marquee
   const trackRef = useRef(null);
+  const rafRef = useRef(null);
+  const marqueePaused = useRef(false);
+
   useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
-    let raf;
-    const speed = 0.4;
-    const step = () => {
-      el.scrollLeft += speed;
-      if (el.scrollLeft >= el.scrollWidth / 2) el.scrollLeft = 0;
-      raf = requestAnimationFrame(step);
+    const prefersReduced =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    let last = performance.now();
+    const speed = prefersReduced ? 0 : 0.4;
+
+    const step = (now) => {
+      if (!marqueePaused.current && speed > 0) {
+        const dt = now - last;
+        last = now;
+        el.scrollLeft += speed * (dt / 16.6);
+        if (el.scrollLeft >= el.scrollWidth / 2) el.scrollLeft = 0;
+      }
+      rafRef.current = requestAnimationFrame(step);
     };
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
+
+    rafRef.current = requestAnimationFrame(step);
+    return () => rafRef.current && cancelAnimationFrame(rafRef.current);
   }, []);
+
   const looped = useMemo(() => [...partners, ...partners], [partners]);
 
   return (
-    <section className="relative w-full overflow-hidden">
+    <section
+      className="relative w-full overflow-hidden bg-white"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <div className="absolute top-0 left-0 w-full h-56 bg-gradient-to-b from-[#FF9933] to-transparent opacity-25 animate-slideDown" />
+        <div className="absolute bottom-0 left-0 w-full h-56 bg-gradient-to-t from-[#138808] to-transparent opacity-25 animate-slideUp" />
+      </div>
+
       <style>{`
         :root{ --orange:${COLORS.orange}; --white:${COLORS.white}; --india:${COLORS.india}; --navy:${COLORS.navy}; }
         .shadow-soft{ box-shadow: 0 10px 25px rgba(0,0,0,.08); }
         .card-glow{ box-shadow: 0 20px 45px rgba(0,0,0,.12); }
         .no-scrollbar::-webkit-scrollbar{display:none;}
         .no-scrollbar{ -ms-overflow-style:none; scrollbar-width:none;}
-        /* Disable the edge fade mask on very small screens for readability */
+        .fade-mask{
+          -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+                  mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+        }
         @media (max-width: 480px){
           .fade-mask{ -webkit-mask-image:none; mask-image:none; }
         }
-        /* Tablet tweaks (768px–1023px) */
         @media (min-width:768px) and (max-width:1023px){
           .tablet-h-card{ height: 440px; }
           .tablet-partner{ height: 88px; width: 190px; border-radius: 1rem; }
         }
-        /* Respect reduced motion */
-        @media (prefers-reduced-motion: reduce){
-          .marquee-track{ scroll-behavior: auto !important; }
-        }
+        @keyframes slideDown { 0%{transform:translateY(-25%)} 100%{transform:translateY(0)} }
+        @keyframes slideUp   { 0%{transform:translateY( 25%)} 100%{transform:translateY(0)} }
+        .animate-slideDown { animation: slideDown 16s ease-in-out infinite alternate; }
+        .animate-slideUp   { animation: slideUp   16s ease-in-out infinite alternate; }
       `}</style>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 pb-12 sm:pb-16">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 pb-12 sm:pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-10 md:gap-12 items-center">
           {/* Left */}
           <div className="space-y-4 sm:space-y-6 order-1 lg:order-none">
@@ -170,7 +209,7 @@ export default function ServiceTestimonial({
             </div>
           </div>
 
-          {/* Right (Card slider) */}
+          {/* Right  */}
           <div
             className="relative h-auto sm:h-[380px] md:h-[440px] flex items-center order-2 tablet-h-card"
             onMouseEnter={() => setPaused(true)}
@@ -178,7 +217,6 @@ export default function ServiceTestimonial({
             onTouchStart={() => setPaused(true)}
             onTouchEnd={() => setPaused(false)}
           >
-            {/* Hide ghosts on tablets and below to reduce visual clutter */}
             <GhostCard
               t={testimonials[prev]}
               side="left"
@@ -190,8 +228,43 @@ export default function ServiceTestimonial({
               className="hidden lg:block"
             />
 
-            {/* Active card */}
             <ActiveCard t={testimonials[idx]} />
+
+            {/* Controls */}
+            {len > 1 && (
+              <>
+                <button
+                  aria-label="Previous testimonial"
+                  onClick={() => go(-1)}
+                  className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/90 text-[var(--navy)] p-2 shadow-soft ring-1 ring-black/10 hover:bg-white"
+                >
+                  ←
+                </button>
+                <button
+                  aria-label="Next testimonial"
+                  onClick={() => go(1)}
+                  className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/90 text-[var(--navy)] p-2 shadow-soft ring-1 ring-black/10 hover:bg-white"
+                >
+                  →
+                </button>
+
+                {/* Dots */}
+                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2">
+                  {testimonials.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setIdx(i)}
+                      aria-label={`Go to testimonial ${i + 1}`}
+                      className="h-2.5 w-2.5 rounded-full"
+                      style={{
+                        backgroundColor:
+                          i === idx ? COLORS.india : "rgba(0,0,128,0.25)",
+                      }}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -202,12 +275,19 @@ export default function ServiceTestimonial({
             Major Partners
           </h3>
 
-          {/* carousel */}
-          <div className="relative mt-4 sm:mt-6 fade-mask">
+          <div
+            className="relative mt-4 sm:mt-6 fade-mask"
+            onMouseEnter={() => (marqueePaused.current = true)}
+            onMouseLeave={() => (marqueePaused.current = false)}
+            onTouchStart={() => (marqueePaused.current = true)}
+            onTouchEnd={() => (marqueePaused.current = false)}
+          >
             <div
               ref={trackRef}
               className="no-scrollbar overflow-x-auto marquee-track"
               style={{ scrollBehavior: "auto" }}
+              role="group"
+              aria-label="Partner logos"
             >
               <div className="flex gap-4 sm:gap-6 md:gap-8 min-w-full">
                 <div className="flex gap-4 sm:gap-6 md:gap-8 w-[200%]">
@@ -299,7 +379,7 @@ function GhostCard({ t, side, className = "" }) {
 function PartnerCard({ name, logoUrl }) {
   const hasLogo = Boolean(logoUrl);
   return (
-    <div className="flex h-16 sm:h-20 md:h-24 w-[140px] sm:w-[180px] md:w-[200px] shrink-0 items-center justify-center rounded-xl sm:rounded-2xl bg-[var(--navy)] text-[var(--white)] shadow-soft tablet-partner">
+    <div className="flex h-16 sm:h-20 md:h-24 w-[140px] sm:w-[180px] md:w-[200px] shrink-0 items-center justify-center rounded-xl sm:rounded-2xl bg-[var(--navy)] text-[var(--white)] shadow-soft tablet-partner transition hover:scale-[1.02]">
       {hasLogo ? (
         <img
           src={logoUrl}

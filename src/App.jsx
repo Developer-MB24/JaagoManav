@@ -1,12 +1,12 @@
-import React, { Suspense, lazy } from "react";
+import React, { lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import MainLayout from "./layout/MainLayout.jsx";
 import Account from "./pages/Account.jsx";
 import Service from "./pages/Service.jsx";
+import About from "./pages/About.jsx";
 
 const Home = lazy(() => import("./pages/Home.jsx"));
 const Blog = lazy(() => import("./pages/Blog.jsx"));
-// const Account = lazy(() => import("./pages/Account.jsx"));
 
 function NotFound() {
   return (
@@ -21,25 +21,27 @@ function NotFound() {
 
 export default function App() {
   return (
-    <Suspense fallback={<div className="p-6">Loading…</div>}>
-      <Routes>
-        <Route element={<MainLayout />}>
-          {/* / */}
-          <Route index element={<Home />} />
+    <Routes>
+      <Route element={<MainLayout />}>
+        {/* / */}
+        <Route index element={<Home />} />
 
-          {/* /blog */}
-          <Route path="/blog" element={<Blog />} />
+        {/* /blog */}
+        <Route path="/blog" element={<Blog />} />
 
-          {/* /service */}
-          <Route path="/service" element={<Service />} />
+        {/* /service and /service/:slug */}
+        <Route path="/service" element={<Service />} />
+        <Route path="/service/:slug" element={<Service />} />
 
-          {/* /account */}
-          <Route path="/account" element={<Account />} />
+        {/* /account */}
+        <Route path="/account" element={<Account />} />
 
-          {/* 404 */}
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-    </Suspense>
+        {/* /about */}
+        <Route path="/about" element={<About />} />
+
+        {/* 404 */}
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
   );
 }

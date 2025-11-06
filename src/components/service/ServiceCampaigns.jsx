@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import {
   Leaf,
@@ -109,15 +109,23 @@ function Progress({ value }) {
   );
 }
 
+/* Card */
 function Card({ item, active, onHover, onLeave }) {
   const percent = Math.min(100, Math.round((item.raised / item.goal) * 100));
   return (
     <motion.article
       variants={fadeUp}
-      className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-white"
-      style={{ boxShadow: "0 12px 30px rgba(0,0,0,0.06)" }}
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
+      className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-white"
+      style={{
+        boxShadow: active
+          ? "0 16px 36px rgba(0,0,0,0.10)"
+          : "0 12px 30px rgba(0,0,0,0.06)",
+        transform: active ? "translateY(-4px)" : "translateY(0)",
+        transition:
+          "box-shadow .3s var(--ease, cubic-bezier(.22,1,.36,1)), transform .3s var(--ease, cubic-bezier(.22,1,.36,1))",
+      }}
     >
       {/* Image */}
       <div className="relative h-60 w-full overflow-hidden rounded-2xl">
@@ -136,6 +144,8 @@ function Card({ item, active, onHover, onLeave }) {
           {item.tag}
         </span>
       </div>
+
+      {/* Copy */}
       <div className="p-5 text-[#000080]">
         <div
           className="mb-3 inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs"
@@ -146,6 +156,7 @@ function Card({ item, active, onHover, onLeave }) {
         <h3 className="mb-2 text-lg font-extrabold">{item.title}</h3>
         <p className="mb-4 text-sm opacity-80">{item.desc}</p>
       </div>
+
       <div className="relative mx-4 mb-4 mt-auto">
         <div className="h-[180px]" />
 
@@ -156,6 +167,7 @@ function Card({ item, active, onHover, onLeave }) {
             boxShadow: "inset 0 0 0 1px rgba(0,0,128,0.08)",
             color: "#000080",
           }}
+          aria-hidden={active}
           animate={{ opacity: active ? 0 : 1, y: active ? 10 : 0 }}
           transition={{ duration: 0.3, ease: easeSmooth }}
         >
@@ -206,15 +218,19 @@ function Card({ item, active, onHover, onLeave }) {
                 backgroundColor: "rgba(0,0,128,0.06)",
                 boxShadow: "0 0 0 1px rgba(0,0,128,0.12)",
               }}
+              aria-label={`${item.likes} likes`}
             >
               <Heart size={14} color="#000080" /> {item.likes}
             </button>
           </div>
         </motion.div>
 
+        {/* Active panel */}
         <motion.div
           className="absolute inset-0 rounded-xl p-4 text-white"
           style={{ backgroundColor: "#138808" }}
+          role="region"
+          aria-live="polite"
           animate={{ opacity: active ? 1 : 0, y: active ? 0 : 10 }}
           transition={{ duration: 0.3, ease: easeSmooth }}
         >
@@ -239,7 +255,7 @@ function Card({ item, active, onHover, onLeave }) {
           </div>
           <div className="mt-4 flex items-center gap-2 justify-between">
             <button
-              className="inline-flex items-center xl:gap-3 rounded-full  xl:px-5 xl:py-3 text-sm font-semibold"
+              className="inline-flex items-center xl:gap-3 rounded-full xl:px-5 xl:py-3 text-sm font-semibold"
               style={{
                 backgroundColor: "#FF9933",
                 color: "#000080",
@@ -260,6 +276,7 @@ function Card({ item, active, onHover, onLeave }) {
                 backgroundColor: "rgba(255,255,255,0.15)",
                 boxShadow: "0 0 0 1px rgba(255,255,255,0.3)",
               }}
+              aria-label={`${item.likes} likes`}
             >
               <Heart size={14} /> {item.likes}
             </button>
@@ -312,16 +329,38 @@ export default function ServiceCampaignsCarousel({
     return () => clearInterval(id);
   }, [hovering, autoPlayMs, slides.length]);
 
-  const goLeft = () => setPage((p) => (p - 1 + slides.length) % slides.length);
-  const goRight = () => setPage((p) => (p + 1) % slides.length);
+  const goLeft = useCallback(
+    () => setPage((p) => (p - 1 + slides.length) % slides.length),
+    [slides.length]
+  );
+  const goRight = useCallback(
+    () => setPage((p) => (p + 1) % slides.length),
+    [slides.length]
+  );
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "ArrowLeft") goLeft();
+      if (e.key === "ArrowRight") goRight();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [goLeft, goRight]);
 
   return (
     <section
-      className="relative w-full bg-[#F6F7F2] py-14 font-serif"
+      className="relative w-full py-14 font-serif overflow-hidden"
+      style={{ backgroundColor: "#F6F7F2" }}
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
+      aria-label="Donation Campaigns Carousel"
     >
-      <div className="mx-auto max-w-7xl px-6 lg:px-12">
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <div className="absolute top-0 left-0 w-full h-56 bg-gradient-to-b from-[#FF9933] to-transparent opacity-20 animate-slideDown" />
+        <div className="absolute bottom-0 left-0 w-full h-56 bg-gradient-to-t from-[#138808] to-transparent opacity-20 animate-slideUp" />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12">
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -331,7 +370,10 @@ export default function ServiceCampaignsCarousel({
         >
           <div className="mb-2 inline-flex items-center gap-2">
             <Leaf size={18} color="#138808" />
-            <span className="text-sm" style={{ color: "#138808" }}>
+            <span
+              className="text-sm font-semibold"
+              style={{ color: "#138808" }}
+            >
               {kicker}
             </span>
           </div>
@@ -339,30 +381,32 @@ export default function ServiceCampaignsCarousel({
             {title}
           </h2>
         </motion.div>
-        {/* Arrows */}
-        <button
-          onClick={goLeft}
-          aria-label="Previous"
-          className="absolute left-4 top-1/2 z-10 -translate-y-1/2 rounded-full p-3"
-          style={{
-            backgroundColor: "#FFFFFF",
-            boxShadow: "0 6px 20px rgba(0,0,0,0.15)",
-          }}
-        >
-          <ChevronLeft color="#000080" />
-        </button>
-        <button
-          onClick={goRight}
-          aria-label="Next"
-          className="absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-full p-3"
-          style={{
-            backgroundColor: "#FFFFFF",
-            boxShadow: "0 6px 20px rgba(0,0,0,0.15)",
-          }}
-        >
-          <ChevronRight color="#000080" />
-        </button>
-        {/* Viewport */}
+
+        <div className="hidden md:block">
+          <button
+            onClick={goLeft}
+            aria-label="Previous campaigns"
+            className="absolute left-4 top-1/2 z-10 -translate-y-1/2 rounded-full p-3"
+            style={{
+              backgroundColor: "#FFFFFF",
+              boxShadow: "0 6px 20px rgba(0,0,0,0.15)",
+            }}
+          >
+            <ChevronLeft color="#000080" />
+          </button>
+          <button
+            onClick={goRight}
+            aria-label="Next campaigns"
+            className="absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-full p-3"
+            style={{
+              backgroundColor: "#FFFFFF",
+              boxShadow: "0 6px 20px rgba(0,0,0,0.15)",
+            }}
+          >
+            <ChevronRight color="#000080" />
+          </button>
+        </div>
+
         <div className="overflow-hidden">
           <motion.div
             className="flex"
@@ -386,7 +430,7 @@ export default function ServiceCampaignsCarousel({
                       active={isActive}
                       onHover={() => setActiveIndex(globalIdx)}
                       onLeave={() =>
-                        setActiveIndex(page * perPage + centerOffset)
+                        setActiveIndex(page * perPage + (perPage === 1 ? 0 : 1))
                       }
                     />
                   );
@@ -394,13 +438,14 @@ export default function ServiceCampaignsCarousel({
             </div>
           </motion.div>
         </div>
+
         {/* Dots */}
         <div className="mt-6 flex items-center justify-center gap-2">
           {slides.map((_, i) => (
             <button
               key={i}
               onClick={() => setPage(i)}
-              className="h-2 w-2 rounded-full"
+              className="h-2.5 w-2.5 rounded-full"
               style={{
                 backgroundColor: i === page ? "#138808" : "rgba(0,0,128,0.25)",
               }}
@@ -409,6 +454,19 @@ export default function ServiceCampaignsCarousel({
           ))}
         </div>
       </div>
+
+      <style>{`
+        @keyframes slideDown {
+          0%   { transform: translateY(-25%); }
+          100% { transform: translateY(0%); }
+        }
+        @keyframes slideUp {
+          0%   { transform: translateY(25%); }
+          100% { transform: translateY(0%); }
+        }
+        .animate-slideDown { animation: slideDown 14s ease-in-out infinite alternate; }
+        .animate-slideUp   { animation: slideUp   14s ease-in-out infinite alternate; }
+      `}</style>
     </section>
   );
 }

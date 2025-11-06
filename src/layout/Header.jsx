@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { createPortal } from "react-dom";
+import { Link } from "react-router-dom";
 
 const ChevronDown = (props) => (
   <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" {...props}>
@@ -123,21 +124,31 @@ function ServicesPortalDropdown({ anchorRef, onClose }) {
         width: pos.width,
         position: "fixed",
       }}
-      className="z-[1000] origin-top-left rounded-xl border border-white/30 bg-[#000080] text-white shadow-lg ring-1 ring-black/5"
+      className="z-[1000] origin-top-left rounded-xl border border-slate-200 bg-white text-slate-900 shadow-xl ring-1 ring-black/5"
     >
+      <div
+        className="h-1 w-full"
+        style={{
+          background:
+            "linear-gradient(90deg,#FF9933 0%,#FFFFFF 50%,#138808 100%)",
+        }}
+      />
       <ul className="py-2">
-        {items.map((label) => (
-          <li key={label}>
-            <a
-              href="#"
-              className="block px-5 py-2.5 text-lg font-semibold tracking-wide hover:bg-white/10 focus:bg-white/10 focus:outline-none"
-              role="menuitem"
-              onClick={onClose}
-            >
-              {label}
-            </a>
-          </li>
-        ))}
+        {items.map((label) => {
+          const slug = label.toLowerCase().replace(/\s+/g, "-");
+          return (
+            <li key={label}>
+              <Link
+                to={`/service/${slug}`}
+                className="block px-5 py-2.5 text-[17px] font-semibold tracking-wide hover:bg-slate-50 focus:bg-slate-50 focus:outline-none"
+                role="menuitem"
+                onClick={onClose}
+              >
+                {label}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
@@ -145,12 +156,10 @@ function ServicesPortalDropdown({ anchorRef, onClose }) {
   return createPortal(menu, document.body);
 }
 
-/* ---------- Header ---------- */
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const servicesButtonRef = useRef(null);
-
   useOnClickOutside([servicesButtonRef], () => setServicesOpen(false));
 
   useEffect(() => {
@@ -161,115 +170,133 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full overflow-visible border-b border-black/5 bg-[#000080] text-white shadow-sm">
-      <nav className="mx-auto flex max-w-screen-2xl items-center justify-between gap-6 px-4 py-3 md:px-6 lg:px-8">
-        {/* Logo */}
-        <a href="#" className="shrink-0 rounded-2xl border border-white/50 p-2">
-          <img
-            src="/images/jaago-manav-logo.webp"
-            alt="Jaago Manav Logo"
-            className="h-10 w-auto md:h-12"
-            loading="eager"
-          />
-        </a>
-
-        {/* Hamburger */}
-        <button
-          className="inline-flex items-center justify-center rounded-lg border border-white/30 p-2 focus:outline-none focus:ring-2 focus:ring-white/60 lg:hidden"
-          aria-label="Toggle menu"
-          onClick={() => setMobileOpen((s) => !s)}
-        >
-          <span className="sr-only">Open menu</span>
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            className="h-6 w-6"
+    <header
+      className="sticky top-0 z-50 w-full"
+      style={{
+        background:
+          "linear-gradient(90deg, #FF9933 0%, #FF9933 33.333%, #FFFFFF 33.333%, #FFFFFF 66.666%, #138808 66.666%, #138808 100%)",
+      }}
+    >
+      <nav
+        className="mx-auto flex max-w-screen-2xl items-center justify-between gap-6 px-4 py-3 md:px-6 lg:px-8
+                      backdrop-blur-sm rounded-none
+                      text-white"
+      >
+        <div className="flex w-full items-center justify-between gap-6 rounded-2xl bg-black/25 px-3 py-2 ring-1 ring-white/20">
+          {/* Logo */}
+          <Link
+            to="/"
+            className="shrink-0 rounded-xl bg-white/10 p-2 ring-1 ring-white/30"
           >
-            <path d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
+            <img
+              src="/images/jaago-manav-logo.webp"
+              alt="Jaago Manav Logo"
+              className="h-10 w-auto md:h-12"
+              loading="eager"
+            />
+          </Link>
 
-        {/* Desktop nav: only from lg and up */}
-        <div className="hidden min-w-0 flex-1 items-center justify-center gap-4 ml-10 text-xl font-semibold tracking-wide lg:flex">
-          <a href="#" className="hover:opacity-90">
-            Home
-          </a>
-          <a href="#" className="hover:opacity-90">
-            About
-          </a>
-
-          <div className="relative">
-            <button
-              ref={servicesButtonRef}
-              className="flex items-center gap-2 hover:opacity-90 focus:outline-none"
-              aria-haspopup="true"
-              aria-expanded={servicesOpen}
-              onClick={(e) => {
-                e.stopPropagation();
-                setServicesOpen((v) => !v);
-              }}
+          {/* Hamburger (mobile/tablet) */}
+          <button
+            className="inline-flex items-center justify-center rounded-lg bg-white/10 p-2 ring-1 ring-white/30 focus:outline-none focus:ring-2 focus:ring-white/60 lg:hidden"
+            aria-label="Toggle menu"
+            onClick={() => setMobileOpen((s) => !s)}
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              className="h-6 w-6"
             >
-              <span>Services</span>
-              <ChevronDown
-                className={`h-5 w-5 transition-transform ${
-                  servicesOpen ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-            {servicesOpen && (
-              <ServicesPortalDropdown
-                anchorRef={servicesButtonRef}
-                onClose={() => setServicesOpen(false)}
-              />
-            )}
+              <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+
+          {/* Desktop nav */}
+          <div className="hidden lg:flex flex-1 items-center justify-center gap-5 ml-6 text-lg font-semibold tracking-wide">
+            <Link to="/" className="hover:text-[#FFE9CC]">
+              Home
+            </Link>
+            <Link to="/about" className="hover:text-[#FFE9CC]">
+              About
+            </Link>
+
+            <div className="relative">
+              <button
+                ref={servicesButtonRef}
+                className="flex items-center gap-2 hover:text-[#FFE9CC] focus:outline-none"
+                aria-haspopup="true"
+                aria-expanded={servicesOpen}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setServicesOpen((v) => !v);
+                }}
+              >
+                <span>Services</span>
+                <ChevronDown
+                  className={`h-5 w-5 transition-transform ${
+                    servicesOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+              {servicesOpen && (
+                <ServicesPortalDropdown
+                  anchorRef={servicesButtonRef}
+                  onClose={() => setServicesOpen(false)}
+                />
+              )}
+            </div>
+
+            <Link to="/donations" className="hover:text-[#FFE9CC]">
+              Donations
+            </Link>
+            <Link to="/shop" className="hover:text-[#FFE9CC]">
+              Shop
+            </Link>
+            <Link to="/blog" className="hover:text-[#FFE9CC]">
+              Blog
+            </Link>
+            <Link to="/contact" className="hover:text-[#FFE9CC]">
+              Contact
+            </Link>
           </div>
 
-          <button className="inline-flex items-center gap-2 hover:opacity-90">
-            <span>Donations</span>
-            <ChevronDown className="h-5 w-5" />
-          </button>
-          <button className="inline-flex items-center gap-2 hover:opacity-90">
-            <span>Shop</span>
-            <ChevronDown className="h-5 w-5" />
-          </button>
-          <button className="inline-flex items-center gap-2 hover:opacity-90">
-            <span>Blog</span>
-            <ChevronDown className="h-5 w-5" />
-          </button>
-          <a href="#" className="hover:opacity-90">
-            Contact
-          </a>
-        </div>
-
-        {/* Donate button  */}
-        <div className="ml-10 hidden items-center lg:flex shrink-0">
-          <a
-            href="#"
-            className="group relative inline-flex shrink-0 items-center gap-5 rounded-full border-[3px] border-orange-400 px-6 py-3 text-xl font-extrabold tracking-wide text-white shadow-sm transition hover:bg-orange-500/15"
-          >
-            <span>Donate Now</span>
-            <span className="grid h-11 w-11 place-items-center rounded-full bg-orange-500 text-white transition group-hover:translate-x-0.5">
-              <ArrowRight className="h-6 w-6" />
-            </span>
-          </a>
+          {/* Donate button */}
+          <div className="ml-6 hidden lg:flex shrink-0">
+            <Link
+              to="/donate"
+              className="group relative inline-flex items-center gap-5 rounded-full border-[3px] border-orange-300/90 px-6 py-3 text-lg font-extrabold tracking-wide text-white shadow-sm transition hover:bg-white/10"
+            >
+              <span>Donate Now</span>
+              <span className="grid h-11 w-11 place-items-center rounded-full bg-orange-500 text-white transition group-hover:translate-x-0.5">
+                <ArrowRight className="h-6 w-6" />
+              </span>
+            </Link>
+          </div>
         </div>
       </nav>
 
-      {/* Mobile/Tablet  */}
+      {/* Mobile / Tablet  */}
       {mobileOpen && (
         <div className="lg:hidden">
-          <div className="space-y-2 border-t border-white/20 px-4 py-4 text-white/95">
-            <a href="#" className="block py-2 text-lg font-semibold">
+          <div className="space-y-2 border-t border-white/30 px-4 py-4 text-white/95 bg-black/25 backdrop-blur-sm">
+            <Link
+              to="/"
+              className="block py-2 text-lg font-semibold hover:text-[#FFE9CC]"
+              onClick={() => setMobileOpen(false)}
+            >
               Home
-            </a>
-            <a href="#" className="block py-2 text-lg font-semibold">
+            </Link>
+            <Link
+              to="/about"
+              className="block py-2 text-lg font-semibold hover:text-[#FFE9CC]"
+              onClick={() => setMobileOpen(false)}
+            >
               About
-            </a>
+            </Link>
 
-            {/* Services collapsible */}
-            <details className="group rounded-lg bg-[#2e9630] p-2 open:bg-[#18871f]/90">
+            <details className="group rounded-lg bg-white/10 p-2 ring-1 ring-white/20 open:bg-white/15">
               <summary className="flex cursor-pointer list-none items-center justify-between text-lg font-semibold">
                 <span>Services</span>
                 <ChevronDown className="h-5 w-5 transition group-open:rotate-180" />
@@ -284,63 +311,84 @@ export default function Header() {
                   "Geographical Issues",
                   "Social & Political Awareness",
                   "Miscellaneous",
-                ].map((label) => (
-                  <li key={label}>
-                    <a
-                      href="#"
-                      className="block rounded-md px-3 py-2 text-base hover:bg-white/10"
-                    >
-                      {label}
-                    </a>
-                  </li>
-                ))}
+                ].map((label) => {
+                  const slug = label.toLowerCase().replace(/\s+/g, "-");
+                  return (
+                    <li key={label}>
+                      <Link
+                        to={`/service/${slug}`}
+                        className="block rounded-md px-3 py-2 text-base hover:bg-white/10"
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        {label}
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             </details>
 
-            <a href="#" className="block py-2 text-lg font-semibold">
+            <Link
+              to="/donations"
+              className="block py-2 text-lg font-semibold hover:text-[#FFE9CC]"
+              onClick={() => setMobileOpen(false)}
+            >
               Donations
-            </a>
-            <a href="#" className="block py-2 text-lg font-semibold">
+            </Link>
+            <Link
+              to="/shop"
+              className="block py-2 text-lg font-semibold hover:text-[#FFE9CC]"
+              onClick={() => setMobileOpen(false)}
+            >
               Shop
-            </a>
-            <a href="#" className="block py-2 text-lg font-semibold">
+            </Link>
+            <Link
+              to="/blog"
+              className="block py-2 text-lg font-semibold hover:text-[#FFE9CC]"
+              onClick={() => setMobileOpen(false)}
+            >
               Blog
-            </a>
-            <a href="#" className="block py-2 text-lg font-semibold">
+            </Link>
+            <Link
+              to="/contact"
+              className="block py-2 text-lg font-semibold hover:text-[#FFE9CC]"
+              onClick={() => setMobileOpen(false)}
+            >
               Contact
-            </a>
+            </Link>
 
             <div className="flex items-center gap-4 pt-3">
               <button
+                className="grid h-10 w-10 place-items-center rounded-full ring-1 ring-white/30 hover:bg-white/10"
                 aria-label="Search"
-                className="grid h-10 w-10 place-items-center rounded-full ring-1 ring-white/30"
               >
                 <SearchIcon className="h-5 w-5" />
               </button>
               <button
+                className="relative grid h-10 w-10 place-items-center rounded-full ring-1 ring-white/30 hover:bg-white/10"
                 aria-label="Cart"
-                className="relative grid h-10 w-10 place-items-center rounded-full ring-1 ring-white/30"
               >
                 <CartIcon className="h-5 w-5" />
-                <span className="absolute -right-1 -top-1 grid h-5 w-5 place-items-center rounded-full bg-orange-500 text-[10px] font-black text-white ring-2 ring-black/80">
+                <span className="absolute -right-1 -top-1 grid h-5 w-5 place-items-center rounded-full bg-orange-500 text-[10px] font-black text-white ring-2 ring-black/40">
                   02
                 </span>
               </button>
               <button
+                className="grid h-10 w-10 place-items-center rounded-full ring-1 ring-white/30 hover:bg-white/10"
                 aria-label="Account"
-                className="grid h-10 w-10 place-items-center rounded-full ring-1 ring-white/30"
               >
                 <UserIcon className="h-5 w-5" />
               </button>
-              <a
-                href="#"
-                className="ml-auto inline-flex items-center gap-3 rounded-full border-2 border-orange-400 px-4 py-2 font-extrabold"
+              <Link
+                to="/donate"
+                className="ml-auto inline-flex items-center gap-3 rounded-full border-2 border-orange-300/90 px-4 py-2 font-extrabold text-white hover:bg-white/10"
+                onClick={() => setMobileOpen(false)}
               >
                 Donate Now
                 <span className="grid h-8 w-8 place-items-center rounded-full bg-orange-500">
-                  <ArrowRight className="h-5 w-5" />
+                  <ArrowRight className="h-5 w-5 text-white" />
                 </span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
