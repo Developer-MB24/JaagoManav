@@ -120,7 +120,7 @@ function EventCard({ event, onJoin }) {
           <button
             type="button"
             onClick={onJoin}
-            className="group inline-flex w-full sm:w-auto items-center justify-center gap-3 rounded-full bg-[#FFE08F] px-5 py-3 font-semibold text-[var(--navy)] ring-1 ring-[#F6D36A] hover:brightness-[.98]"
+            className="group inline-flex w-full sm:w-auto items-center justify-center gap-3 rounded-full bg-[#FF9933] px-5 py-3 font-semibold text-[var(--navy)] ring-1 ring-[#F6D36A] hover:brightness-[.98]"
           >
             Join Event
             <span className="inline-flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-[var(--india)] text-[var(--white)] group-hover:translate-x-0.5 transition">

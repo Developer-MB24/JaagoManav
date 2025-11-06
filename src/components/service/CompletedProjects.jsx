@@ -192,7 +192,7 @@ const CompletedProjects = () => {
               className="group inline-flex items-center gap-3 rounded-full bg-white/15 px-6 py-3 text-sm font-extrabold text-black ring-1 ring-white/20 transition hover:bg-white/20"
             >
               View All Projects
-              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#f6c544] text-black transition-transform duration-500 group-hover:rotate-[360deg]">
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#FF9933] text-black transition-transform duration-500 group-hover:rotate-[360deg]">
                 <ArrowRight className="w-4 h-4" />
               </span>
             </button>
