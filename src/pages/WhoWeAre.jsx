@@ -1,5 +1,5 @@
 import React from "react";
-import HeroWhoWeAre from "../components/whoweare/HeroWhoWeAre";
+// import HeroWhoWeAre from "../components/whoweare/HeroWhoWeAre";
 
 import CompanyStatsSection from "../components/whoweare/CompanyStatsSection";
 import JourneySection from "../components/whoweare/JourneySection";
@@ -13,7 +13,7 @@ import WhoWeAreSection from "../components/WhoWeAre/WhoWeAreSection.jsx";
 export default function Whoweare() {
   return (
     <>
-      <HeroWhoWeAre />
+      {/* <HeroWhoWeAre /> */}
       <WhoWeAreSection />
       <CompanyStatsSection />
       <JourneySection />
