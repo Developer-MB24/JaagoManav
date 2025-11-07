@@ -1,10 +1,12 @@
-import React, { lazy } from "react";
+import React, { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import MainLayout from "./layout/MainLayout.jsx";
 import Account from "./pages/Account.jsx";
 import Service from "./pages/Service.jsx";
 import About from "./pages/About.jsx";
 import Whoweare from "./pages/WhoWeAre.jsx";
+import BlogDetails from "./pages/BlogDetails.jsx";
+import Contact from "./pages/Contact.jsx";
 
 const Home = lazy(() => import("./pages/Home.jsx"));
 const Blog = lazy(() => import("./pages/Blog.jsx"));
@@ -22,30 +24,26 @@ function NotFound() {
 
 export default function App() {
   return (
-    <Routes>
-      <Route element={<MainLayout />}>
-        {/* / */}
-        <Route index element={<Home />} />
+    <Suspense fallback={<div className="p-8 text-center">Loading…</div>}>
+      <Routes>
+        <Route element={<MainLayout />}>
+          <Route index element={<Home />} />
+          <Route path="/blog" element={<Blog />} />
 
-        {/* /blog */}
-        <Route path="/blog" element={<Blog />} />
+          <Route path="/service" element={<Service />} />
+          <Route path="/service/:slug" element={<Service />} />
 
-        {/* /service and /service/:slug */}
-        <Route path="/service" element={<Service />} />
-        <Route path="/service/:slug" element={<Service />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/whoweare" element={<Whoweare />} />
 
-        {/* /account */}
-        <Route path="/account" element={<Account />} />
+          <Route path="/blogdetails" element={<BlogDetails />} />
 
-        {/* /about */}
-        <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
 
-        {/* /whoweare */}
-        <Route path="/whoweare" element={<Whoweare />} />
-
-        {/* 404 */}
-        <Route path="*" element={<NotFound />} />
-      </Route>
-    </Routes>
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </Suspense>
   );
 }

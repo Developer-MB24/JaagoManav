@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 
-/* --- icons unchanged --- */
+/* ========= Icons ========= */
 const ChevronDown = (props) => (
   <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" {...props}>
     <path d="M5.23 7.21a.75.75 0 011.06.02L10 10.06l3.71-2.83a.75.75 0 11.92 1.18l-4.2 3.2a.75.75 0 01-.92 0l-4.2-3.2a.75.75 0 01-.02-1.2z" />
@@ -58,7 +58,7 @@ const ArrowRight = (p) => (
   </svg>
 );
 
-/* --- utils & dropdown unchanged --- */
+/* ========= Utils ========= */
 function useOnClickOutside(refs, handler) {
   useEffect(() => {
     function onClick(e) {
@@ -71,9 +71,10 @@ function useOnClickOutside(refs, handler) {
   }, [refs, handler]);
 }
 
-function ServicesPortalDropdown({ anchorRef, onClose }) {
+/* ========= Shared Portal Dropdown ========= */
+function SimplePortalDropdown({ anchorRef, onClose, items }) {
   const menuRef = useRef(null);
-  const [pos, setPos] = useState({ top: 0, left: 0, width: 288 });
+  const [pos, setPos] = useState({ top: 0, left: 0, width: 240 });
 
   const updatePosition = () => {
     const btn = anchorRef.current;
@@ -82,7 +83,7 @@ function ServicesPortalDropdown({ anchorRef, onClose }) {
     setPos({
       top: rect.bottom + 8,
       left: rect.left,
-      width: rect.width < 288 ? 288 : rect.width,
+      width: Math.max(rect.width, 240),
     });
   };
 
@@ -104,22 +105,11 @@ function ServicesPortalDropdown({ anchorRef, onClose }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
-  const items = [
-    "Service",
-    "Education",
-    "Health",
-    "Agriculture",
-    "Employment",
-    "Geographical Issues",
-    "Social & Political Awareness",
-    "Miscellaneous",
-  ];
-
   const menu = (
     <div
       ref={menuRef}
       role="menu"
-      aria-label="Services Menu"
+      aria-label="Menu"
       style={{
         top: pos.top,
         left: pos.left,
@@ -136,21 +126,18 @@ function ServicesPortalDropdown({ anchorRef, onClose }) {
         }}
       />
       <ul className="py-2">
-        {items.map((label) => {
-          const slug = label.toLowerCase().replace(/\s+/g, "-");
-          return (
-            <li key={label}>
-              <Link
-                to={`/service/${slug}`}
-                className="block px-5 py-2.5 text-[17px] font-semibold tracking-wide hover:bg-slate-50 focus:bg-slate-50 focus:outline-none"
-                role="menuitem"
-                onClick={onClose}
-              >
-                {label}
-              </Link>
-            </li>
-          );
-        })}
+        {items.map(({ label, to }) => (
+          <li key={label}>
+            <Link
+              to={to}
+              className="block px-5 py-2.5 text-[16.5px] font-semibold tracking-wide hover:bg-slate-50 focus:bg-slate-50 focus:outline-none"
+              role="menuitem"
+              onClick={onClose}
+            >
+              {label}
+            </Link>
+          </li>
+        ))}
       </ul>
     </div>
   );
@@ -158,12 +145,20 @@ function ServicesPortalDropdown({ anchorRef, onClose }) {
   return createPortal(menu, document.body);
 }
 
-/* ------------------ HEADER (updated bg) ------------------ */
+/* ========= Header ========= */
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+
   const [servicesOpen, setServicesOpen] = useState(false);
   const servicesButtonRef = useRef(null);
-  useOnClickOutside([servicesButtonRef], () => setServicesOpen(false));
+
+  const [blogOpen, setBlogOpen] = useState(false);
+  const blogButtonRef = useRef(null);
+
+  useOnClickOutside([servicesButtonRef, blogButtonRef], () => {
+    setServicesOpen(false);
+    setBlogOpen(false);
+  });
 
   useEffect(() => {
     const mql = window.matchMedia("(min-width: 1024px)");
@@ -174,31 +169,29 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full relative overflow-hidden">
-      {/* tricolor gradient overlays (top orange, bottom green) */}
+      {/* Tricolor overlays */}
       <div className="absolute inset-0 pointer-events-none -z-10">
         <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-[#FF9933] to-transparent opacity-30 animate-slideDown" />
         <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-[#138808] to-transparent opacity-30 animate-slideUp" />
       </div>
-
-      {/* optional subtle base to improve contrast on transparent pages */}
       <div className="absolute inset-0 -z-20 bg-black/10 backdrop-blur-[2px]" />
 
       <nav className="mx-auto flex max-w-screen-2xl items-center justify-between gap-6 px-4 py-3 md:px-6 lg:px-8 text-white">
-        <div className="flex w-full items-center justify-between gap-6 rounded-2xl bg-black/25 px-3 py-2 ring-1 ring-white/20">
-          {/* Logo */}
+        <div className="flex w-full items-center justify-between gap-1 rounded-2xl bg-black/25 px-3 py-2 ring-1 ring-white/20">
+          {/* Logo (bigger) */}
           <Link
             to="/"
             className="shrink-0 rounded-xl bg-white/10 p-2 ring-1 ring-white/30"
           >
             <img
-              src="/images/jaago-manav-logo.webp"
+              src="/images/jaago-manav-logo.png"
               alt="Jaago Manav Logo"
-              className="h-10 w-auto md:h-12"
+              className="h-14 w-auto md:h-24"
               loading="eager"
             />
           </Link>
 
-          {/* Hamburger (mobile/tablet) */}
+          {/* Hamburger */}
           <button
             className="inline-flex items-center justify-center rounded-lg bg-white/10 p-2 ring-1 ring-white/30 focus:outline-none focus:ring-2 focus:ring-white/60 lg:hidden"
             aria-label="Toggle menu"
@@ -224,6 +217,7 @@ export default function Header() {
               About
             </Link>
 
+            {/* Services dropdown */}
             <div className="relative">
               <button
                 ref={servicesButtonRef}
@@ -233,6 +227,7 @@ export default function Header() {
                 onClick={(e) => {
                   e.stopPropagation();
                   setServicesOpen((v) => !v);
+                  setBlogOpen(false);
                 }}
               >
                 <span>Services</span>
@@ -243,9 +238,57 @@ export default function Header() {
                 />
               </button>
               {servicesOpen && (
-                <ServicesPortalDropdown
+                <SimplePortalDropdown
                   anchorRef={servicesButtonRef}
                   onClose={() => setServicesOpen(false)}
+                  items={[
+                    { label: "Service", to: "/service/service" },
+                    { label: "Education", to: "/service/education" },
+                    { label: "Health", to: "/service/health" },
+                    { label: "Agriculture", to: "/service/agriculture" },
+                    { label: "Employment", to: "/service/employment" },
+                    {
+                      label: "Geographical Issues",
+                      to: "/service/geographical-issues",
+                    },
+                    {
+                      label: "Social & Political Awareness",
+                      to: "/service/social-&-political-awareness",
+                    },
+                    { label: "Miscellaneous", to: "/service/miscellaneous" },
+                  ]}
+                />
+              )}
+            </div>
+
+            {/* Blog dropdown */}
+            <div className="relative">
+              <button
+                ref={blogButtonRef}
+                className="flex items-center gap-2 hover:text-[#FFE9CC] focus:outline-none"
+                aria-haspopup="true"
+                aria-expanded={blogOpen}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setBlogOpen((v) => !v);
+                  setServicesOpen(false);
+                }}
+              >
+                <span>Blog</span>
+                <ChevronDown
+                  className={`h-5 w-5 transition-transform ${
+                    blogOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+              {blogOpen && (
+                <SimplePortalDropdown
+                  anchorRef={blogButtonRef}
+                  onClose={() => setBlogOpen(false)}
+                  items={[
+                    { label: "Blog", to: "/blog" },
+                    { label: "Blog Details", to: "/blogdetails" },
+                  ]}
                 />
               )}
             </div>
@@ -256,22 +299,39 @@ export default function Header() {
             <Link to="/shop" className="hover:text-[#FFE9CC]">
               Shop
             </Link>
-            <Link to="/blog" className="hover:text-[#FFE9CC]">
-              Blog
-            </Link>
             <Link to="/contact" className="hover:text-[#FFE9CC]">
               Contact
             </Link>
           </div>
 
-          {/* Donate button */}
-          <div className="ml-6 hidden lg:flex shrink-0">
+          {/* Desktop: Search + Cart + Donate */}
+          <div className="ml-6 hidden lg:flex items-center gap-5 shrink-0">
+            {/* Search */}
+            <button
+              aria-label="Search"
+              className="grid h-10 w-10 place-items-center rounded-full text-white hover:bg-white/10 ring-1 ring-white/20"
+            >
+              <SearchIcon className="h-6 w-6" />
+            </button>
+
+            {/* Cart with badge */}
+            <button
+              aria-label="Cart"
+              className="relative grid h-10 w-10 place-items-center rounded-full text-white hover:bg-white/10 ring-1 ring-white/20"
+            >
+              <CartIcon className="h-6 w-6" />
+              <span className="absolute -right-2 -top-2 grid h-6 w-6 place-items-center rounded-full bg-[#FF5A1F] text-[10px] font-black text-white ring-2 ring-black/30">
+                02
+              </span>
+            </button>
+
+            {/* Donate */}
             <Link
               to="/donate"
-              className="group relative inline-flex items-center gap-5 rounded-full border-[3px] border-orange-300/90 px-6 py-3 text-lg font-extrabold tracking-wide text-white shadow-sm transition hover:bg-white/10"
+              className="group relative inline-flex items-center gap-5 rounded-full border-[3px] border-[#FF5A1F] px-6 py-3 text-lg font-extrabold tracking-wide text-white shadow-sm transition hover:bg-white/10"
             >
               <span>Donate Now</span>
-              <span className="grid h-11 w-11 place-items-center rounded-full bg-orange-500 text-white transition group-hover:translate-x-0.5">
+              <span className="grid h-11 w-11 place-items-center rounded-full bg-[#FF5A1F] text-white transition group-hover:translate-x-0.5">
                 <ArrowRight className="h-6 w-6" />
               </span>
             </Link>
@@ -279,7 +339,7 @@ export default function Header() {
         </div>
       </nav>
 
-      {/* Mobile / Tablet  */}
+      {/* Mobile / Tablet */}
       {mobileOpen && (
         <div className="lg:hidden">
           <div className="space-y-2 border-t border-white/30 px-4 py-4 text-white/95 bg-black/25 backdrop-blur-sm">
@@ -298,6 +358,7 @@ export default function Header() {
               About
             </Link>
 
+            {/* Services group */}
             <details className="group rounded-lg bg-white/10 p-2 ring-1 ring-white/20 open:bg-white/15">
               <summary className="flex cursor-pointer list-none items-center justify-between text-lg font-semibold">
                 <span>Services</span>
@@ -305,28 +366,55 @@ export default function Header() {
               </summary>
               <ul className="mt-2 space-y-1">
                 {[
-                  "Service",
-                  "Education",
-                  "Health",
-                  "Agriculture",
-                  "Employment",
-                  "Geographical Issues",
-                  "Social & Political Awareness",
-                  "Miscellaneous",
-                ].map((label) => {
-                  const slug = label.toLowerCase().replace(/\s+/g, "-");
-                  return (
-                    <li key={label}>
-                      <Link
-                        to={`/service/${slug}`}
-                        className="block rounded-md px-3 py-2 text-base hover:bg-white/10"
-                        onClick={() => setMobileOpen(false)}
-                      >
-                        {label}
-                      </Link>
-                    </li>
-                  );
-                })}
+                  { label: "Service", to: "/service/service" },
+                  { label: "Education", to: "/service/education" },
+                  { label: "Health", to: "/service/health" },
+                  { label: "Agriculture", to: "/service/agriculture" },
+                  { label: "Employment", to: "/service/employment" },
+                  {
+                    label: "Geographical Issues",
+                    to: "/service/geographical-issues",
+                  },
+                  {
+                    label: "Social & Political Awareness",
+                    to: "/service/social-&-political-awareness",
+                  },
+                  { label: "Miscellaneous", to: "/service/miscellaneous" },
+                ].map((item) => (
+                  <li key={item.label}>
+                    <Link
+                      to={item.to}
+                      className="block rounded-md px-3 py-2 text-base hover:bg-white/10"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </details>
+
+            {/* Blog group */}
+            <details className="group rounded-lg bg-white/10 p-2 ring-1 ring-white/20 open:bg-white/15">
+              <summary className="flex cursor-pointer list-none items-center justify-between text-lg font-semibold">
+                <span>Blog</span>
+                <ChevronDown className="h-5 w-5 transition group-open:rotate-180" />
+              </summary>
+              <ul className="mt-2 space-y-1">
+                {[
+                  { label: "Blog", to: "/blog" },
+                  { label: "Blog Details", to: "/blogdetails" },
+                ].map((item) => (
+                  <li key={item.label}>
+                    <Link
+                      to={item.to}
+                      className="block rounded-md px-3 py-2 text-base hover:bg-white/10"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </details>
 
@@ -343,13 +431,6 @@ export default function Header() {
               onClick={() => setMobileOpen(false)}
             >
               Shop
-            </Link>
-            <Link
-              to="/blog"
-              className="block py-2 text-lg font-semibold hover:text-[#FFE9CC]"
-              onClick={() => setMobileOpen(false)}
-            >
-              Blog
             </Link>
             <Link
               to="/contact"
@@ -371,7 +452,7 @@ export default function Header() {
                 aria-label="Cart"
               >
                 <CartIcon className="h-5 w-5" />
-                <span className="absolute -right-1 -top-1 grid h-5 w-5 place-items-center rounded-full bg-orange-500 text-[10px] font-black text-white ring-2 ring-black/40">
+                <span className="absolute -right-1 -top-1 grid h-5 w-5 place-items-center rounded-full bg-[#FF5A1F] text-[10px] font-black text-white ring-2 ring-black/40">
                   02
                 </span>
               </button>
@@ -383,11 +464,11 @@ export default function Header() {
               </button>
               <Link
                 to="/donate"
-                className="ml-auto inline-flex items-center gap-3 rounded-full border-2 border-orange-300/90 px-4 py-2 font-extrabold text-white hover:bg-white/10"
+                className="ml-auto inline-flex items-center gap-3 rounded-full border-2 border-[#FF5A1F] px-4 py-2 font-extrabold text-white hover:bg-white/10"
                 onClick={() => setMobileOpen(false)}
               >
                 Donate Now
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-orange-500">
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-[#FF5A1F]">
                   <ArrowRight className="h-5 w-5 text-white" />
                 </span>
               </Link>
@@ -396,16 +477,10 @@ export default function Header() {
         </div>
       )}
 
-      {/* local keyframes for header overlays */}
+      {/* Keyframes */}
       <style>{`
-        @keyframes slideDown {
-          0% { transform: translateY(-24px); opacity: .45; }
-          100% { transform: translateY(0); opacity: .30; }
-        }
-        @keyframes slideUp {
-          0% { transform: translateY(24px); opacity: .45; }
-          100% { transform: translateY(0); opacity: .30; }
-        }
+        @keyframes slideDown { 0% { transform: translateY(-24px); opacity:.45 } 100% { transform: translateY(0); opacity:.30 } }
+        @keyframes slideUp   { 0% { transform: translateY(24px);  opacity:.45 } 100% { transform: translateY(0); opacity:.30 } }
         .animate-slideDown { animation: slideDown 7s ease-in-out infinite alternate; }
         .animate-slideUp   { animation: slideUp   7s ease-in-out infinite alternate; }
       `}</style>
