@@ -7,8 +7,8 @@ const slides = [
     titleTop: "Helping Hands",
     titleBottomAccent: "Changing Lives",
     text: "We help communities develop sustainable programs across education, health, and livelihoods.",
-    photo: "/images/about-two-img-3.jpg",
-    circle: "/images/about-two-img-3.jpg",
+    photo: "/images/homehero1.png",
+    circle: "/images/homehero1.png",
   },
   {
     id: 2,
@@ -16,8 +16,8 @@ const slides = [
     titleTop: "Every Child",
     titleBottomAccent: "Learns",
     text: "Bridge schooling, literacy camps, and digital readiness for real continuity.",
-    photo: "/images/about-two-img-1.jpg",
-    circle: "/images/about-two-img-1.jpg",
+    photo: "/images/homehero2.png",
+    circle: "/images/homehero2.png",
   },
   {
     id: 3,
@@ -25,8 +25,8 @@ const slides = [
     titleTop: "Healthy Today",
     titleBottomAccent: "Stronger Tomorrow",
     text: "Preventive camps, screenings, and awareness drives with community volunteers.",
-    photo: "/images/about-two-img-2.jpg",
-    circle: "/images/about-two-img-2.jpg",
+    photo: "/images/homehero3.png",
+    circle: "/images/homehero3.png",
   },
 ];
 
@@ -57,13 +57,14 @@ export default function HeroCarousel() {
   useEffect(() => {
     const target = active.circle || active.photo;
     if (target !== circleSrc) setNextCircleSrc(target);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index]);
 
   // Autoplay
   useEffect(() => {
     play();
     return stop;
-  }, [index]);
+  }, [index]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const play = () => {
     stop();
@@ -86,12 +87,18 @@ export default function HeroCarousel() {
     setEnterKey((k) => k + 1);
   };
 
+  // 👇 Set this to your sticky header height (in px)
+  const HEADER_H = 88;
+
   return (
     <section
       className="relative isolate overflow-hidden"
       onMouseEnter={() => (hoveredRef.current = true)}
       onMouseLeave={() => (hoveredRef.current = false)}
-      style={{ minHeight: "70vh" }}
+      style={{
+        minHeight: `calc(100dvh - ${HEADER_H}px)`,
+        height: `calc(100vh - ${HEADER_H}px)`,
+      }}
     >
       {/* Background slides */}
       <div className="absolute inset-0 -z-10">
@@ -119,7 +126,7 @@ export default function HeroCarousel() {
         })}
       </div>
 
-      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 px-4 py-16 md:grid-cols-2 md:py-24">
+      <div className="mx-auto grid min-h-[inherit] max-w-6xl grid-cols-1 items-center gap-10 px-4 py-16 md:grid-cols-2 md:py-24">
         {/* Left */}
         <div key={`text-${enterKey}`} className="relative z-30">
           <p className="text-sm uppercase tracking-[0.2em] text-white/80">
