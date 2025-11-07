@@ -1,10 +1,14 @@
-export default function HeroWhoWeAre({ onPlay = () => {} }) {
+import React from "react";
+
+export default function HeroWhoWeAre({ onPlay }) {
+  const handlePlay = onPlay ?? (() => {});
+
   return (
     <section className="relative w-full overflow-hidden">
       {/* Tricolor base (India flag) */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#FF9933]/40 via-white to-[#138808]/40" />
 
-      {/* Animated soft glows (self-contained classes below) */}
+      {/* Animated soft glows */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-[#FF9933] to-transparent opacity-30 animate-slideDown" />
         <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-[#138808] to-transparent opacity-30 animate-slideUp" />
@@ -45,7 +49,7 @@ export default function HeroWhoWeAre({ onPlay = () => {} }) {
           {/* Play button */}
           <button
             aria-label="Play video"
-            onClick={onPlay}
+            onClick={handlePlay}
             className="absolute inset-0 m-auto w-20 h-20 rounded-full bg-white/85 backdrop-blur flex items-center justify-center shadow-xl transition-transform hover:scale-110"
           >
             <svg
@@ -60,7 +64,7 @@ export default function HeroWhoWeAre({ onPlay = () => {} }) {
         </div>
       </div>
 
-      {/* Self-contained keyframes & utility classes */}
+      {/* Self-contained keyframes */}
       <style>{`
         @keyframes slideDown {
           0% { transform: translateY(-28px); opacity: .45; }
@@ -71,7 +75,7 @@ export default function HeroWhoWeAre({ onPlay = () => {} }) {
           100% { transform: translateY(0); opacity: .30; }
         }
         .animate-slideDown { animation: slideDown 6s ease-in-out infinite alternate; }
-        .animate-slideUp { animation: slideUp 6s ease-in-out infinite alternate; }
+        .animate-slideUp   { animation: slideUp   6s ease-in-out infinite alternate; }
       `}</style>
     </section>
   );
