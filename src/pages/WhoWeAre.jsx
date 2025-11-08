@@ -8,7 +8,7 @@ import EconestUpcomingEvents from "../components/whoweare/EconestUpcomingEvents.
 
 import ContactBar from "../components/whoweare/ContactBar.jsx";
 import WhoWeAreTestimonial from "../components/whoweare/WhoWeAreTestimonial.jsx";
-import WhoWeAreSection from "../components/WhoWeAre/WhoWeAreSection.jsx";
+import WhoWeAreSection from "../components/whoweare/WhoWeAreSection.jsx";
 
 export default function Whoweare() {
   return (
