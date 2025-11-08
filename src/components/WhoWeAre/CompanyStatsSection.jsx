@@ -29,7 +29,7 @@ const stats = [
   },
 ];
 
-const CompanyStatsSection = () => (
+export default CompanyStatsSection = () => (
   <section
     className="relative py-24 px-3 overflow-hidden bg-[#FAFBF5] flex justify-center items-center"
     style={{ minHeight: 380 }}
@@ -76,5 +76,3 @@ const CompanyStatsSection = () => (
     </style>
   </section>
 );
-
-export default CompanyStatsSection;
