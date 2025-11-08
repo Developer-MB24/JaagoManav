@@ -10,28 +10,28 @@ const volunteers = [
   {
     name: "Jessica Brown",
     role: "Volunteer",
-    img: "/images/about-two-img-1.jpg",
+    img: "/images/1 - Expert Volunteer.jpg",
     accent: "bg-[#FF9933]", // India Saffron
     border: "ring-[#FF9933]",
   },
   {
     name: "James Fuller",
     role: "Founder",
-    img: "/images/about-two-img-2.jpg",
+    img: "/images/2 - Expert Volunteer.jpg",
     accent: "bg-[#000080]", // White
     border: "ring-[#000080]", // Navy ring for visibility
   },
   {
     name: "Jasmet Mangat",
     role: "Manager",
-    img: "/images/about-two-img-3.jpg",
+    img: "/images/3 - Expert Volunteer.jpg",
     accent: "bg-[#138808]", // India Green
     border: "ring-[#138808]",
   },
   {
     name: "Tim Southe",
     role: "Founder",
-    img: "/images/about-two-img-1.jpg",
+    img: "/images/2 - Expert Volunteer.jpg",
     accent: "bg-[#000080]", // Navy Blue
     border: "ring-[#000080]",
   },
@@ -51,14 +51,38 @@ const item = {
   show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
 };
 
-function VolunteerCard({ v }) {
+// 🔹 NEW: directional image slide variants (left for first 2, right for last 2)
+const imgVariants = {
+  hidden: (dir) => ({
+    opacity: 0,
+    x: dir === "left" ? -40 : 40,
+    scale: 0.98,
+  }),
+  show: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: { duration: 0.55, ease: "easeOut" },
+  },
+};
+
+function VolunteerCard({ v, index }) {
+  const dir = index < 2 ? "left" : "right"; // first 2 from left, last 2 from right
+
   return (
     <motion.article
       variants={item}
       className="group relative rounded-[22px] shadow-lg bg-white overflow-hidden"
     >
-      {/* Image region */}
-      <div className="relative h-64">
+      {/* Image region (directional slide-in) */}
+      <motion.div
+        className="relative h-64"
+        variants={imgVariants}
+        custom={dir}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.4 }}
+      >
         <img
           src={v.img}
           alt={v.name}
@@ -87,7 +111,7 @@ function VolunteerCard({ v }) {
             )
           )}
         </div>
-      </div>
+      </motion.div>
 
       <div className="h-[10px]">
         <svg
@@ -131,11 +155,39 @@ export default function VolunteerSection() {
       <div className="max-w-6xl mx-auto px-4">
         {/* Heading */}
         <div className="text-center mb-10">
-          <p className="uppercase tracking-widest text-[#FF9933] font-semibold text-sm">
-            Expert Volunteer
-          </p>
-          <h2 className="text-4xl font-extrabold text-[#138808]">
-            Meet Our <span className="text-[#FF9933]">Volunteer</span>
+          {/* 🔸 italic orange label + gliding underline */}
+          <div className="uppercase tracking-widest text-[#FF9933] font-semibold text-sm italic inline-block">
+            <span className="relative inline-block">
+              Expert Volunteer
+              <div className="relative mx-auto mt-1 h-[3px] w-48 overflow-hidden">
+                {/* faint baseline */}
+                <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[2px] bg-[#FF9933]/30" />
+                {/* moving bar */}
+                <motion.div
+                  className="absolute top-1/2 -translate-y-1/2 h-[3px] w-20 rounded bg-[#FF9933]"
+                  animate={{ x: [0, 112, 0] }} // 112px ≈ (w-48 - w-20)
+                  transition={{
+                    duration: 1.6,
+                    repeat: Infinity,
+                    repeatType: "mirror",
+                    ease: "easeInOut",
+                  }}
+                />
+              </div>
+            </span>
+          </div>
+
+          {/* 🔸 Split H2 into two bottom→up blocks */}
+          <h2 className="mt-3 text-4xl font-extrabold text-[#138808]">
+            <motion.span
+              className="block"
+              initial={{ y: 40, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true, amount: 0.6 }}
+              transition={{ duration: 0.55, ease: "easeOut" }}
+            >
+              Meet Our <span className="text-[#FF9933]">Volunteer</span>
+            </motion.span>
           </h2>
         </div>
 
@@ -147,8 +199,9 @@ export default function VolunteerSection() {
           viewport={{ once: true, amount: 0.25 }}
           className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
         >
-          {volunteers.map((v) => (
-            <VolunteerCard key={v.name} v={v} />
+          {volunteers.map((v, i) => (
+            // 🔹 pass index so first two can come from left, last two from right
+            <VolunteerCard key={v.name} v={v} index={i} />
           ))}
         </motion.div>
       </div>

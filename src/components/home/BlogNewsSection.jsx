@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import {
   CalendarDays,
   User2,
@@ -117,13 +118,48 @@ export default function BlogNewsSection() {
     <section className="py-16">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-10">
-          <p className="uppercase tracking-widest text-[#FF9933] font-semibold text-sm">
-            News and Blogs
-          </p>
-          <h2 className="text-4xl font-extrabold text-[#138808]">
-            We Articles From Blog
-            <br />
-            <span className="text-[#FF9933]">News and Story</span>
+          {/* italic orange label + gliding underline */}
+          <div className="uppercase tracking-widest text-[#FF9933] font-semibold text-sm italic inline-block">
+            <span className="relative inline-block">
+              News and Blogs
+              <div className="relative mx-auto mt-1 h-[3px] w-48 overflow-hidden">
+                {/* faint baseline */}
+                <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[2px] bg-[#FF9933]/30" />
+                {/* moving bar */}
+                <motion.div
+                  className="absolute top-1/2 -translate-y-1/2 h-[3px] w-20 rounded bg-[#FF9933]"
+                  animate={{ x: [0, 112, 0] }} // 112px ≈ (w-48 - w-20)
+                  transition={{
+                    duration: 1.6,
+                    repeat: Infinity,
+                    repeatType: "mirror",
+                    ease: "easeInOut",
+                  }}
+                />
+              </div>
+            </span>
+          </div>
+
+          {/* Split H2 into two animated blocks: top→down then bottom→up */}
+          <h2 className="mt-3 text-4xl font-extrabold text-[#138808] leading-tight">
+            <motion.span
+              className="block"
+              initial={{ y: -40, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true, amount: 0.6 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
+              We Articles From Blog
+            </motion.span>
+            <motion.span
+              className="block"
+              initial={{ y: 40, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true, amount: 0.6 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.12 }}
+            >
+              <span className="text-[#FF9933]">News and Story</span>
+            </motion.span>
           </h2>
         </div>
 

@@ -1,5 +1,6 @@
 import { CheckCircle } from "lucide-react";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 export default function HelpSection() {
   const [activeTab, setActiveTab] = useState("education");
@@ -73,12 +74,48 @@ export default function HelpSection() {
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Heading */}
         <div className="text-center mb-12">
-          <p className="text-[#FF9933] italic font-semibold tracking-wide">
-            WE TAKE CARE THEM
-          </p>
-          <h2 className="text-4xl font-extrabold text-[#138808]">
-            We Always Help The{" "}
-            <span className="text-[#FF9933]">Needy People</span>
+          {/* Italic orange label + animated underline */}
+          <div className="text-[#FF9933] italic font-semibold tracking-wide inline-block">
+            <span className="relative inline-block">
+              WE TAKE CARE THEM
+              <div className="relative mx-auto mt-1 h-[3px] w-48 overflow-hidden">
+                {/* faint baseline */}
+                <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[2px] bg-[#FF9933]/30" />
+                {/* gliding bar */}
+                <motion.div
+                  className="absolute top-1/2 -translate-y-1/2 h-[3px] w-20 rounded bg-[#FF9933]"
+                  animate={{ x: [0, 112, 0] }} // 112px ≈ (w-48 - w-20)
+                  transition={{
+                    duration: 1.7,
+                    repeat: Infinity,
+                    repeatType: "mirror",
+                    ease: "easeInOut",
+                  }}
+                />
+              </div>
+            </span>
+          </div>
+
+          {/* Split H2 with opposite slide reveals */}
+          <h2 className="mt-3 text-4xl font-extrabold text-[#138808] leading-tight">
+            <motion.span
+              className="block"
+              initial={{ y: -40, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true, amount: 0.6 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
+              We Always Help The
+            </motion.span>
+            <motion.span
+              className="block"
+              initial={{ y: 40, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true, amount: 0.6 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
+            >
+              <span className="text-[#FF9933]">Needy People</span>
+            </motion.span>
           </h2>
         </div>
 

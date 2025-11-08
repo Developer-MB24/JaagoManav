@@ -1,84 +1,180 @@
+import React from "react";
 import { HeartHandshake, HandCoins, Users2, HandHeart } from "lucide-react";
-import { motion } from "framer-motion";
 
-function StatCard({ value, label, colorFrom, colorTo, Icon, delay = 0 }) {
+/* ------------ Count-up (roll number, then stop) ------------ */
+function useCountUpString(targetStr, start) {
+  const [out, setOut] = React.useState(targetStr);
+
+  React.useEffect(() => {
+    if (!start) {
+      setOut(targetStr);
+      return;
+    }
+    const m = String(targetStr)
+      .trim()
+      .match(/^(\d+(?:\.\d+)?)(.*)$/);
+    if (!m) {
+      setOut(targetStr);
+      return;
+    }
+    const target = parseFloat(m[1]);
+    const suffix = m[2] ?? "";
+    const isFloat = m[1].includes(".");
+    const duration = 1600;
+    let raf = 0;
+    let t0 = 0;
+
+    const easeOutCubic = (p) => 1 - Math.pow(1 - p, 3);
+
+    const step = (ts) => {
+      if (!t0) t0 = ts;
+      const p = Math.min((ts - t0) / duration, 1);
+      const eased = easeOutCubic(p);
+      const val = target * eased;
+      const shown = isFloat ? val.toFixed(1) : Math.floor(val).toString();
+      setOut(`${shown}${suffix}`);
+      if (p < 1) raf = requestAnimationFrame(step);
+    };
+
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [targetStr, start]);
+
+  return out;
+}
+
+/* ------------ One stat card ------------ */
+function StatCard({
+  value,
+  label,
+  colorFrom,
+  colorTo,
+  Icon,
+  withLeftDivider = false,
+}) {
+  const ref = React.useRef(null);
+  const [inView, setInView] = React.useState(false);
+  const rolled = useCountUpString(value, inView);
+
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.55 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <div className="flex items-center gap-4">
-      <div
-        className="relative grid place-items-center w-16 h-16 shrink-0 shadow-lg"
-        style={{
-          clipPath:
-            "polygon(25% 4%, 75% 4%, 100% 50%, 75% 96%, 25% 96%, 0% 50%)",
-          backgroundImage: `linear-gradient(135deg, ${colorFrom}, ${colorTo})`,
-        }}
-      >
-        <div className="grid place-items-center w-10 h-10 rounded-xl bg-white/90 shadow-sm">
-          <Icon className="w-6 h-6 text-gray-800" />
+    <div
+      ref={ref}
+      className="relative flex flex-col items-center justify-center py-4"
+    >
+      {/* vertical divider (left) */}
+      {withLeftDivider && (
+        <span className="pointer-events-none absolute left-0 top-0 hidden h-full w-px bg-gray-200 sm:block" />
+      )}
+
+      {/* Hex badge with icon */}
+      <div className="relative h-16 w-16">
+        {/* Outer hex (gradient) */}
+        <div
+          className="absolute inset-0 rounded-none shadow-lg transition-transform duration-300 group-hover:-translate-y-0.5"
+          style={{
+            clipPath:
+              "polygon(25% 4%, 75% 4%, 100% 50%, 75% 96%, 25% 96%, 0% 50%)",
+            backgroundImage: `linear-gradient(135deg, ${colorFrom}, ${colorTo})`,
+          }}
+        />
+
+        {/* Inner hex – turns white on hover */}
+        <div
+          className="absolute inset-[6px] bg-white/85 transition-colors duration-300 group-hover:bg-white"
+          style={{
+            clipPath:
+              "polygon(25% 4%, 75% 4%, 100% 50%, 75% 96%, 25% 96%, 0% 50%)",
+          }}
+        />
+
+        {/* Icon layer (keep above everything so it never disappears) */}
+        <div className="absolute inset-0 grid place-items-center z-10">
+          <div className="grid h-10 w-10 place-items-center rounded-xl bg-white/92 shadow-sm transition-all duration-300 group-hover:bg-white group-hover:shadow-md">
+            <Icon className="h-6 w-6 text-slate-900" strokeWidth={2.2} />
+          </div>
         </div>
       </div>
 
-      <div>
-        <motion.div
-          className="text-3xl font-extrabold tracking-tight text-gray-800 inline-block"
-          initial={{ rotate: 0 }}
-          whileInView={{ rotate: 360 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay }}
-          viewport={{ once: true, amount: 0.6 }}
-        >
-          {value}
-        </motion.div>
-        <div className="text-sm text-gray-500">{label}</div>
+      {/* Number + label */}
+      <div className="mt-5 text-center">
+        <div className="text-3xl font-extrabold tracking-tight text-slate-900">
+          {rolled}
+        </div>
+        <div className="mt-2 text-sm text-slate-500">{label}</div>
       </div>
     </div>
   );
 }
 
+/* ------------ Stats strip ------------ */
 export default function Statsstrip() {
+  const stats = [
+    {
+      value: "220K",
+      label: "Poor Educate",
+      from: "#FF9933",
+      to: "#FF9933",
+      Icon: HeartHandshake,
+    },
+    {
+      value: "95M+",
+      label: "Fund Raised",
+      from: "#F6C445",
+      to: "#E4B018",
+      Icon: HandCoins,
+    },
+    {
+      value: "150K",
+      label: "Team Member",
+      from: "#21C197",
+      to: "#10B981",
+      Icon: Users2,
+    },
+    {
+      value: "32M+",
+      label: "Donate now",
+      from: "#7C3AED",
+      to: "#8B5CF6",
+      Icon: HandHeart,
+    },
+  ];
+
   return (
     <section className="w-full">
-      <div className="mx-auto max-w-6xl">
-        <div className="flex flex-col sm:flex-row items-stretch justify-between gap-8 sm:gap-0 bg-white/60 backdrop-blur rounded-2xl px-6 sm:px-8 py-8">
-          <StatCard
-            value="220K"
-            label="Poor Educate"
-            colorFrom="#FF9933"
-            colorTo="#FF9933"
-            Icon={HeartHandshake}
-            delay={0.0}
-          />
-
-          <div className="hidden sm:block w-px self-stretch bg-gray-200 mx-8" />
-
-          <StatCard
-            value="95M+"
-            label="Fund Raised"
-            colorFrom="#000080"
-            colorTo="#000080"
-            Icon={HandCoins}
-            delay={0.1}
-          />
-
-          <div className="hidden sm:block w-px self-stretch bg-gray-200 mx-8" />
-
-          <StatCard
-            value="150K"
-            label="Team Member"
-            colorFrom="#000080"
-            colorTo="#138808"
-            Icon={Users2}
-            delay={0.2}
-          />
-
-          <div className="hidden sm:block w-px self-stretch bg-gray-200 mx-8" />
-
-          <StatCard
-            value="32M+"
-            label="Donate now"
-            colorFrom="#138808"
-            colorTo="#138808"
-            Icon={HandHeart}
-            delay={0.3}
-          />
+      <div className="mx-auto max-w-6xl px-4">
+        {/* card background */}
+        <div className="rounded-3xl bg-white/60 p-6 sm:p-10 backdrop-blur">
+          {/* 4 equal columns; centered perfectly */}
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-4 sm:gap-0">
+            {stats.map((s, i) => (
+              <div className="group" key={s.label}>
+                <StatCard
+                  value={s.value}
+                  label={s.label}
+                  colorFrom={s.from}
+                  colorTo={s.to}
+                  Icon={s.Icon}
+                  withLeftDivider={i !== 0} // divider for cols 2-4
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

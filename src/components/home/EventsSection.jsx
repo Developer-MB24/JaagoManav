@@ -6,21 +6,21 @@ const events = [
     title: "Provides Them Poor",
     date: "03 Sep 2025",
     city: "African city",
-    img: "/images/about-two-img-1.jpg",
+    img: "/images/Our Events1.jpg",
     gradient: { from: "#FF9933", to: "#FF9933" },
   },
   {
     title: "Donation Drive",
     date: "03 Sep 2025",
     city: "African city",
-    img: "/images/about-two-img-2.jpg",
+    img: "/images/Our Events2.jpg",
     gradient: { from: "#000080", to: "#000080" },
   },
   {
     title: "Event Of Shares",
     date: "03 Sep 2025",
     city: "African city",
-    img: "/images/about-two-img-3.jpg",
+    img: "/images/Our Events3.jpg",
     gradient: { from: "#138808", to: "#138808" },
   },
 ];
@@ -122,12 +122,48 @@ export default function EventsSection() {
       <div className="max-w-6xl mx-auto px-4">
         {/* Heading */}
         <div className="text-center mb-10">
-          <p className="uppercase tracking-widest text-[#FF9933] font-semibold text-sm">
-            Our Events
-          </p>
-          <h2 className="text-4xl font-extrabold text-[#138808]">
-            Our Best Popular <span className="text-[#FF9933]">Upcoming</span>
-            <br /> Events.
+          {/* italic orange label + gliding underline */}
+          <div className="text-sm tracking-widest uppercase font-semibold italic text-[#FF9933] inline-block">
+            <span className="relative inline-block">
+              Our Events
+              <div className="relative mx-auto mt-1 h-[3px] w-48 overflow-hidden">
+                {/* faint baseline */}
+                <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[2px] bg-[#FF9933]/30" />
+                {/* moving bar */}
+                <motion.div
+                  className="absolute top-1/2 -translate-y-1/2 h-[3px] w-20 rounded bg-[#FF9933]"
+                  animate={{ x: [0, 112, 0] }} // 112px ≈ (w-48 - w-20)
+                  transition={{
+                    duration: 1.6,
+                    repeat: Infinity,
+                    repeatType: "mirror",
+                    ease: "easeInOut",
+                  }}
+                />
+              </div>
+            </span>
+          </div>
+
+          {/* Split H2 into two animated blocks: top→down then bottom→up */}
+          <h2 className="mt-3 text-4xl font-extrabold text-[#138808] leading-tight">
+            <motion.span
+              className="block"
+              initial={{ y: -40, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true, amount: 0.6 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
+              Our Best Popular <span className="text-[#FF9933]">Upcoming</span>
+            </motion.span>
+            <motion.span
+              className="block"
+              initial={{ y: 40, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true, amount: 0.6 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.12 }}
+            >
+              Events.
+            </motion.span>
           </h2>
         </div>
 
