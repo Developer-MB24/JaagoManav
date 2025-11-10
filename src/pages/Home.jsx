@@ -13,6 +13,8 @@ import EventsSection from "../components/home/EventsSection.jsx";
 import TestimonialSection from "../components/home/TestimonialSection.jsx";
 import CtaDonate from "../components/home/CtaDonate.jsx";
 import BlogNewsSection from "../components/home/BlogNewsSection.jsx";
+import SubscribeSection from "../components/home/SubscribeSection.jsx";
+import LogoSection from "../components/home/LogoSection.jsx";
 
 export default function Home() {
   return (
@@ -24,12 +26,14 @@ export default function Home() {
       <Services />
       <CharityStrip />
       <HelpSection />
+      <LogoSection />
       <ContactVolunteer />
       <VolunteerSection />
       <EventsSection />
       <TestimonialSection />
       <CtaDonate />
       <BlogNewsSection />
+      <SubscribeSection />
     </>
   );
 }
