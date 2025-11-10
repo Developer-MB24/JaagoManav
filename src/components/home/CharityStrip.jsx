@@ -6,21 +6,15 @@ import {
   UtensilsCrossed,
 } from "lucide-react";
 
-const MASK_DATA = null;
-
 const ITEMS = [
-  {
-    icon: UtensilsCrossed,
-    text: "CHARITY FOR FOODS",
-    color: "text-[#FFFFFF]",
-  },
+  { icon: UtensilsCrossed, text: "CHARITY FOR FOODS", color: "text-white" },
   {
     icon: GraduationCap,
     text: "CHARITY FOR EDUCATION",
     color: "text-[#138808]",
   },
   { icon: Droplets, text: "CHARITY FOR WATER", color: "text-[#FF9933]" },
-  { icon: Stethoscope, text: "CHARITY FOR MEDICAL", color: "text-[#000080]" },
+  // { icon: Stethoscope, text: "CHARITY FOR MEDICAL", color: "text-[#7A3DF0]" }, // a bit brighter than #000080
 ];
 
 function Row({ items }) {
@@ -29,11 +23,13 @@ function Row({ items }) {
       {items.map((it, i) => (
         <div
           key={i}
-          className="flex items-center gap-5 shrink-0 ml-5 first:ml-0"
+          className="flex items-center gap-1 shrink-0 ml-8 first:ml-0"
         >
-          <it.icon className={`h-[35px] w-[35px] ${it.color}`} />
+          {/* Bigger icons */}
+          <it.icon className={`h-[42px] w-[42px] ${it.color}`} />
+          {/* Bigger text */}
           <span
-            className={`text-[12px] leading-[30px] font-extrabold tracking-wide uppercase ${it.color}`}
+            className={`text-[18px] md:text-[18px] leading-[34px] md:leading-[40px] font-extrabold tracking-wide uppercase ${it.color}`}
           >
             {it.text}
           </span>
@@ -44,40 +40,39 @@ function Row({ items }) {
 }
 
 export default function CharityStrip({
-  bgImage = "/images/process-1-1.jpg",
+  // background image with torn edges
+  paperBg = "/images/charity-bg.png",
+  // subtle inner photo if you want (set to null/"" to disable)
+  innerPhoto = "/images/process-1-1.jpg",
   speedSec = 30,
-  maskImage = MASK_DATA,
 }) {
   return (
-    <section className="relative w-full pt-[120px]">
+    <section className="relative w-full">
+      {/* Paper edge background (torn look) */}
       <div
-        className="relative z-[3] bg-black py-[35px] overflow-hidden"
-        style={
-          maskImage
-            ? {
-                WebkitMaskImage: maskImage,
-                maskImage: maskImage,
-                WebkitMaskRepeat: "no-repeat",
-                maskRepeat: "no-repeat",
-                WebkitMaskPosition: "center center",
-                maskPosition: "center center",
-                WebkitMaskSize: "cover",
-                maskSize: "cover",
-              }
-            : undefined
-        }
+        className="relative z-[3] overflow-hidden py-6 md:py-8"
+        style={{
+          backgroundImage: `url('${paperBg}')`,
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          backgroundSize: "cover", // ensures edges fill the strip
+        }}
       >
-        <div
-          className="absolute inset-0 -z-[1]"
-          style={{
-            backgroundImage: `url(${bgImage})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            opacity: 0.15,
-            mixBlendMode: "luminosity",
-          }}
-        />
+        {/* Optional inner image underlay for texture; comment out if not needed */}
+        {innerPhoto ? (
+          <div
+            className="absolute inset-0 -z-[1]"
+            style={{
+              backgroundImage: `url('${innerPhoto}')`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              opacity: 0.18,
+              mixBlendMode: "luminosity",
+            }}
+          />
+        ) : null}
 
+        {/* Marquee content */}
         <div className="relative overflow-hidden">
           <div
             className="flex min-w-[300%] animate-[marquee_var(--speed)_linear_infinite]"

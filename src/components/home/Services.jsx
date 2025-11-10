@@ -242,7 +242,7 @@ export default function Services() {
         {/* Heading */}
         <div className="text-center mb-10">
           {/* OUR SERVICE + moving underline */}
-          <div className="text-sm tracking-widest uppercase font-semibold italic text-[#FF9933]">
+          <div className="text-sm tracking-widest uppercase font-semibold font-caveat text-[#FF9933]">
             <span className="relative inline-block">
               OUR SERVICE
               {/* animated underline that goes left <-> right */}
@@ -265,17 +265,18 @@ export default function Services() {
           {/* Main title with opposite slide animations */}
           <h2 className="mt-3 text-4xl md:text-5xl font-extrabold leading-tight">
             <motion.span
-              className="block text-[#138808]"
+              className="block text-[#138808] font-nunito"
               initial={{ y: -40, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true, amount: 0.6 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
-              We Do it for all <span className="text-[#FF9933]">charity</span>
+              We Do it for all{" "}
+              <span className="text-[#FF9933] font-nunito">charity</span>
             </motion.span>
 
             <motion.span
-              className="block text-[#138808]"
+              className="block text-[#138808] font-nunito"
               initial={{ y: 40, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true, amount: 0.6 }}

@@ -2,6 +2,27 @@ import { CheckCircle } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
+/** Decorative framed image using a torn-edge background */
+function FramedImage({ src, alt = "" }) {
+  return (
+    <div
+      className="
+        relative overflow-hidden rounded-2xl p-1 bg-white
+        before:content-[''] before:absolute before:inset-0 before:rounded-2xl
+        before:bg-[url('/images/wetakecarebg.png')] before:bg-contain before:bg-center before:bg-no-repeat
+        before:z-0 before:pointer-events-none
+      "
+    >
+      <img
+        src={src}
+        alt={alt}
+        className="relative z-10 w-full h-full object-cover rounded-xl"
+        loading="lazy"
+      />
+    </div>
+  );
+}
+
 export default function HelpSection() {
   const [activeTab, setActiveTab] = useState("education");
 
@@ -36,7 +57,7 @@ export default function HelpSection() {
       ],
     },
     treatment: {
-      img: "/images/child-treatment.jpg",
+      img: "/images/services.jpg",
       points: [
         {
           title: "Free Medical Checkups for Children",
@@ -51,7 +72,7 @@ export default function HelpSection() {
       ],
     },
     food: {
-      img: "/images/child-food.jpg",
+      img: "/images/services.jpg",
       points: [
         {
           title: "Nutritional Food for Needy Kids",
@@ -75,7 +96,7 @@ export default function HelpSection() {
         {/* Section Heading */}
         <div className="text-center mb-12">
           {/* Italic orange label + animated underline */}
-          <div className="text-[#FF9933] italic font-semibold tracking-wide inline-block">
+          <div className="text-[#FF9933] font-caveat font-semibold tracking-wide inline-block">
             <span className="relative inline-block">
               WE TAKE CARE THEM
               <div className="relative mx-auto mt-1 h-[3px] w-48 overflow-hidden">
@@ -97,7 +118,7 @@ export default function HelpSection() {
           </div>
 
           {/* Split H2 with opposite slide reveals */}
-          <h2 className="mt-3 text-4xl font-extrabold text-[#138808] leading-tight">
+          <h2 className="mt-3 font-nunito text-4xl font-extrabold text-[#138808] leading-tight">
             <motion.span
               className="block"
               initial={{ y: -40, opacity: 0 }}
@@ -139,12 +160,12 @@ export default function HelpSection() {
 
           {/* Right Content */}
           <div className="lg:col-span-2 bg-green-50 rounded-2xl p-8 flex flex-col md:flex-row items-center gap-8 shadow">
-            <img
-              src={active.img}
-              alt="help"
-              className="rounded-xl w-full md:w-1/2 object-cover shadow-lg"
-            />
-            <div>
+            {/* Framed image replaces the plain <img /> */}
+            <div className="w-full md:w-1/2">
+              <FramedImage src={active.img} alt="help" />
+            </div>
+
+            <div className="w-full md:w-1/2">
               <h3 className="text-2xl font-bold text-[#138808] mb-4">
                 How You Can Help Us?
               </h3>

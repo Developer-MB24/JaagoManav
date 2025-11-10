@@ -96,9 +96,9 @@ export default function ContactSection() {
         <div className="relative flex flex-col justify-between h-full">
           <div className="flex-1 flex items-start justify-center md:justify-end">
             <motion.img
-              src="/images/about-two-img-1.jpg"
+              src="/images/contact-one-img-1.png"
               alt="Volunteers"
-              className="w-[420px] md:w-[480px] lg:w-[380px] h-auto md:h-[520px] object-cover mt-16 rounded-md"
+              className="w-[420px] md:w-[480px] lg:w-[380px] h-auto md:h-[480px] object-cover mt-16 rounded-md"
               initial={{ opacity: 0, x: 120 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.4 }}

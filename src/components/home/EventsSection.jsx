@@ -1,3 +1,4 @@
+import React from "react";
 import { motion } from "framer-motion";
 import { CalendarDays, MapPin, ArrowRight } from "lucide-react";
 
@@ -25,15 +26,9 @@ const events = [
   },
 ];
 
+// inline SVG mask (jagged top, solid bottom) — encoded for data: URL
 const jaggedMask = encodeURIComponent(`
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 28" preserveAspectRatio="none">
-  <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="white"/>
-      <stop offset="1" stop-color="white"/>
-    </linearGradient>
-  </defs>
-  <!-- white below, jagged on top -->
   <path d="M0,28 L0,14 
            C5,17 7,10 11,12 
            C14,14 16,8 20,10 
@@ -45,7 +40,7 @@ const jaggedMask = encodeURIComponent(`
            C70,17 73,10 76,14
            C80,19 83,11 86,13
            C90,16 93,12 96,14
-           L100,16 L100,28 Z" fill="url(#g)"/>
+           L100,16 L100,28 Z" fill="white"/>
 </svg>
 `);
 
@@ -69,32 +64,46 @@ function EventCard({ ev }) {
       variants={item}
       className="group relative rounded-[22px] overflow-hidden shadow-lg bg-white"
     >
-      <div className="relative h-[420px]">
+      {/* Image wrapper uses your background under the main photo */}
+      <div
+        className="relative h-[420px]"
+        style={{
+          backgroundImage: 'url("/images/our-events-bg.png")',
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        {/* main event image on top */}
         <img
           src={ev.img}
           alt={ev.title}
-          className="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-[1.03] group-hover:blur-[1.2px]"
+          className="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-[1.03] group-hover:blur-[1.2px] group-hover:opacity-90"
+          style={{ zIndex: 1 }}
         />
 
-        <div className="absolute inset-0 bg-black/0 transition duration-500 group-hover:bg-black/35" />
+        {/* dim overlay on hover */}
+        <div
+          className="absolute inset-0 bg-black/0 transition duration-500 group-hover:bg-black/35"
+          style={{ zIndex: 2 }}
+        />
 
+        {/* action button */}
         <button
           aria-label="Open event"
           className="absolute top-4 right-4 grid place-items-center w-11 h-11 rounded-full bg-amber-400 text-white shadow-md opacity-0 -translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0"
+          style={{ zIndex: 3 }}
         >
           <ArrowRight className="w-5 h-5" />
         </button>
 
+        {/* gradient footer with mask */}
         <div
           className="absolute left-0 right-0 bottom-0 h-36 px-5 pb-5 pt-6 text-white"
           style={{
+            zIndex: 4,
             background: `linear-gradient(0deg, ${ev.gradient.to} 0%, ${ev.gradient.from} 100%)`,
-            WebkitMaskImage: `url("data:image/svg+xml,${jaggedMask}")`,
-            maskImage: `url("data:image/svg+xml,${jaggedMask}")`,
-            WebkitMaskSize: "100% 100%",
-            maskSize: "100% 100%",
-            WebkitMaskRepeat: "no-repeat",
-            maskRepeat: "no-repeat",
+            WebkitMask: `url("data:image/svg+xml,${jaggedMask}") no-repeat center / 100% 100%`,
+            mask: `url("data:image/svg+xml,${jaggedMask}") no-repeat center / 100% 100%`,
           }}
         >
           <div className="flex items-center gap-5 text-[13px] mt-14 opacity-95">
@@ -123,8 +132,8 @@ export default function EventsSection() {
         {/* Heading */}
         <div className="text-center mb-10">
           {/* italic orange label + gliding underline */}
-          <div className="text-sm tracking-widest uppercase font-semibold italic text-[#FF9933] inline-block">
-            <span className="relative inline-block">
+          <div className="text-sm tracking-widest uppercase font-semibold font-caveat text-[#FF9933] inline-block">
+            <span className="relative inline-block font-caveat">
               Our Events
               <div className="relative mx-auto mt-1 h-[3px] w-48 overflow-hidden">
                 {/* faint baseline */}
@@ -144,8 +153,8 @@ export default function EventsSection() {
             </span>
           </div>
 
-          {/* Split H2 into two animated blocks: top→down then bottom→up */}
-          <h2 className="mt-3 text-4xl font-extrabold text-[#138808] leading-tight">
+          {/* Split H2 into two animated blocks */}
+          <h2 className="mt-3 text-4xl font-nunito font-extrabold text-[#138808] leading-tight">
             <motion.span
               className="block"
               initial={{ y: -40, opacity: 0 }}

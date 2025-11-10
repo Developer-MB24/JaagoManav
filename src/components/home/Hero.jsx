@@ -71,7 +71,7 @@ export default function HeroCarousel() {
     stop();
     timerRef.current = setInterval(() => {
       if (!hoveredRef.current) next();
-    }, 6000);
+    }, 3000);
   };
   const stop = () => {
     if (timerRef.current) {

@@ -1,13 +1,27 @@
+/* 1) Imports must come first */
+@import "@fontsource-variable/figtree"; /* npm i @fontsource-variable/figtree */
+
+/* 2) Tailwind layers next */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* 3) Your overrides */
 @layer base {
-  html { font-family: theme('fontFamily.serif'); scroll-behavior: smooth; }
+  html {
+    font-family: theme("fontFamily.sans");
+    scroll-behavior: smooth;
+  }
 }
 
 @layer components {
-  .btn-primary {@apply inline-flex items-center gap-2 rounded-2xl bg-primary px-5 py-3 font-semibold text-white shadow-soft transition hover:bg-primary-hover focus:outline-none focus:ring-4 focus:ring-primary/30;}
-  .btn-secondary {@apply inline-flex items-center gap-2 rounded-2xl bg-secondary px-5 py-3 font-semibold text-white shadow-soft transition hover:bg-secondary-hover focus:outline-none focus:ring-4 focus:ring-secondary/30;}
-  .card {@apply rounded-2xl bg-white p-6 shadow-soft;}
+  .btn-primary {
+    @apply inline-flex items-center gap-2 rounded-2xl bg-primary px-5 py-3 font-semibold text-white shadow-soft transition hover:bg-primary-hover focus:outline-none focus:ring-4 focus:ring-primary/30;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 rounded-2xl bg-secondary px-5 py-3 font-semibold text-white shadow-soft transition hover:bg-secondary-hover focus:outline-none focus:ring-4 focus:ring-secondary/30;
+  }
+  .card {
+    @apply rounded-2xl bg-white p-6 shadow-soft;
+  }
 }

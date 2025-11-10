@@ -79,12 +79,9 @@ export default function TestimonialSection() {
   return (
     <>
       {/* Title - outside above the curve */}
-      <div
-        className="relative z-[999] text-center pt-20 mb-8 md:mb-12 bg-transparent"
-        style={{ fontFamily: "Georgia, serif" }}
-      >
+      <div className="relative z-[999] text-center pt-20 mb-8 md:mb-12 bg-transparent">
         {/* italic orange label with oscillating underline */}
-        <p className="label-osc mx-auto inline-block italic text-[#f27b21] text-sm tracking-wide">
+        <p className="label-osc mx-auto inline-block font-caveat text-[#f27b21] text-sm tracking-wide">
           <span>Our testimonials</span>
         </p>
 
@@ -94,19 +91,19 @@ export default function TestimonialSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          style={{ fontFamily: "Georgia, serif" }}
         >
           <motion.span
-            className="block"
+            className="block font-nunito"
             initial={{ y: -40, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true, amount: 0.6 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            Our Impact in Their <span className="text-[#FF9933]">Words</span>
+            Our Impact in Their{" "}
+            <span className="text-[#FF9933] font-nunito">Words</span>
           </motion.span>
           <motion.span
-            className="block"
+            className="block font-nunito"
             initial={{ y: 40, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true, amount: 0.6 }}
@@ -117,10 +114,7 @@ export default function TestimonialSection() {
         </motion.h2>
       </div>
 
-      <section
-        className="relative overflow-hidden isolate pt-0 md:pt-0 pb-28 md:pb-32"
-        style={{ fontFamily: "Georgia, serif" }}
-      >
+      <section className="relative overflow-hidden isolate pt-0 md:pt-0 pb-28 md:pb-32">
         <div
           className="absolute inset-0 -z-30 bg-center bg-cover"
           style={{ backgroundImage: "url('/images/about-two-img-2.jpg')" }}

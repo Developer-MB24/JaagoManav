@@ -156,8 +156,8 @@ export default function VolunteerSection() {
         {/* Heading */}
         <div className="text-center mb-10">
           {/* 🔸 italic orange label + gliding underline */}
-          <div className="uppercase tracking-widest text-[#FF9933] font-semibold text-sm italic inline-block">
-            <span className="relative inline-block">
+          <div className="uppercase tracking-widest text-[#FF9933] font-semibold text-sm font-caveat inline-block">
+            <span className="relative inline-block font-caveat">
               Expert Volunteer
               <div className="relative mx-auto mt-1 h-[3px] w-48 overflow-hidden">
                 {/* faint baseline */}
@@ -178,7 +178,7 @@ export default function VolunteerSection() {
           </div>
 
           {/* 🔸 Split H2 into two bottom→up blocks */}
-          <h2 className="mt-3 text-4xl font-extrabold text-[#138808]">
+          <h2 className="mt-3 text-4xl font-extrabold font-nunito text-[#138808]">
             <motion.span
               className="block"
               initial={{ y: 40, opacity: 0 }}
