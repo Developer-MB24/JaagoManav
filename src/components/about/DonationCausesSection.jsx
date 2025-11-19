@@ -71,51 +71,81 @@ const DonationCausesSection = () => (
     </div>
 
     {/* Cards */}
-    <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+    <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 px-4">
       {causes.map((c, idx) => (
         <div
           key={idx}
-          className="bg-white rounded-2xl shadow-md flex flex-col sm:flex-row p-4 gap-5 items-center group hover:shadow-xl transition"
+          className="bg-white rounded-2xl shadow-md flex flex-col sm:flex-row p-0 overflow-hidden group hover:shadow-xl transition-all duration-200"
         >
-          {/* Card Image */}
-          <div className="relative min-w-[140px] w-[140px] h-[120px] overflow-hidden rounded-xl">
+          {/* Image column */}
+          <div
+            className="relative w-full sm:w-[160px] h-[220px] flex-shrink-0 overflow-hidden
+                       rounded-t-2xl sm:rounded-tl-2xl sm:rounded-bl-2xl"
+          >
             <img
               src={c.img}
               alt={c.title}
-              className="w-full h-full object-cover group-hover:scale-105 transition"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
 
-            <span className="absolute top-2 left-2 bg-[#138808] text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md">
+            {/* percent pill */}
+            <div className="absolute top-3 left-3 bg-[#138808] text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md z-10">
               {c.percent}%
-            </span>
+            </div>
+
+            {/* decorative faded edge on right */}
+            <div
+              aria-hidden
+              className="absolute right-0 top-0 h-full w-[22px] pointer-events-none"
+              style={{
+                background:
+                  "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.92) 60%)",
+              }}
+            />
           </div>
 
-          {/* Card  */}
-          <div className="flex-1 flex flex-col justify-between pl-2 w-full">
+          {/* Content column */}
+          <div className="flex-1 flex flex-col justify-between p-5">
             <div>
-              <h3 className="font-semibold text-md md:text-lg text-[#222] mb-1">
+              <h3 className="font-semibold text-md md:text-lg text-[#222] mb-2">
                 {c.title}
               </h3>
-              <p className="text-xs text-gray-500 mb-2">{c.desc}</p>
+              <p className="text-sm text-gray-500 mb-4 leading-relaxed">
+                {c.desc}
+              </p>
             </div>
 
-            <div className="flex items-center gap-6 mt-2 mb-1">
-              <div>
-                <div className="text-xs text-gray-500">Raised</div>
-                <div className="font-semibold text-sm">{c.raised}</div>
+            <div>
+              {/* Progress bar */}
+              <div className="w-full h-3 rounded-full bg-[#FFF1DB] overflow-hidden">
+                <div
+                  className="h-full rounded-full transition-all duration-500"
+                  style={{
+                    width: `${Math.max(0, Math.min(100, c.percent))}%`,
+                    background:
+                      "linear-gradient(90deg, #F59E0B 0%, #FFC66B 100%)",
+                  }}
+                />
               </div>
-              <div>
-                <div className="text-xs text-gray-500">Goal</div>
-                <div className="font-semibold text-sm">{c.goal}</div>
+
+              {/* amounts and button row */}
+              <div className="flex items-center gap-6 mt-4">
+                <div>
+                  <div className="text-xs text-gray-500">Raised</div>
+                  <div className="font-semibold text-sm">{c.raised}</div>
+                </div>
+
+                <div>
+                  <div className="text-xs text-gray-500">Goal</div>
+                  <div className="font-semibold text-sm">{c.goal}</div>
+                </div>
+              </div>
+              <div className="ml-auto mt-4">
+                <button className="bg-[#138808] hover:bg-[#166a3f] text-white px-6 py-2 rounded-full font-semibold shadow transition text-sm flex items-center justify-center gap-2">
+                  Donate Now <span className="ml-1">↗</span>
+                </button>
               </div>
             </div>
-
-            <div className="w-24 h-1 rounded bg-[#FF9933] mt-2 mb-2" />
-
-            {/* Donate button */}
-            <button className="bg-[#138808] hover:bg-[#1e785e] text-white px-6 py-2 rounded-full font-semibold shadow mt-1 transition text-sm flex items-center justify-center gap-2">
-              Donate Now <span className="ml-1">↗</span>
-            </button>
           </div>
         </div>
       ))}

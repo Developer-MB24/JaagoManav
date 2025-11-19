@@ -15,64 +15,101 @@ export default function CallToAction({
     </>
   ),
   buttonText = "Donate Now",
-  photo = "/images/about-two-img-1.jpg",
-  handImage = "/images/left-right-hand-image.png",
+  buttonHref = "/donate-now",
+
+  photo = "/images/about-two-img-2.jpg",
+
+  shapeImage = "/images/site-footer-two-content-shape-1.png",
+  // ⬇️ MASK IMAGE
+  maskUrl = "/images/cta-mask.png",
 }) {
+  const maskStyle = maskUrl
+    ? {
+        WebkitMaskImage: `url(${maskUrl})`,
+        maskImage: `url(${maskUrl})`,
+        WebkitMaskRepeat: "no-repeat",
+        maskRepeat: "no-repeat",
+        WebkitMaskPosition: "center center",
+        maskPosition: "center center",
+        WebkitMaskSize: "cover",
+        maskSize: "cover",
+      }
+    : {};
+
   return (
-    <section className="relative bg-[#0e3b37] py-16 sm:py-20">
-      <div className="mx-auto max-w-5xl px-4">
-        <div className="relative isolate rounded-[22px] bg-[#eef7f6] px-6 py-14 sm:px-10 text-center shadow-md overflow-hidden">
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-            {handImage ? (
-              <img
-                src={handImage}
-                alt=""
-                className="w-[620px] sm:w-[720px] md:w-[820px] lg:w-[900px] object-contain opacity-10"
-              />
-            ) : (
-              <HandsWatermark className="absolute inset-0 text-emerald-900/5 scale-110" />
-            )}
-          </div>
+    <section className="relative py-16 sm:py-20 overflow-hidden">
+      <style>{`
+        @keyframes topBottomLocal {
+          0%, 100% { transform: translate(-50%, 0); }
+          50% { transform: translate(-50%, -15px); }
+        }
+        .cta-shape-bob {
+          animation: topBottomLocal 3s ease-in-out infinite;
+        }
+      `}</style>
 
-          <h2 className="relative z-10 text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-800">
+      <div className="relative z-[2] mx-auto max-w-[1320px] px-[15px]">
+        <div
+          className="relative text-center bg-[#ece5dd] pt-[91px] pb-[200px] rounded-[24px] shadow-md overflow-hidden"
+          style={maskStyle}
+        >
+          {shapeImage && (
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 opacity-10 cta-shape-bob">
+              <img src={shapeImage} alt="" className="w-auto" />
+            </div>
+          )}
+
+          {/* Title */}
+          <h3 className="text-[35px] font-extrabold leading-[45px] text-[#138808]">
             {title}
-          </h2>
+          </h3>
 
-          <p className="relative z-10 mt-3 max-w-3xl mx-auto text-sm sm:text-base text-slate-600">
+          {/* Subtitle text */}
+          <p className="mt-[10px] mb-[20px] font-medium text-[#111827]">
             {subtitle}
           </p>
 
-          <div className="relative z-10 mt-6">
-            <button className="inline-flex items-center gap-3 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 border border-slate-200 shadow hover:shadow-md transition">
-              {buttonText}
-              <span className="inline-grid place-items-center h-7 w-7 rounded-full bg-[#FF9933] text-white text-base leading-none">
-                •
+          {/* Button */}
+          <div className="mt-2">
+            <a
+              href={buttonHref}
+              className="group relative inline-flex items-center gap-3 rounded-full bg-[#138808] hover:bg-[#FF9933] px-7 py-3 text-[15px] font-semibold text-white shadow hover:shadow-md transition-all overflow-hidden"
+            >
+              {/* Bubble  effect */}
+              <span className="pointer-events-none absolute inset-0 rounded-full bg-[#FF9933] opacity-0 scale-50 transition-transform transition-opacity duration-500 group-hover:opacity-40 group-hover:scale-110" />
+
+              {/* Button text */}
+              <span className="relative z-10">{buttonText}</span>
+
+              <span className="relative z-10 inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#FF9933] text-white transition-all duration-300 group-hover:bg-white group-hover:text-[#138808]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="w-4 h-4"
+                >
+                  <path d="M5 12h14" />
+                  <path d="M13 6l6 6-6 6" />
+                </svg>
               </span>
-            </button>
+            </a>
           </div>
 
-          <div className="absolute -bottom-10 left-1/2 -translate-x-1/2">
-            <div className="h-20 w-20 sm:h-24 sm:w-24 rounded-full ring-4 ring-[#eef7f6] overflow-hidden shadow-md">
+          <div className="absolute -bottom-[35px] left-1/2 -translate-x-1/2 max-w-[200px] w-full">
+            <div className="w-[140px] sm:w-[180px] mx-auto rounded-full overflow-hidden shadow ring-4 ring-[#eef7f6]">
               <img
                 src={photo}
-                alt="Beneficiary"
-                className="h-full w-full object-cover"
+                alt="Footer highlight"
+                className="w-full h-full object-cover"
               />
             </div>
           </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function HandsWatermark({ className = "" }) {
-  return (
-    <svg viewBox="0 0 800 400" className={className} aria-hidden="true">
-      <g fill="currentColor">
-        <path d="M150 250c-30-40-26-82 8-90 19-5 34 7 42 26 3-23 16-39 36-37 19 1 28 17 27 39 8-19 24-29 41-21 18 8 18 30 10 52-10 27-36 57-64 72-41 22-76 2-100-41z" />
-        <path d="M650 250c30-40 26-82-8-90-19-5-34 7-42 26-3-23-16-39-36-37-19 1-28 17-27 39-8-19-24-29-41-21-18 8-18 30-10 52 10 27 36 57 64 72 41 22 76 2 100-41z" />
-      </g>
-    </svg>
   );
 }

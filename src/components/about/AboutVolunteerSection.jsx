@@ -7,54 +7,46 @@ const AboutVolunteerSection = () => (
       <div className="animate-slideUp absolute bottom-0 left-0 h-40 w-full opacity-30 md:h-64 bg-gradient-to-t from-[#138808] to-transparent" />
     </div>
 
-    <div className="relative z-10 mx-auto flex max-w-6xl flex-col items-center justify-between md:flex-row md:items-start">
-      {/* Left: Images*/}
-      <div className="relative flex w-full max-w-[480px] flex-col items-center gap-5 md:items-start">
-        {/* Top small image  */}
-        <div className="animate-upDown relative z-10 h-32 w-64 overflow-hidden rounded-3xl shadow-md xs:h-36 xs:w-72 sm:h-40 sm:w-80 md:ml-12 md:h-40 md:w-80 lg:ml-48">
-          <img
-            src="/images/about-two-img-3.jpg"
-            alt="Children smiling"
-            className="h-full w-full object-cover"
-          />
-        </div>
-
-        {/* Bottom large image */}
-        <div className="relative z-0 mt-[-20px] h-72 w-64 overflow-hidden rounded-3xl shadow-xl xs:mt-[-28px] xs:h-80 xs:w-72 sm:mt-[-36px] sm:h-96 sm:w-80 md:ml-2 md:mt-[-50px] md:h-96 md:w-80">
+    <div className="relative z-10 mx-auto flex max-w-6xl flex-col items-center justify-between md:flex-row t">
+      {/* Left Section (Images + Stats Box) */}
+      <div className="relative flex w-full max-w-[520px] flex-col md:flex-row md:items-start">
+        {/* Big Bottom Image */}
+        <div className="relative h-80 w-64 rounded-[3rem] overflow-hidden shadow-xl xs:h-96 xs:w-72 sm:h-[420px] sm:w-80 md:h-[430px] md:w-80">
           <img
             src="/images/about-two-img-2.jpg"
-            alt="Children learning"
+            alt="Children"
             className="h-full w-full object-cover"
           />
         </div>
 
-        <div
-          className="
-          absolute left-1/2 bottom-[-18px] translate-x-[-50%]
-          xs:bottom-[-22px]
-          sm:static sm:translate-x-0 sm:self-center sm:mt-3
-          md:absolute md:left-[18rem] md:bottom-8
-          lg:left-80
-        "
-        >
-          <div className="animate-leftRight w-[220px] rounded-[1.8rem] bg-[#138808] mb-[-60px] px-6 py-2 text-white shadow-xl md:mb-[-180px] md:ml-[-180px] xl:w-[280px] xl:mb-[-120px] mxl:px-8 xl:py-7">
-            <div className="mb-2 text-2xl font-bold leading-tight sm:text-3xl">
-              266300+
-            </div>
-            <div className="mb-2 text-sm font-semibold leading-snug sm:text-base">
-              Children in Africa Need School
-            </div>
-            <a
-              href="#"
-              className="text-xs font-semibold text-yellow-300 underline transition-colors hover:text-yellow-400 sm:text-sm"
-            >
-              Become A Volunteer
-            </a>
-          </div>
+        {/* Top-Right Small Image */}
+        <div className="absolute right-4 top-[-30px] h-32 w-56 rounded-[3rem] overflow-hidden shadow-md border-8 border-white xs:h-36 xs:w-64 sm:h-64 sm:w-72 md:right-[60px] md:top-[-120px]">
+          <img
+            src="/images/about-two-img-3.jpg"
+            alt="Kids"
+            className="h-full w-full object-cover"
+          />
         </div>
 
-        <div className="pointer-events-none absolute -top-6 -left-4 -z-10 hidden sm:block md:-top-10 md:-left-8">
-          <svg width="200" height="200" viewBox="0 0 200 200" fill="none">
+        {/* Green Stats Box */}
+        <div className="absolute bottom-[-30px] border-8 border-white flex flex-col right-4 justify-center items-center sm:right-8 md:right-[-40px] md:bottom-[40px] w-[240px] sm:w-[270px] bg-[#138808] rounded-[3rem] h-52 px-6 py-4 shadow-xl">
+          <div className="text-3xl font-bold text-white leading-tight">
+            266300+
+          </div>
+          <p className="text-white font-medium text-sm mt-1">
+            Children in Africa Need School
+          </p>
+          <a
+            href="#"
+            className="text-yellow-300 underline text-sm font-semibold hover:text-yellow-400 mt-2 inline-block"
+          >
+            Become A Volunteer
+          </a>
+        </div>
+
+        {/* Decorative Shape */}
+        <div className="absolute -left-6 -top-6 -z-10 hidden sm:block">
+          <svg width="240" height="240" viewBox="0 0 200 200" fill="none">
             <path
               d="M150 10C170 30 190 60 180 100C170 140 130 180 90 190C50 200 10 180 5 130C0 80 30 40 70 20C110 0 130 -10 150 10Z"
               fill="#FFB347"

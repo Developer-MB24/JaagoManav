@@ -11,10 +11,10 @@ export default function BlogDetails() {
     <>
       <HeroBlogDetails />
 
-      <section className="py-8 px-4 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
+      <section className="py-8 px-4 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-4  relative z-10">
         {/* Main Blog Content */}
         <motion.div
-          className="md:col-span-3"
+          className="md:col-span-8"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -25,7 +25,7 @@ export default function BlogDetails() {
         </motion.div>
 
         {/* Sidebar */}
-        <div className="md:col-span-1">
+        <div className="md:col-span-4">
           <Sidebar />
         </div>
       </section>

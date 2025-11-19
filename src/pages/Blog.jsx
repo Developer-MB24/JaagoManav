@@ -97,11 +97,7 @@ export default function Blog() {
 
   return (
     <>
-      <BlogHero
-        title="Blog Right Sidebar"
-        bg="/images/about-two-img-1.jpg"
-        crumbs={[{ label: "Home", to: "/" }, { label: "Blog Right Sidebar" }]}
-      />
+      <BlogHero />
 
       <section className="mx-auto max-w-6xl px-4 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* LEFT */}

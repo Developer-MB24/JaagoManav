@@ -77,7 +77,7 @@ const TrustedCompaniesCarousel = () => (
 
     {/* Styles */}
     <style>{`
-      /* Marquee animation */
+     
       .carousel-track {
         min-width: max-content;
         animation: carouselMove var(--speed) linear infinite;
@@ -90,7 +90,7 @@ const TrustedCompaniesCarousel = () => (
         100% { transform: translateX(-33.333%); } /* 3x duplication => shift by 1/3 */
       }
 
-      /* Animated gradient bands (shared) */
+      /* Animated gradient bands */
       @keyframes slideDown {
         0%   { transform: translateY(-25%); }
         100% { transform: translateY(0%); }
@@ -102,7 +102,7 @@ const TrustedCompaniesCarousel = () => (
       .animate-slideDown { animation: slideDown 14s ease-in-out infinite alternate; }
       .animate-slideUp   { animation: slideUp   14s ease-in-out infinite alternate; }
 
-      /* Respect users who prefer reduced motion */
+      
       @media (prefers-reduced-motion: reduce) {
         .carousel-track {
           animation: none;

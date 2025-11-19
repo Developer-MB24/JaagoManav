@@ -1,4 +1,4 @@
-import { HiOutlineSearch } from "react-icons/hi";
+import { HiOutlineSearch, HiOutlineCalendar } from "react-icons/hi";
 
 const categories = [
   { name: "Donation Drive", count: 59 },
@@ -38,65 +38,108 @@ const tags = [
 
 export default function Sidebar() {
   return (
-    <aside className="space-y-6">
+    <aside className="w-full space-y-5">
       {/* Search */}
-      <div className="bg-[#F6FCFD] rounded-2xl p-4 mb-2 shadow-none">
-        <div className="text-sm font-semibold mb-2">Search Here</div>
-        <div className="relative">
+      <div className="bg-[#F6FCFD] rounded-2xl p-7 shadow-none">
+        <div className="mb-7">
+          <h3 className="text-[22px] font-bold leading-[34px] border-b border-black/15 pb-[11px]">
+            Search Here
+          </h3>
+        </div>
+        <form className="relative">
           <input
-            className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:outline-none text-sm"
+            type="search"
+            className="w-full h-[60px] px-5 pr-12 rounded-[10px] border-none outline-none bg-white text-[16px] text-gray-600"
             placeholder="Search.."
           />
-          <HiOutlineSearch className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-gray-400" />
-        </div>
+          <button
+            type="submit"
+            className="absolute top-1/2 right-[15px] -translate-y-1/2 max-w-[40px] w-full flex items-center justify-center text-[22px] text-gray-500 hover:text-[#138808] transition"
+          >
+            <HiOutlineSearch />
+          </button>
+        </form>
       </div>
+
       {/* Categories */}
-      <div className="bg-[#F6FCFD] rounded-2xl p-4 mb-2 shadow-none">
-        <div className="text-base font-semibold mb-2">Categories</div>
-        <ul className="divide-y divide-gray-200 text-sm">
+      <div className="bg-[#F6FCFD] rounded-2xl p-7 shadow-none">
+        <div className="mb-5">
+          <h3 className="text-[22px] font-bold leading-[34px] border-b border-black/15 pb-[11px]">
+            Categories
+          </h3>
+        </div>
+        <ul className="space-y-[11px]">
           {categories.map((cat) => (
-            <li key={cat.name} className="flex justify-between py-1.5">
-              <span className="text-gray-700">{cat.name}</span>
-              <span className="text-gray-500">{cat.count}</span>
+            <li key={cat.name}>
+              <a
+                href="#"
+                className="flex items-center justify-between text-[15px] text-gray-600 bg-[linear-gradient(to_right,currentColor_0%,currentColor_100%)] bg-[length:0_1px] bg-no-repeat bg-[position:0_95%] transition-[background-size,color] duration-500 hover:text-[#138808] hover:bg-[length:100%_1px]"
+              >
+                <span>{cat.name}</span>
+                <span>{cat.count}</span>
+              </a>
             </li>
           ))}
         </ul>
       </div>
+
       {/* Recent Posts */}
-      <div className="bg-[#F6FCFD] rounded-2xl p-4 mb-2 shadow-none">
-        <div className="text-base font-semibold mb-2">Recent Post</div>
-        <ul className="divide-y divide-gray-200">
-          {recentPosts.map((post) => (
-            <li key={post.title} className="flex gap-3 items-start py-2">
-              <img
-                src={post.img}
-                alt={post.title}
-                className="w-12 h-12 object-cover rounded-md"
-              />
-              <div className="flex-1">
-                <div className="flex items-center gap-1 text-xs text-gray-400 mb-0.5">
-                  <span className="inline-block w-2 h-2 rounded-full bg-orange-300 mr-1" />
+      <div className="bg-[#F6FCFD] rounded-2xl px-7 py-7 pr-5 shadow-none">
+        <div className="mb-[17px]">
+          <h3 className="text-[22px] font-bold leading-[34px] border-b border-black/15 pb-[11px]">
+            Recent Post
+          </h3>
+        </div>
+        <ul>
+          {recentPosts.map((post, idx) => (
+            <li
+              key={post.title}
+              className={`flex items-center ${idx > 0 ? "mt-[17px]" : ""}`}
+            >
+              <div className="max-w-[80px] w-full">
+                <img
+                  src={post.img}
+                  alt={post.title}
+                  className="w-full h-full object-cover rounded-[10px]"
+                />
+              </div>
+              <div className="ml-[15px] flex-1">
+                <p className="mt-[6px] text-sm text-gray-500 flex items-center gap-2">
+                  <span className="text-[#138808] font-black mr-[10px]">
+                    <HiOutlineCalendar className="w-4 h-4" />
+                  </span>
                   {post.date}
-                </div>
-                <div className="text-[13px] font-semibold text-gray-800 leading-tight">
-                  {post.title}
-                </div>
+                </p>
+                <h4 className="text-[18px] leading-[28px] font-bold">
+                  <a
+                    href="#"
+                    className="text-[#111827] hover:text-[#138808] transition-colors"
+                  >
+                    {post.title}
+                  </a>
+                </h4>
               </div>
             </li>
           ))}
         </ul>
       </div>
+
       {/* Popular Tags */}
-      <div className="bg-[#F6FCFD] rounded-2xl p-4 shadow-none">
-        <div className="text-base font-semibold mb-2">Popular Tags</div>
-        <div className="flex flex-wrap gap-2">
+      <div className="bg-[#F6FCFD] rounded-2xl p-7 shadow-none">
+        <div className="mb-[21px]">
+          <h3 className="text-[22px] font-bold leading-[34px] border-b border-black/15 pb-[11px]">
+            Popular Tags
+          </h3>
+        </div>
+        <div className="-ml-[10px] flex flex-wrap">
           {tags.map((tag) => (
-            <span
+            <a
+              href="#"
               key={tag}
-              className="bg-white text-gray-700 border border-gray-200 px-3 py-1 rounded-md text-xs font-medium"
+              className="ml-[10px] mt-[10px] inline-block rounded-[10px] bg-white px-[14px] py-[9px] text-[16px] font-medium leading-[26px] text-gray-600 transition-all duration-500 hover:bg-[#138808] hover:text-white"
             >
               {tag}
-            </span>
+            </a>
           ))}
         </div>
       </div>

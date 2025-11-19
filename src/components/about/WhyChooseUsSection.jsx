@@ -27,27 +27,29 @@ const WhyChooseUsSection = () => {
         });
       }, 12);
     });
+
     return () => intervals.forEach(clearInterval);
   }, [targetPercents]);
 
   return (
-    <section className="relative overflow-hidden w-full flex flex-col md:flex-row items-stretch bg-white py-8 md:py-14 px-2 md:px-8">
+    <section className="relative overflow-hidden w-full flex flex-col md:flex-row items-stretch py-8 md:py-14 px-4 md:px-8">
+      {/* Background gradients */}
       <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-[#FF9933] to-transparent opacity-30 animate-slideDown" />
-        <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-[#138808] to-transparent opacity-30 animate-slideUp" />
+        <div className="absolute top-0 left-0 w-full h-48 sm:h-64 bg-gradient-to-b from-[#FF9933] to-transparent opacity-30 animate-slideDown" />
+        <div className="absolute bottom-0 left-0 w-full h-48 sm:h-64 bg-gradient-to-t from-[#138808] to-transparent opacity-30 animate-slideUp" />
       </div>
 
       {/* Left: Image */}
-      <div className="md:w-1/2 relative z-10">
+      <div className="w-full md:w-1/2 relative z-10 mb-6 md:mb-0">
         <img
           src="/images/about-two-img-1.jpg"
           alt="Community"
-          className="object-cover w-full h-full max-h-96 md:rounded-l-xl grayscale"
+          className="object-cover w-full h-56 sm:h-72 md:h-full max-h-96 md:rounded-l-xl rounded-t-xl md:rounded-tr-none grayscale"
         />
       </div>
 
       {/* Right: Content */}
-      <div className="md:w-1/2 relative z-10 bg-white flex flex-col justify-center px-6 py-6 md:rounded-xl shadow-md">
+      <div className="w-full md:w-1/2 relative z-10 flex flex-col justify-center bg-white/80 backdrop-blur-sm mx-0 md:mx-10 px-4 sm:px-6 md:px-10 py-6 md:rounded-xl rounded-b-xl md:rounded-bl-none">
         <div className="flex items-center gap-2 mb-2">
           <span className="text-[#138808]">
             <svg
@@ -63,17 +65,19 @@ const WhyChooseUsSection = () => {
               />
             </svg>
           </span>
-          <span className="italic font-semibold text-[#FF9933]">
+          <span className="italic font-semibold text-xs sm:text-sm text-[#FF9933]">
             Why Choose Us
           </span>
         </div>
 
-        <h2 className="text-3xl md:text-4xl font-bold text-[#222] mb-2 leading-tight">
-          Together, We Can Make A<br />
-          Difference
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#222] mb-3 leading-snug">
+          Together, We Can Make A
+          <br className="hidden sm:block" />
+          <span className="sm:hidden"> Difference</span>
+          <span className="hidden sm:inline"> Difference</span>
         </h2>
 
-        <p className="text-gray-500 text-sm mb-3">
+        <p className="text-gray-500 text-xs sm:text-sm mb-4">
           Our secure online donation platform allows you to make contribution
           quickly and safely. Choose from various payment methods and set up
           one-time or recurring donations with ease. Your support helps us
@@ -81,38 +85,45 @@ const WhyChooseUsSection = () => {
         </p>
 
         {/* Animated Progress Bars */}
-        {stats.map((stat, idx) => (
-          <div key={stat.label} className="flex items-center text-sm mb-2">
-            <div className="w-28 text-gray-700 font-semibold">{stat.label}</div>
-            <div className="flex-1 mx-2">
-              <div className="relative w-full h-2 bg-gray-200 rounded-full">
-                <div
-                  className="absolute h-2 left-0 top-0 rounded-full"
-                  style={{
-                    width: `${animatedPercents[idx]}%`,
-                    background: stat.color,
-                    transition: "width 1s cubic-bezier(.45,1.1,.53,1.13)",
-                  }}
-                />
+        <div className="space-y-2 mb-4">
+          {stats.map((stat, idx) => (
+            <div
+              key={stat.label}
+              className="flex items-center text-xs sm:text-sm"
+            >
+              <div className="w-20 sm:w-28 text-gray-700 font-semibold">
+                {stat.label}
+              </div>
+              <div className="flex-1 mx-2">
+                <div className="relative w-full h-2 bg-gray-200 rounded-full">
+                  <div
+                    className="absolute h-2 left-0 top-0 rounded-full"
+                    style={{
+                      width: `${animatedPercents[idx]}%`,
+                      background: stat.color,
+                      transition: "width 1s cubic-bezier(.45,1.1,.53,1.13)",
+                    }}
+                  />
+                </div>
+              </div>
+              <div
+                className="w-8 text-right font-semibold"
+                style={{ color: stat.color }}
+              >
+                {animatedPercents[idx]}%
               </div>
             </div>
-            <div
-              className="w-8 text-right font-semibold"
-              style={{ color: stat.color }}
-            >
-              {animatedPercents[idx]}%
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
 
         {/* Highlights */}
-        <div className="flex gap-8 mt-5">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 mt-3">
+          <div className="flex items-start gap-2">
             <span className="bg-[#138808]/10 rounded-full p-2">
-              <Users className="text-[#138808]" size={30} />
+              <Users className="text-[#138808]" size={24} />
             </span>
             <span>
-              <div className="font-semibold text-[#134A43]">
+              <div className="font-semibold text-[#134A43] text-sm sm:text-base">
                 Global Community
               </div>
               <div className="text-gray-500 text-xs">
@@ -121,12 +132,14 @@ const WhyChooseUsSection = () => {
               </div>
             </span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-start gap-2">
             <span className="bg-[#FF9933]/10 rounded-full p-2">
-              <HandCoins className="text-[#FF9933]" size={30} />
+              <HandCoins className="text-[#FF9933]" size={24} />
             </span>
             <span>
-              <div className="font-semibold text-[#134A43]">Crowdfunding</div>
+              <div className="font-semibold text-[#134A43] text-sm sm:text-base">
+                Crowdfunding
+              </div>
               <div className="text-gray-500 text-xs">
                 Join our monthly giving program to provide consistent support
               </div>
@@ -135,7 +148,7 @@ const WhyChooseUsSection = () => {
         </div>
 
         {/* Button */}
-        <button className="mt-7 py-2 px-8 rounded-full bg-[#138808] hover:bg-[#0e3e35] text-white font-semibold text-lg shadow transition flex items-center justify-center gap-2">
+        <button className="mt-6 sm:mt-7 py-2.5 px-6 sm:px-8 rounded-full bg-[#138808] hover:bg-[#FF9933] text-white font-semibold text-sm sm:text-lg shadow transition flex items-center justify-center gap-2 w-full sm:w-auto">
           Learn More <span className="ml-1">↗</span>
         </button>
       </div>

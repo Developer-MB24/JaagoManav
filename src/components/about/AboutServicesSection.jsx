@@ -23,24 +23,33 @@ const cards = [
 ];
 
 const AboutServicesSection = () => (
-  <section className="w-full bg-[#F6F6F6] py-16 flex flex-col items-center relative overflow-hidden">
-    <div className="absolute top-0 left-0 w-full h-72 z-0 pointer-events-none">
-      <svg className="w-full h-full" viewBox="0 0 1440 320" aria-hidden="true">
+  <section className="w-full   py-16 flex flex-col items-center relative">
+    {/* TOP ARC (VISIBLE NOW) */}
+    {/* TOP ARC (FLIPPED UPWARDS) */}
+    <div className="absolute top-0 left-0 w-full md:mt-[-140px] overflow-hidden  z-50 pointer-events-none rotate-180">
+      <svg
+        className="w-full h-full"
+        viewBox="0 0 1440 320"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
         <path
+          d="M0,64 C360,220 1080,220 1440,64 L1440,0 L0,0 Z"
           fill="#FF9933"
-          fillOpacity="1"
-          d="M0,224L1440,32L1440,0L0,0Z"
-        ></path>
+        />
+        {/* <path
+          d="M0,120 C360,270 1080,270 1440,120 L1440,0 L0,0 Z"
+          fill="#138808"
+          fillOpacity="0.08"
+        /> */}
       </svg>
     </div>
 
-    <div className="absolute inset-0 pointer-events-none z-[1]">
-      <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-[#FF9933] to-transparent opacity-30 animate-slideDown will-change-transform" />
-      <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-[#138808] to-transparent opacity-30 animate-slideUp will-change-transform" />
-    </div>
+    {/* optional left green strip */}
+    {/* <div className="absolute top-24 left-0 h-56 w-8 bg-[#138808] rounded-r-2xl z-10 pointer-events-none" /> */}
 
-    {/* Cards */}
-    <div className="relative z-10 flex flex-col md:flex-row w-full gap-8 justify-center items-center mt-20">
+    {/* CARDS */}
+    <div className="relative z-20 flex flex-col md:flex-row w-full gap-8 justify-center items-center mt-24 px-6 md:px-20">
       {cards.map(({ title, desc, color, Icon }, idx) => (
         <div
           key={title}
@@ -54,10 +63,7 @@ const AboutServicesSection = () => (
             <div className="rounded-full p-4 bg-gradient-to-br from-[#F6F6F6] to-[#e0e0e0]">
               <div className="flip-parent">
                 <div className="flip-child">
-                  <div
-                    className="relative flex items-center justify-center w-14 h-14 rounded-full bg-white"
-                    aria-hidden="true"
-                  >
+                  <div className="relative flex items-center justify-center w-14 h-14 rounded-full bg-white">
                     <Icon
                       size={40}
                       strokeWidth={2.25}
@@ -90,7 +96,6 @@ const AboutServicesSection = () => (
       }
       .animate-fadeIn { animation: fadeIn 1.4s cubic-bezier(.45,1.1,.53,1.13); }
 
-      /* 360° flip on hover */
       .flip-parent { perspective: 800px; }
       .flip-child {
         transform: rotateY(0deg);
@@ -100,18 +105,6 @@ const AboutServicesSection = () => (
         will-change: transform;
       }
       .group:hover .flip-child { transform: rotateY(360deg); }
-
-      /* NEW: animated gradient wash */
-      @keyframes slideDown {
-        0% { transform: translateY(-25%); }
-        100% { transform: translateY(0%); }
-      }
-      @keyframes slideUp {
-        0% { transform: translateY(25%); }
-        100% { transform: translateY(0%); }
-      }
-      .animate-slideDown { animation: slideDown 14s ease-in-out infinite alternate; }
-      .animate-slideUp   { animation: slideUp   14s ease-in-out infinite alternate; }
     `}</style>
   </section>
 );

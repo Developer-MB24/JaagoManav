@@ -8,6 +8,7 @@ import DonationCausesSection from "../components/about/DonationCausesSection";
 import WhyChooseUsSection from "../components/about/WhyChooseUsSection";
 import FAQSection from "../components/about/FAQSection";
 import TrustedCompaniesCarousel from "../components/about/TrustedCompaniesCarousel";
+import VideoSection from "../components/about/VideoSection";
 
 export default function About() {
   return (
@@ -19,6 +20,7 @@ export default function About() {
       <CallToActionSection />
       <DonationCausesSection />
       <WhyChooseUsSection />
+      <VideoSection />
       <FAQSection />
       <TrustedCompaniesCarousel />
     </>
