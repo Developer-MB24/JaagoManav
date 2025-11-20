@@ -49,7 +49,7 @@ const PARTNERS = [
   { name: "Spectranet 4G", logoUrl: "" },
 ];
 
-export default function WhoWeAreTestimonial({
+export default function Testimonial({
   testimonials = TESTIMONIALS,
   partners = PARTNERS,
   onWriteReview = () => {},

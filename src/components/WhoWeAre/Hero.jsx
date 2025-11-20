@@ -1,6 +1,6 @@
 import React from "react";
 
-function HeroWhoWeAre({ onPlay }) {
+function Hero({ onPlay }) {
   const handlePlay = onPlay || (() => {});
 
   return (
@@ -67,4 +67,4 @@ function HeroWhoWeAre({ onPlay }) {
   );
 }
 
-export default HeroWhoWeAre;
+export default Hero;
