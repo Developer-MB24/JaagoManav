@@ -4,12 +4,13 @@ import MainLayout from "./layout/MainLayout.jsx";
 import Account from "./pages/Account.jsx";
 import Service from "./pages/Service.jsx";
 import About from "./pages/About.jsx";
-import Whoweare from "./pages/WhoWeAre.jsx";
+
 import BlogDetails from "./pages/BlogDetails.jsx";
 import Contact from "./pages/Contact.jsx";
 
 // ⬇️ Custom cursor
 import CustomCursor from "./CustomCursor.jsx";
+import Whoarewe from "./pages/Whoarewe.jsx";
 
 const Home = lazy(() => import("./pages/Home.jsx"));
 const Blog = lazy(() => import("./pages/Blog.jsx"));
@@ -54,7 +55,8 @@ export default function App() {
 
           <Route path="/account" element={<Account />} />
           <Route path="/about" element={<About />} />
-          <Route path="/whoweare" element={<Whoweare />} />
+          <Route path="/whoarewe" element={<Whoarewe />} />
+          {/* <Route path="/whoweare" element={<Whoweare />} /> */}
 
           <Route path="/blogdetails" element={<BlogDetails />} />
           <Route path="/contact" element={<Contact />} />

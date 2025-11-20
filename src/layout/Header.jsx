@@ -293,7 +293,7 @@ export default function Header() {
               )}
             </div>
 
-            <Link to="/whoweare" className="hover:text-[#FFE9CC]">
+            <Link to="/whoarewe" className="hover:text-[#FFE9CC]">
               WhoWeAre
             </Link>
             <Link to="/shop" className="hover:text-[#FFE9CC]">
