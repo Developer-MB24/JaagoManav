@@ -1,7 +1,7 @@
 import React from "react";
 
-export default function HeroWhoWeAre({ onPlay }) {
-  const handlePlay = onPlay ?? (() => {});
+function HeroWhoWeAre({ onPlay }) {
+  const handlePlay = onPlay || (() => {});
 
   return (
     <section className="relative w-full overflow-hidden">
@@ -63,20 +63,8 @@ export default function HeroWhoWeAre({ onPlay }) {
           </button>
         </div>
       </div>
-
-      {/* Self-contained keyframes */}
-      <style>{`
-        @keyframes slideDown {
-          0% { transform: translateY(-28px); opacity: .45; }
-          100% { transform: translateY(0); opacity: .30; }
-        }
-        @keyframes slideUp {
-          0% { transform: translateY(28px); opacity: .45; }
-          100% { transform: translateY(0); opacity: .30; }
-        }
-        .animate-slideDown { animation: slideDown 6s ease-in-out infinite alternate; }
-        .animate-slideUp   { animation: slideUp   6s ease-in-out infinite alternate; }
-      `}</style>
     </section>
   );
 }
+
+export default HeroWhoWeAre;

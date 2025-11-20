@@ -1,7 +1,7 @@
 import React from "react";
 import HeroWhoWeAre from "../components/whoweare/HeroWhoWeAre.jsx";
 
-// import CompanyStatsSection from "../components/whoweare/CompanyStatsSection.jsx";
+import CompanyStatsSection from "../components/whoweare/CompanyStatsSection.jsx";
 import JourneySection from "../components/whoweare/JourneySection.jsx";
 import VolunteerCard from "../components/whoweare/VolunteerCard.jsx";
 import EconestUpcomingEvents from "../components/whoweare/EconestUpcomingEvents.jsx";
@@ -15,7 +15,7 @@ export default function Whoweare() {
     <>
       <HeroWhoWeAre />
       <WhoWeAreSection />
-      {/* <CompanyStatsSection /> */}
+      <CompanyStatsSection />
       <JourneySection />
       <VolunteerCard />
       <WhoWeAreTestimonial />
