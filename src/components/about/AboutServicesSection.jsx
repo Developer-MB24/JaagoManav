@@ -24,8 +24,6 @@ const cards = [
 
 const AboutServicesSection = () => (
   <section className="w-full   py-16 flex flex-col items-center relative">
-    {/* TOP ARC (VISIBLE NOW) */}
-    {/* TOP ARC (FLIPPED UPWARDS) */}
     <div className="absolute top-0 left-0 w-full md:mt-[-140px] overflow-hidden  z-50 pointer-events-none rotate-180">
       <svg
         className="w-full h-full"
