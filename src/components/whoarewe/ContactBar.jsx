@@ -1,72 +1,106 @@
-// ContactBar.jsx
+// src/components/contact/ContactBar.jsx
 import React, { useState } from "react";
-import { Send, Phone, MapPin } from "lucide-react";
+import { Send, PhoneCall, MapPin } from "lucide-react";
 
-const infos = [
+const cards = [
   {
-    label: "support.econest@gmail.com",
-    sub: "Send a Email",
-    icon: <Send size={22} />,
-    key: "email",
+    id: 0,
+    href: "mailto:support.econest@gmail.com",
+    title: "support.econest@gmail.com",
+    subtitle: "Send a Email",
+    Icon: Send,
   },
   {
-    label: "+70 264 566 579",
-    sub: "Any Time Call Us",
-    icon: <Phone size={22} />,
-    key: "phone",
+    id: 1,
+    href: "tel:+70264566579",
+    title: "+70 264 566 579",
+    subtitle: "Any Time Call Us",
+    Icon: PhoneCall,
   },
   {
-    label: "Jones Street, New York, USA",
-    sub: "Our Address",
-    icon: <MapPin size={22} />,
-    key: "address",
+    id: 2,
+    href: "#",
+    title: "Jones Street, New York, USA",
+    subtitle: "Our Address",
+    Icon: MapPin,
   },
 ];
 
-const ContactBar = () => {
-  const [active, setActive] = useState(-1);
-
-  // Card colors
-  const getCardClasses = (idx) =>
-    `${active === idx ? "bg-[#138808] text-white" : "bg-[#FF9933] text-white"} 
-     transition-colors duration-300 rounded-lg shadow flex-1 flex items-center px-8 py-5 gap-4 cursor-pointer`;
-
-  const getIconClasses = (idx) =>
-    `rounded-full p-2 ${
-      active === idx
-        ? "bg-white text-[#FF9933]"
-        : "bg-white text-[#138808] border border-white"
-    } transition`;
+export default function ContactBar() {
+  // middle card active by default
+  const [activeIndex, setActiveIndex] = useState(1);
 
   return (
-    <div className="relative z-10 max-w-5xl mx-auto flex gap-6 items-stretch py-4 px-2">
-      {infos.map((info, idx) => (
-        <div
-          key={info.key}
-          className={getCardClasses(idx)}
-          onMouseEnter={() => setActive(idx)}
-        >
-          <span className={getIconClasses(idx)}>{info.icon}</span>
-          <div className="flex flex-col flex-1">
-            <div
-              className={`font-bold text-lg ${
-                active === idx ? "text-white" : "text-white"
-              }`}
-            >
-              {info.label}
-            </div>
-            <div
-              className={`text-sm opacity-80 mt-1 ${
-                active === idx ? "text-white" : "text-white"
-              }`}
-            >
-              {info.sub}
-            </div>
+    <section className="relative contact-info-section z-50 -mb-10 md:-mb-14 lg:-mb-16">
+      <div className="mx-auto max-w-6xl px-4">
+        <div className="bg-[#FFE47D] rounded-2xl md:rounded-[18px] shadow-[0_18px_40px_rgba(0,69,64,0.18)]">
+          <div className="grid grid-cols-1 md:grid-cols-3">
+            {cards.map((card, idx) => {
+              const isActive = idx === activeIndex;
+              const { Icon } = card;
+
+              return (
+                <a
+                  key={card.id}
+                  href={card.href}
+                  onMouseEnter={() => setActiveIndex(idx)}
+                  className={[
+                    "contact-info block cursor-pointer transition-all duration-300",
+                    "px-6 sm:px-8 lg:px-10 py-6 sm:py-8 lg:py-9",
+                    "border-transparent",
+                    isActive
+                      ? "bg-[#134A43] text-white rounded-2xl md:rounded-[18px] shadow-[0_26px_55px_rgba(0,69,64,0.45)] translate-y-[-18px] md:translate-y-[-22px] z-10"
+                      : "bg-transparent text-[#134A43] md:hover:bg-[#134A43] md:hover:text-white",
+                    idx === 0 ? "md:rounded-l-[18px]" : "",
+                    idx === cards.length - 1 ? "md:rounded-r-[18px]" : "",
+                  ].join(" ")}
+                  style={{ position: "relative" }}
+                >
+                  {/* top line + icon */}
+                  <div className="icon-wrap flex items-center justify-between gap-4 mb-5">
+                    <span
+                      className={`h-px flex-1 ${
+                        isActive
+                          ? "bg-gradient-to-r from-transparent to-[#FFBF4B]"
+                          : "bg-gradient-to-r from-transparent to-[#134A43]"
+                      }`}
+                    />
+                    <div
+                      className={[
+                        "icon flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full border",
+                        isActive
+                          ? "bg-[#0F3A35] border-white/30 text-[#FFBF4B]"
+                          : "bg-[#134A43] border-[#134A43]/40 text-[#FFBF4B]",
+                      ].join(" ")}
+                    >
+                      <Icon size={20} />
+                    </div>
+                  </div>
+
+                  {/* text */}
+                  <h3
+                    className={[
+                      "font-semibold leading-snug mb-2",
+                      "text-lg sm:text-xl lg:text-2xl",
+                      isActive ? "text-white" : "text-[#134A43]",
+                    ].join(" ")}
+                  >
+                    {card.title}
+                  </h3>
+                  <p
+                    className={[
+                      "text-sm sm:text-base",
+                      isActive ? "text-white/80" : "text-[#134A43]",
+                    ].join(" ")}
+                  >
+                    {card.subtitle}
+                  </p>
+                </a>
+              );
+            })}
           </div>
         </div>
-      ))}
-    </div>
+      </div>
+    </section>
   );
-};
-
-export default ContactBar;
+}

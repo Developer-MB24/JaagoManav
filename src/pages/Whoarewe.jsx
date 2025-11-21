@@ -3,12 +3,13 @@ import Hero from "../components/whoarewe/Hero";
 import WhoWeAreSection from "../components/whoarewe/WhoWeAreSection";
 import Testimonial from "../components/whoarewe/Testimonial";
 
-import CompanyStatsSection from "../components/whoarewe/CompanyStatsSection.jsx";
+// import CompanyStatsSection from "../components/whoarewe/CompanyStatsSection.jsx";
 import JourneySection from "../components/whoarewe/JourneySection.jsx";
 import VolunteerCard from "../components/whoarewe/VolunteerCard.jsx";
 import EconestUpcomingEvents from "../components/whoarewe/EconestUpcomingEvents.jsx";
 
 import ContactBar from "../components/whoarewe/ContactBar.jsx";
+import MajorPartnersSection from "../components/whoarewe/MajorPartnersSection.jsx";
 
 // import WhoWeAreSection from "../components/whoweare/WhoWeAreSection.jsx";
 // import Hero from "../components/whoweare/Hero.jsx";
@@ -19,10 +20,11 @@ export default function Whoarewe() {
     <>
       <Hero />
       <WhoWeAreSection />
-      <CompanyStatsSection />
+      {/* <CompanyStatsSection /> */}
       <JourneySection />
       <VolunteerCard />
       <Testimonial />
+      <MajorPartnersSection />
       <EconestUpcomingEvents />
       <ContactBar />
     </>

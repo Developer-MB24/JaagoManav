@@ -1,373 +1,274 @@
-import { useRef, useEffect, useState } from "react";
-import { motion, useInView } from "framer-motion";
-import {
-  ArrowRight,
-  Leaf,
-  Play,
-  Star,
-  Award,
-  ThumbsUp,
-  Users,
-  Lightbulb,
-  BarChart3,
-  Check,
-} from "lucide-react";
+"use client";
 
-function useCountUp(target = 0, start = false, { duration = 1500 } = {}) {
-  const [value, setValue] = useState(0);
-  const rafRef = useRef(null);
+import React, { useState } from "react";
 
-  useEffect(() => {
-    if (!start) return;
-    const startTs = performance.now();
-    const from = 0;
-    const to = Number(target) || 0;
-    const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
-
-    function tick(now) {
-      const p = Math.min(1, (now - startTs) / duration);
-      const eased = easeOutCubic(p);
-      setValue(Math.round(from + (to - from) * eased));
-      if (p < 1) rafRef.current = requestAnimationFrame(tick);
-    }
-    rafRef.current = requestAnimationFrame(tick);
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, [start, target, duration]);
-
-  return value;
-}
-
-function splitNumberAndSuffix(v) {
-  const s = String(v);
-  let i = 0;
-  while (i < s.length && s[i] >= "0" && s[i] <= "9") i++;
-  const num = Number(s.slice(0, i) || "0");
-  const suffix = s.slice(i);
-  return [num, suffix];
-}
-
-function Stat({ icon: Icon, value = "0", label = "" }) {
-  const [num, suffix] = splitNumberAndSuffix(value);
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-20% 0px -20% 0px" });
-  const rolled = useCountUp(num, inView, { duration: 1500 });
+const ServiceAbout = () => {
+  const [activeTab, setActiveTab] = useState("history");
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className="flex flex-col items-center"
-    >
-      <div
-        className="h-14 w-14 rounded-full flex items-center justify-center shadow"
-        style={{
-          background: "#fff",
-          boxShadow: "0 0 0 2px rgba(255,153,51,0.28)",
-        }}
-      >
-        <Icon size={22} color="#134A43" />
-      </div>
-      <div
-        className="text-2xl lg:text-3xl font-bold mt-2"
-        style={{ color: "#134A43" }}
-      >
-        {rolled}
-        <span>{suffix}</span>
-      </div>
-      <div
-        className="text-sm lg:text-base mt-1 font-medium"
-        style={{ color: "#138808" }}
-      >
-        {label}
-      </div>
-    </motion.div>
-  );
-}
-
-export default function ServiceAboutExact({
-  primaryImage = "/images/about-two-img-1.jpg",
-  secondaryImage = "/images/about-two-img-2.jpg",
-  badgeYear = "29+",
-  title = "Building Greener Future Together And Protect",
-  tabs = ["Our History", "Our Mission", "Our Vision"],
-  activeTabIndex = 0,
-  bullets = [
-    "Nature ecologically, acceptable, organisms environment",
-    "Ecology is the study of the relationship between living",
-    "Focus on your important tasks and orders",
-  ],
-  stats = [
-    { icon: BarChart3, value: "98%", label: "Company Success" },
-    { icon: Lightbulb, value: "565+", label: "Company Strategies" },
-    { icon: ThumbsUp, value: "36k", label: "Complete Projects" },
-    { icon: Users, value: "100+", label: "Experienced Members" },
-  ],
-}) {
-  return (
-    <section className="relative w-full overflow-hidden bg-white font-serif pt-4">
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 left-0 w-full h-56 bg-gradient-to-b from-[#FF9933] to-transparent opacity-25 animate-slideDown" />
-        <div className="absolute bottom-0 left-0 w-full h-56 bg-gradient-to-t from-[#138808] to-transparent opacity-25 animate-slideUp" />
-      </div>
-
-      <div
-        className="relative z-10 mx-auto max-w-screen-2xl grid grid-cols-1 lg:grid-cols-[520px_1fr] gap-6 lg:gap-0 px-4 sm:px-6 lg:px-20 items-center"
-        style={{ minHeight: 520 }}
-      >
-        {/* LEFT COLUMN */}
-        <div
-          className="relative flex-shrink-0 flex justify-center lg:justify-start items-start lg:pb-0"
-          style={{ minHeight: 430 }}
-        >
-          <div className="rounded-[24px] lg:rounded-[32px] overflow-hidden w-[88vw] max-w-[360px] h-[60vw] max-h-[400px] lg:w-[355px] lg:h-[400px] bg-gray-200 shadow-lg relative z-[1]">
+    <section className="about-us-section mt-28 md:mt-24 sm:mt-20">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* LEFT: Image composition */}
+          <div className="relative mb-36 lg:mb-40 sm:mb-64">
+            {/* Main image */}
             <img
-              src={primaryImage}
-              alt="Primary"
-              className="w-full h-full object-cover"
+              src="/images/thumb-39.webp"
+              alt="About us main"
+              className="rounded-[10px] w-full max-w-lg"
             />
-          </div>
 
-          {/* Badge */}
-          <div
-            className="absolute right-2 top-2 lg:right-[-18px] lg:top-[36px] z-20 px-5 lg:px-7 py-2.5 lg:py-3 rounded-xl bg-[#FFE184] text-[#134A43] text-center shadow font-extrabold flex flex-col items-center"
-            style={{ fontSize: 22, minWidth: 112 }}
-          >
-            <span className="text-xl lg:text-2xl font-extrabold">
-              {badgeYear}
-            </span>
-            <span className="text-xs lg:text-sm font-medium mt-1">
-              Years of experience
-            </span>
-          </div>
-
-          <div
-            className="absolute left-2 top-[65%] lg:left-[-45px] lg:top-[218px] flex items-center gap-2 bg-[#138808] text-white px-4 lg:px-5 py-2.5 lg:py-3 rounded-lg shadow-lg z-20"
-            style={{ fontSize: 13 }}
-          >
-            <Award size={18} color="#FFBF4B" />
-            <div className="flex flex-col text-xs lg:text-sm">
-              <span className="font-semibold">2024–We are the</span>
-              <span className="opacity-90">best award winner</span>
+            {/* Experience box */}
+            <div
+              className="absolute top-20 right-10 flex items-center gap-3 bg-[#FF9933] px-5 py-4 rounded-xl shadow-lg z-20
+                            xl:right-3
+                            lg:right-[-80px]
+                            md:right-[70px]
+                            sm:top-[-8%] sm:right-1/2 sm:translate-x-1/2"
+            >
+              <h3
+                className="m-0 text-[56px] md:text-[44px] sm:text-[40px] font-semibold leading-none text-transparent"
+                style={{ WebkitTextStroke: "1px #004540" }}
+              >
+                29<span className="align-top text-2xl">+</span>
+              </h3>
+              <p className="m-0 max-w-[110px] text-[17px] leading-[1.4] font-semibold text-[#004540]">
+                Years of experience
+              </p>
             </div>
-          </div>
 
-          <div
-            className="
-              relative z-30 mt-24 mx-auto w-[260px] h-[300px]
-              lg:absolute lg:mt-0 lg:mx-0 lg:w-[245px] lg:h-[360px]
-              lg:left-[298px] lg:top-[160px] overflow-hidden
-            "
-            style={{
-              borderRadius: "150px 150px 12px 12px",
-              border: "4px solid #fff",
-              boxShadow: "0 10px 60px rgba(0,0,0,0.16)",
-              background: "#fff",
-            }}
-          >
-            <img
-              src={secondaryImage}
-              alt="Overlay"
-              className="w-full h-full object-cover"
-            />
-
-            <motion.button
-              className="absolute flex items-center justify-center rounded-full"
+            {/* Award shape */}
+            <div
+              className="absolute  left-[-60px] inline-flex items-center gap-4 px-6 py-4 rounded-md bg-[#004540] z-20
+                         2xl:left-[-20px] xl:left-[-40px] md:left-[-40px]
+                         sm:left-[15%] sm:bottom-[-34%]"
               style={{
-                width: 72,
-                height: 72,
-                textAlign: "center",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                color: "#138808",
-                fontWeight: 500,
-                fontSize: 18,
-                lineHeight: "28px",
-                backdropFilter: "blur(13px)",
-                padding: "20px 18px",
-                borderRadius: "100%",
-                background: "rgba(255, 255, 255, 0.08)",
-                border: "1px solid rgba(19,136,8,0.35)",
-                transition: "0.3s linear",
-                boxShadow:
-                  "rgba(0,0,0,0) 0px 0px 0px 3.3px, rgba(0,0,0,0) 0px 0px 0px 30px",
+                backgroundImage: "url('/images/shape-18.webp')",
+                backgroundPosition: "left",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "contain",
               }}
-              aria-label="Play video"
             >
-              <motion.span
-                className="pointer-events-none absolute inset-0 rounded-full"
-                animate={{
-                  boxShadow: [
-                    "0 0 0 0 rgba(19,136,8,0.35)",
-                    "0 0 0 15px rgba(19,136,8,0.0)",
-                    "0 0 0 30px rgba(19,136,8,0.0)",
-                  ],
-                  opacity: [1, 0.85, 1],
-                }}
-                transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
+              <img
+                src="/images/icon-6.svg"
+                alt="award icon"
+                className="max-w-[36px]"
               />
-              <motion.span
-                animate={{ scale: [1, 1.18, 1], opacity: [1, 0.85, 1] }}
-                transition={{ repeat: Infinity, duration: 2, ease: "easeOut" }}
-              >
-                <Play size={26} color="#138808" />
-              </motion.span>
-            </motion.button>
-          </div>
+              <p className="m-0 max-w-[160px] text-sm text-white">
+                2024 - We are the best award winner
+              </p>
+            </div>
 
-          <div
-            className="absolute left-2 lg:left-[8px] bottom-[-10px] lg:bottom-[-14px] z-[1]"
-            style={{
-              width: 95,
-              height: 23,
-              background: "radial-gradient(#138808 1.1px, transparent 1.1px)",
-              backgroundSize: "7px 7px",
-              opacity: 0.12,
-            }}
-          />
-        </div>
+            {/* Box shape behind main image */}
+            <div className="absolute bottom-[-32px] left-[-16px] -z-10">
+              <img src="/images/shape-14.webp" alt="box shape" />
+            </div>
 
-        {/* RIGHT COLUMN */}
-        <div className="relative z-10 flex flex-col lg:pl-9 lg:pr-3 justify-center items-start lg:ml-14 pl-1 pr-1 sm:pl-3 sm:pr-3 ml-0">
-          <div className="flex items-center gap-2 mb-2 mt-2">
-            <Leaf size={20} color="#138808" />
-            <span className="text-[#138808] text-base lg:text-lg font-semibold">
-              About Us
-            </span>
-          </div>
-
-          {/* Title */}
-          <h2
-            className="text-[1.85rem] lg:text-[2.98rem] leading-tight font-extrabold mb-4 lg:mb-6 mt-2 lg:mt-3"
-            style={{
-              letterSpacing: "-0.5px",
-              lineHeight: "1.12",
-              color: "#134A43",
-            }}
-          >
-            {title}
-          </h2>
-
-          {/* Tabs */}
-          <div className="flex flex-wrap gap-3 lg:gap-6 mb-4 lg:mb-6 mt-1 lg:mt-2">
-            {tabs.map((t, i) => (
-              <button
-                key={t}
-                className="px-5 lg:px-7 py-2 rounded-full font-bold text-[0.98rem] lg:text-[1.05rem] border transition"
-                style={
-                  i === activeTabIndex
-                    ? {
-                        background: "#fff",
-                        borderColor: "#FF9933",
-                        borderWidth: 2,
-                        color: "#134A43",
-                      }
-                    : {
-                        background: "#fff",
-                        borderColor: "#fff",
-                        borderWidth: 2,
-                        color: "#557070",
-                        opacity: 0.9,
-                      }
-                }
-              >
-                {t}
-              </button>
-            ))}
-          </div>
-
-          {/* Body */}
-          <div className="mb-4 lg:mb-5 max-w-xl text-[#4b5563] text-[1rem] lg:text-[1.10rem] leading-relaxed">
-            The implant fixture is first placed, so that it likely to then a
-            dental prosthetic is added then dental prosthetic.
-          </div>
-
-          <ul className="space-y-4 lg:space-y-5 pb-1 lg:pb-2">
-            {bullets.map((b) => (
-              <li
-                key={b}
-                className="flex items-center gap-3 lg:gap-4 font-bold text-[1rem] lg:text-[1.04rem]"
-                style={{ color: "#134A43" }}
-              >
-                <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[rgba(19,136,8,0.10)] border border-green-200">
-                  <Check size={17} color="#138808" />
-                </span>
-                <span>{b}</span>
-              </li>
-            ))}
-          </ul>
-
-          {/* CTA */}
-          <div className="flex gap-4 lg:gap-6 items-center flex-wrap mt-4 lg:mt-5">
-            <button
-              className="inline-flex items-center gap-2 rounded-full px-8 lg:px-10 py-3.5 lg:py-4 font-extrabold text-[1.05rem] lg:text-[1.25rem] shadow-lg transition"
-              style={{ background: "#FF9933", color: "#134A43" }}
+            {/* Positioned video thumb */}
+            <div
+              className="absolute top-1/2 right-[70px] rounded-[150px_150px_12px_12px] sm:right-[6%] sm:w-[88%]
+                            xl:right-[-20px] lg:right-[-60px] md:right-[50px]"
             >
-              Explore More
-              <span
-                className="grid h-8 w-8 lg:h-9 lg:w-9 place-items-center rounded-full"
-                style={{ background: "rgba(19,136,8,0.10)" }}
-              >
-                <ArrowRight size={20} />
-              </span>
-            </button>
-            <div className="flex items-center gap-3">
-              <span className="inline-flex items-center gap-1">
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white border border-[#FFD975]">
-                  <Star size={18} color="#138808" />
-                </span>
-                <span
-                  className="text-sm lg:text-md font-bold"
-                  style={{ color: "#134A43" }}
-                >
-                  Trustpilot
-                </span>
-              </span>
-              <div className="flex items-center">
-                {Array(5)
-                  .fill(0)
-                  .map((_, i) => (
-                    <Star
-                      key={i}
-                      size={18}
-                      className="lg:size-[19px]"
-                      color="#FFBF4B"
-                      fill="#FFBF4B"
-                    />
-                  ))}
+              <div className="relative w-full xl:w-[85%] lg:w-full">
+                <div className="relative w-fit">
+                  <img
+                    src="/images/thumb-40.webp"
+                    alt="video thumb"
+                    className="w-full border-4 border-white rounded-[150px_150px_12px_12px]"
+                  />
+                  <a
+                    href="https://www.youtube.com/watch?v=fLeJJPxua3E&ab_channel=Motiversity"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="video-play-btn absolute inset-0 m-auto flex items-center justify-center w-20 h-20 rounded-full border border-white text-white text-xl
+                               bg-white/5 backdrop-blur-[13px] transition hover:bg-[#FF9933] hover:text-[#004540] hover:border-[#FF9933]
+                               animate-pulse"
+                  >
+                    <i className="fa-solid fa-play" />
+                  </a>
+                </div>
+
+                {/* Vector shape under video */}
+                <div className="absolute bottom-0 w-full">
+                  <img
+                    src="/images/shape-19.webp"
+                    alt="vector shape"
+                    className="w-full"
+                  />
+                </div>
               </div>
-              <span className="text-sm lg:text-md text-gray-500 ml-2 lg:ml-3 font-medium">
-                Excellent 4.9 out of 5
+            </div>
+          </div>
+
+          {/* RIGHT: Content + tabs */}
+          <div className="about-us-content px-3 xl:px-8">
+            {/* Subtitle */}
+            <div className="flex items-center gap-3 mb-4">
+              <img
+                src="/images/icon-2.svg"
+                alt="icon-2"
+                className="h-7 w-7 object-contain"
+              />
+              <span className="text-sm font-semibold tracking-wide text-[#004540]">
+                About Us
               </span>
+            </div>
+
+            {/* Title */}
+            <div className="mb-6">
+              <h2 className="text-3xl md:text-4xl font-semibold text-[#004540]">
+                Building Greener Future Together And Protect
+              </h2>
+            </div>
+
+            {/* Tabs */}
+            <div className="c-tabs-wrapper mb-6">
+              <div className="flex flex-wrap items-center gap-3 mb-6">
+                <TabButton
+                  label="Our History"
+                  isActive={activeTab === "history"}
+                  onClick={() => setActiveTab("history")}
+                />
+                <TabButton
+                  label="Our Mission"
+                  isActive={activeTab === "mission"}
+                  onClick={() => setActiveTab("mission")}
+                />
+                <TabButton
+                  label="Our Vision"
+                  isActive={activeTab === "vision"}
+                  onClick={() => setActiveTab("vision")}
+                />
+              </div>
+
+              {/* Tab content */}
+              <div className="tab-content space-y-4">
+                {activeTab === "history" && (
+                  <div>
+                    <div className="text mb-4">
+                      <p className="text-slate-700 leading-7">
+                        The implant fixture is first placed, so that it ilikely
+                        to then a dental prosthetic is added then dental
+                        prosthetic.
+                      </p>
+                    </div>
+                    <BenefitsList />
+                  </div>
+                )}
+
+                {activeTab === "mission" && (
+                  <div>
+                    <div className="text mb-4">
+                      <p className="text-slate-700 leading-7">
+                        The implant fixture is first placed, so that it ilikely
+                        to then a dental prosthetic is added then dental
+                        prosthetic.
+                      </p>
+                    </div>
+                    <BenefitsList />
+                  </div>
+                )}
+
+                {activeTab === "vision" && (
+                  <div>
+                    <div className="text mb-4">
+                      <p className="text-slate-700 leading-7">
+                        The implant fixture is first placed, so that it ilikely
+                        to then a dental prosthetic is added then dental
+                        prosthetic.
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* CTA + Rating */}
+            <div className="annual-donation-wrap flex items-center gap-6 sm:flex-col sm:items-start sm:gap-4 mt-4">
+              <a
+                href="/econest/about"
+                className="inline-flex items-center gap-3 rounded-full bg-[#004540] text-[#FFFBEB] px-7 py-3 text-sm font-semibold shadow hover:bg-[#FF9933] hover:text-[#004540] transition relative overflow-hidden
+                           before:content-[''] before:absolute before:inset-0 before:bg-[#FF9933] before:scale-0 before:origin-left before:transition-transform before:duration-300 hover:before:scale-100"
+              >
+                <span className="relative z-[1] flex items-center gap-3">
+                  Explore More
+                  <span className="icon-wrap relative inline-flex items-center justify-center w-8 h-8 rounded-full bg-[#FFFBEB] text-[#004540]">
+                    <span className="icon flex items-center">
+                      <i className="fa-regular fa-arrow-right text-[11px]" />
+                      <i className="fa-regular fa-arrow-right text-[11px] -ml-0.5 opacity-70" />
+                    </span>
+                  </span>
+                </span>
+              </a>
+
+              <div className="rating-wrap">
+                <div className="star-rating flex items-center gap-3 mb-2">
+                  <img
+                    src="/images/logo-8.svg"
+                    alt="rating logo"
+                    className="h-10 w-auto"
+                  />
+                  <div className="stars flex items-center gap-1">
+                    {[1, 2, 3, 4, 5].map((n) => (
+                      <span
+                        key={n}
+                        className="flex items-center justify-center w-5 h-5 bg-[#004540] text-[#FF9933]"
+                      >
+                        <i className="fa-solid fa-star-sharp text-[11px]" />
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <p className="text-sm text-slate-700 m-0">
+                  Excellent 4.9 out of 5
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Stats */}
-      <div className="relative z-10 mx-auto max-w-7xl grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 pt-8 lg:pt-12 pb-6 lg:pb-7 px-4 sm:px-6 lg:px-14">
-        {stats.map((s) => (
-          <Stat key={s.label} icon={s.icon} value={s.value} label={s.label} />
-        ))}
-      </div>
-
-      <style>{`
-        @keyframes slideDown {
-          0%   { transform: translateY(-25%); }
-          100% { transform: translateY(0%); }
-        }
-        @keyframes slideUp {
-          0%   { transform: translateY(25%); }
-          100% { transform: translateY(0%); }
-        }
-        .animate-slideDown { animation: slideDown 14s ease-in-out infinite alternate; }
-        .animate-slideUp   { animation: slideUp   14s ease-in-out infinite alternate; }
-      `}</style>
     </section>
   );
-}
+};
+
+/** Tab button */
+const TabButton = ({ label, isActive, onClick }) => {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`px-7 py-3 rounded-full text-sm font-semibold border transition
+                  ${
+                    isActive
+                      ? "bg-[#F8F7F0] text-[#004540] border-[#FF9933] shadow-[0_6px_16px_-3px_rgba(0,69,64,0.11)]"
+                      : "bg-white text-slate-700 border-transparent hover:bg-[#F8F7F0] hover:text-[#004540]"
+                  }
+                  sm:px-3 sm:py-1.5`}
+    >
+      {label}
+    </button>
+  );
+};
+
+/** Benefits bullet list (reused for History & Mission) */
+const BenefitsList = () => (
+  <div className="benefits mb-8">
+    <ul className="flex flex-col gap-3 list-none p-0 m-0">
+      {[
+        "Nature ecologically, acceptable, organisms environment",
+        "Ecology is the study of the relationship between living",
+        "Focus on your important tasks and orders",
+      ].map((item, idx) => (
+        <li key={idx} className="relative pl-9 flex items-center sm:pl-8">
+          {/* Outer bullet */}
+          <span className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-white shadow-[0_6px_10px_-3px_rgba(0,69,64,0.11)]" />
+          {/* Inner gradient dot */}
+          <span className="absolute left-[7px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[radial-gradient(circle_at_86.3%_87.5%,rgba(0,0,0,0.23)_0%,rgba(0,0,0,0)_86.18%),radial-gradient(circle_at_26.39%_20.83%,rgba(255,255,255,0.413)_0%,rgba(255,255,255,0)_69.79%),#004540]" />
+          <span className="text-slate-800 leading-relaxed">{item}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
+export default ServiceAbout;

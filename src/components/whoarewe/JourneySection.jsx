@@ -1,89 +1,117 @@
-// JourneySection.jsx
+// src/components/whoweare/JourneySection.jsx
 import React, { useState } from "react";
-import { ArrowRight } from "lucide-react";
 
-const years = [2020, 2021, 2022, 2023, 2024];
+const tabs = [
+  { year: 2020 },
+  { year: 2021 },
+  { year: 2022 },
+  { year: 2023 },
+  { year: 2024 },
+];
 
-const JourneySection = () => {
-  const [selected, setSelected] = useState(2020);
+const description =
+  "Despite applying for three times and even hiring a lawyer to assist with the process, Morgan was unable to get authorization to fly to the USA for the premiere of her film about a factory-farmed pig.";
+
+export default function JourneySection() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeYear = tabs[activeIndex].year;
 
   return (
-    <section className="relative overflow-hidden flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-16 min-h-[430px] bg-white">
-      {/* Background gradients (optional for global consistency) */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-[#FF9933] to-transparent opacity-20" />
-        <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-[#138808] to-transparent opacity-20" />
-      </div>
-      {/* Left: image */}
-      <div className="w-full md:w-1/2 flex justify-start items-end z-10">
-        <img
-          src="/images/about-two-img-2.jpg"
-          alt="Eco energy"
-          className="object-contain w-[410px] max-w-full"
-          draggable="false"
-        />
-      </div>
-      {/* Right: content */}
-      <div className="w-full md:w-1/2 flex flex-col z-10 mt-8 md:mt-0">
-        <div className="flex items-center gap-2 mb-4">
-          <span className="text-[#138808] font-bold">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <circle cx="11" cy="11" r="10" stroke="#138808" strokeWidth="2" />
-              <path
-                d="M11 7v4l2 2"
-                stroke="#138808"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-          </span>
-          <span className="font-medium text-[#FF9933] text-lg">
-            Our History
-          </span>
-        </div>
-        <h2 className="text-3xl md:text-4xl font-bold text-[#138808] mb-6">
-          Journey Was Started
-        </h2>
-        {/* Years Switcher */}
-        <div className="flex gap-3 mb-6">
-          {years.map((year) => (
-            <button
-              key={year}
-              onClick={() => setSelected(year)}
-              className={`
-                px-5 py-2 rounded-full font-semibold text-base transition
-                ${
-                  selected === year
-                    ? "bg-[#FF9933] text-white"
-                    : "bg-transparent text-[#138808] border border-[#138808] hover:bg-[#FF9933] hover:text-white"
-                }
-              `}
-            >
-              {year}
-            </button>
-          ))}
-        </div>
-        {/* Example content for selected year */}
-        <div>
-          <div className="text-[#138808] font-semibold">Year {selected}</div>
-          <div className="font-bold text-lg text-[#138808] mb-1 mt-2">
-            Got First Reward From (NYC)
-          </div>
-          <p className="text-[#138808] opacity-80 max-w-lg mb-6 text-base">
-            Despite applying for three times and even hiring a lawyer to assist
-            with the process. Morgan was unable to get authorization to fly to
-            the USA for the premiere of her film about a factory-farmed pig.
-          </p>
-          <button className="flex items-center gap-2 bg-[#FF9933] px-6 py-3 rounded-full font-bold text-[#138808] text-base transition hover:bg-[#ffae49] shadow">
-            See Our Achievement
-            <span className="rounded-full bg-[#138808] text-white p-1 ml-2">
-              <ArrowRight size={20} />
+    <section
+      className="relative py-20 md:py-24 px-4"
+      style={{
+        backgroundImage:
+          "url(/images/why-us-bg.webp), url(/images/about-us-bg.webp)",
+        backgroundPosition: "bottom right, bottom left 1%",
+        backgroundRepeat: "no-repeat, no-repeat",
+        backgroundSize: "contain, contain",
+      }}
+    >
+      <div className="mx-auto max-w-5xl flex justify-end mb-8">
+        <div className="w-full lg:w-[70%] xl:w-[60%] bg-white/90 rounded-2xl shadow-sm px-4 sm:px-6 lg:px-12 py-10 lg:py-16">
+          {/* Subtitle */}
+          <div className="flex items-center gap-3 mb-3">
+            <img src="/images/icon-2.svg" alt="icon-2" className="w-9 h-9" />
+            <span className="text-[#138808] font-semibold text-base">
+              Our History
             </span>
-          </button>
+          </div>
+
+          {/* Title */}
+          <h2 className="text-3xl md:text-4xl font-bold text-[#134A43] mb-6">
+            Journey Was Started
+          </h2>
+
+          {/* Tabs */}
+          <div className="mb-8">
+            <div className="flex flex-wrap items-center gap-3">
+              {tabs.map((tab, idx) => {
+                const active = idx === activeIndex;
+                return (
+                  <button
+                    key={tab.year}
+                    type="button"
+                    onClick={() => setActiveIndex(idx)}
+                    className="px-5 sm:px-7 py-2.5 rounded-full text-sm sm:text-base font-semibold border transition-all"
+                    style={
+                      active
+                        ? {
+                            backgroundColor: "#F8F7F0",
+                            color: "#134A43",
+                            borderColor: "#138808",
+                            boxShadow: "0 6px 16px -3px rgba(0, 69, 64, 0.11)",
+                          }
+                        : {
+                            backgroundColor: "#FFFFFF",
+                            color: "#4B5563",
+                            borderColor: "transparent",
+                          }
+                    }
+                  >
+                    {tab.year}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Active tab content */}
+          <div>
+            <div className="mb-2">
+              <h6 className="text-[18px] leading-[30px] font-medium text-[#134A43]">
+                Year {activeYear}
+              </h6>
+            </div>
+            <div className="mb-3">
+              <h5 className="text-[22px] md:text-[24px] leading-[32px] md:leading-[36px] font-semibold text-[#134A43]">
+                Got First Reward From (NYC)
+              </h5>
+            </div>
+            <p className="text-[#4B5563] mb-7 leading-relaxed">{description}</p>
+
+            {/* CTA button */}
+            <div className="flex items-center">
+              <a
+                href="/project"
+                className="inline-flex items-center gap-3 rounded-full bg-[#134A43] text-[#FF9933] px-7 py-3 text-sm md:text-base font-semibold overflow-hidden relative group"
+              >
+                <span className="relative z-10">See Our Achievement</span>
+                <span className="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-[#FF9933] text-[#134A43] transition-colors duration-300 group-hover:bg-white group-hover:text-[#FF9933]">
+                  <span className="flex items-center gap-[2px]">
+                    <span className="block text-xs leading-none group-hover:-translate-x-[1px] transition-transform duration-200">
+                      →
+                    </span>
+                    <span className="block text-xs leading-none group-hover:translate-x-[1px] transition-transform duration-200 delay-75">
+                      →
+                    </span>
+                  </span>
+                </span>
+                <span className="absolute inset-0 bg-[#FF9933]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
-};
-
-export default JourneySection;
+}

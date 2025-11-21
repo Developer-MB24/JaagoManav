@@ -1,397 +1,286 @@
-import React, {
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  useCallback,
-} from "react";
+// src/components/whoweare/Testimonial.jsx
+import React, { useEffect, useState } from "react";
 
-const COLORS = {
-  orange: "#FF9933",
-  white: "#FFFFFF",
-  india: "#138808",
-  navy: "#000080",
-};
-
-const TESTIMONIALS = [
+const testimonials = [
   {
+    id: 1,
+    image: "/images/about-two-img-2.jpg",
+    rating: "5.0",
+    review:
+      "I was very impressed 😍 — it involves providing advice and guidance on energy-related matters. Understand the advantages of hiring professionals to design and maintain your garden. 🙋",
     name: "Penelope Miller",
+    nick: "(Arjun)",
     role: "Sr. Volunteer",
-    rating: 5.0,
-    text: "I was very impressed 🐝 involves providing of advice and guidance on energy–related matters. Understand the advantages hiring professionals to design and maintain your garden. 🐝",
-    imageUrl:
-      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop",
+    videoUrl:
+      "https://www.youtube.com/watch?v=fLeJJPxua3E&ab_channel=Motiversity",
   },
   {
-    name: "Amara Patel",
-    role: "Coordinator",
-    rating: 4.9,
-    text: "Clear communication and reliable support. The team delivered beyond expectations and kept us informed at every step.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1524253482453-3fed8d2fe12b?q=80&w=1200&auto=format&fit=crop",
+    id: 2,
+    image: "/images/about-two-img-3.jpg",
+    rating: "5.0",
+    review:
+      "Their dedication to sustainable energy solutions truly stands out. The team is supportive, knowledgeable, and always ready to help communities go greener. 🌿",
+    name: "John Maxwell",
+    nick: "(Rahul)",
+    role: "Team Leader",
+    videoUrl:
+      "https://www.youtube.com/watch?v=fLeJJPxua3E&ab_channel=Motiversity",
   },
   {
-    name: "Jonas Erik",
-    role: "Project Lead",
-    rating: 5.0,
-    text: "Quality-first approach with practical guidance that actually works in the field. Highly recommended.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1544006659-f0b21884ce1d?q=80&w=1200&auto=format&fit=crop",
+    id: 3,
+    image: "/images/about-two-img-1.jpg",
+    rating: "5.0",
+    review:
+      "From planning to execution, everything feels smooth and professional. I love how they blend technology with nature to create real impact. 🌍",
+    name: "Denial Pasha",
+    nick: "(Sahil)",
+    role: "Volunteer",
+    videoUrl:
+      "https://www.youtube.com/watch?v=fLeJJPxua3E&ab_channel=Motiversity",
   },
 ];
 
-const PARTNERS = [
-  { name: "Kudi", logoUrl: "" },
-  { name: "DISRUPT", logoUrl: "" },
-  { name: "Air Peace", logoUrl: "" },
-  { name: "Arik", logoUrl: "" },
-  { name: "H TRANSIT", logoUrl: "" },
-  { name: "Spectranet 4G", logoUrl: "" },
-];
+const AUTOPLAY_MS = 5500;
 
-export default function Testimonial({
-  testimonials = TESTIMONIALS,
-  partners = PARTNERS,
-  onWriteReview = () => {},
-  onBecomePartner = () => {},
-  slideEveryMs = 4500,
-}) {
-  const [idx, setIdx] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const len = testimonials.length;
+export default function Testimonial() {
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const go = useCallback(
-    (dir = 1) => setIdx((i) => (i + dir + len) % len),
-    [len]
-  );
+  const handlePlay = (url) => {
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
 
+  // --- simple autoplay ---
   useEffect(() => {
-    if (paused || len <= 1) return;
-    const id = setInterval(() => go(1), Math.max(1800, slideEveryMs));
+    const id = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % testimonials.length);
+    }, AUTOPLAY_MS);
     return () => clearInterval(id);
-  }, [paused, len, slideEveryMs, go]);
-
-  useEffect(() => {
-    const onKey = (e) => {
-      if (e.key === "ArrowLeft") go(-1);
-      if (e.key === "ArrowRight") go(1);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [go]);
-
-  const prev = (idx - 1 + len) % len;
-  const next = (idx + 1) % len;
-
-  const trackRef = useRef(null);
-  const rafRef = useRef(null);
-  const marqueePaused = useRef(false);
-
-  useEffect(() => {
-    const el = trackRef.current;
-    if (!el) return;
-    const prefersReduced =
-      typeof window !== "undefined" &&
-      window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    let last = performance.now();
-    const speed = prefersReduced ? 0 : 0.4;
-
-    const step = (now) => {
-      if (!marqueePaused.current && speed > 0) {
-        const dt = now - last;
-        last = now;
-        el.scrollLeft += speed * (dt / 16.6);
-        if (el.scrollLeft >= el.scrollWidth / 2) el.scrollLeft = 0;
-      }
-      rafRef.current = requestAnimationFrame(step);
-    };
-
-    rafRef.current = requestAnimationFrame(step);
-    return () => rafRef.current && cancelAnimationFrame(rafRef.current);
   }, []);
 
-  const looped = useMemo(() => [...partners, ...partners], [partners]);
+  // helper to know “position” of each slide relative to active
+  const getOffset = (index) => {
+    const n = testimonials.length;
+    return (index - activeIndex + n) % n; // 0,1,2,...
+  };
 
   return (
-    <section
-      className="relative w-full overflow-hidden bg-white"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 left-0 w-full h-56 bg-gradient-to-b from-[#FF9933] to-transparent opacity-25 animate-slideDown" />
-        <div className="absolute bottom-0 left-0 w-full h-56 bg-gradient-to-t from-[#138808] to-transparent opacity-25 animate-slideUp" />
-      </div>
-
-      <style>{`
-        :root{ --orange:${COLORS.orange}; --white:${COLORS.white}; --india:${COLORS.india}; --navy:${COLORS.navy}; }
-        .shadow-soft{ box-shadow: 0 10px 25px rgba(0,0,0,.08); }
-        .card-glow{ box-shadow: 0 20px 45px rgba(0,0,0,.12); }
-        .no-scrollbar::-webkit-scrollbar{display:none;}
-        .no-scrollbar{ -ms-overflow-style:none; scrollbar-width:none;}
-        .fade-mask{
-          -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
-                  mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
-        }
-        @media (max-width: 480px){
-          .fade-mask{ -webkit-mask-image:none; mask-image:none; }
-        }
-        @media (min-width:768px) and (max-width:1023px){
-          .tablet-h-card{ height: 440px; }
-          .tablet-partner{ height: 88px; width: 190px; border-radius: 1rem; }
-        }
-        @keyframes slideDown { 0%{transform:translateY(-25%)} 100%{transform:translateY(0)} }
-        @keyframes slideUp   { 0%{transform:translateY( 25%)} 100%{transform:translateY(0)} }
-        .animate-slideDown { animation: slideDown 16s ease-in-out infinite alternate; }
-        .animate-slideUp   { animation: slideUp   16s ease-in-out infinite alternate; }
-      `}</style>
-
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 pb-12 sm:pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-10 md:gap-12 items-center">
-          {/* Left */}
-          <div className="space-y-4 sm:space-y-6 order-1 lg:order-none">
-            <div className="flex items-center gap-2">
-              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[var(--india)] text-[var(--white)]">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M12 2a10 10 0 1010 10A10.011 10.011 0 0012 2zm-1 15l-4-4 1.414-1.414L11 13.172l5.586-5.586L18 9z" />
-                </svg>
-              </span>
-              <p className="text-xs sm:text-sm font-semibold tracking-wide text-[var(--navy)]">
-                Testimonials
-              </p>
-            </div>
-
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight text-[var(--navy)]">
-              Why They Believe
-              <br className="hidden sm:block" />
-              <span className="sm:ml-0">In Us</span>
-            </h2>
-
-            <p className="max-w-xl text-sm sm:text-base leading-7 text-slate-600">
-              Likely to then a dental prosthetic is added then dental prosthetic
-              occaecat laborum.
-            </p>
-
-            <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-1 sm:pt-2">
+    <section className="pt-24 pb-16 md:pt-20 md:pb-20 bg-white">
+      <div className="mx-auto max-w-6xl px-4">
+        <div className="flex flex-col lg:flex-row items-start justify-between gap-10 lg:gap-16">
+          {/* LEFT: Text content */}
+          <div className="w-full lg:w-[42%]">
+            <div className="space-y-6">
+              {/* Subtitle */}
               <div className="flex items-center gap-3">
-                <span className="text-3xl sm:text-4xl font-extrabold text-[var(--orange)]">
-                  99%
+                <img
+                  src="/images/icon-2.svg"
+                  alt="icon-2"
+                  className="w-9 h-9"
+                />
+                <span className="text-sm font-semibold text-[#138808]">
+                  Testimonials
                 </span>
-                <div className="flex items-center gap-2">
-                  <span className="inline-flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center rounded-full bg-[var(--india)] text-[var(--white)]">
-                    ✓
-                  </span>
-                  <span className="text-xs sm:text-base font-semibold text-[var(--navy)]">
-                    Positive Reviews
-                  </span>
-                </div>
               </div>
 
-              <button
-                onClick={onWriteReview}
-                className="group flex items-center gap-2 rounded-full bg-[var(--white)] px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold text-[var(--navy)] ring-1 ring-slate-200 hover:ring-[var(--orange)] transition"
+              {/* Title */}
+              <div>
+                <h2 className="text-[2.3rem] md:text-[2.7rem] font-bold leading-tight text-[#134A43]">
+                  Why They Believe{" "}
+                  <span className="inline-flex items-center gap-3">
+                    <span className="inline-flex items-center justify-center rounded-full bg-[#134A43] text-[#FFCC40] px-3 py-1">
+                      <i className="fa-solid fa-quote-right text-base" />
+                    </span>
+                    In Us
+                  </span>
+                </h2>
+              </div>
+
+              {/* Text */}
+              <p className="text-[#4B5563] text-[15px] md:text-base max-w-md">
+                Likely to then a dental prosthetic is added, creating a stronger
+                foundation for long-lasting and sustainable smiles.
+              </p>
+
+              {/* Reviews summary */}
+              <div className="flex items-center gap-4">
+                <h3
+                  className="text-[40px] md:text-[46px] font-semibold leading-none"
+                  style={{
+                    color: "transparent",
+                    WebkitTextStroke: "1px #4B5563",
+                  }}
+                >
+                  99%
+                </h3>
+                <img
+                  src="/images/favicon.webp"
+                  alt="favicon"
+                  className="w-10 h-10 md:w-11 md:h-11"
+                />
+                <h5 className="text-[20px] md:text-[22px] font-semibold text-[#134A43]">
+                  Positive Reviews
+                </h5>
+              </div>
+
+              {/* Review button */}
+              <a
+                href="/contact"
+                className="inline-flex items-center gap-3 max-w-[260px] w-full border-2 border-[rgba(0,69,64,0.1)] rounded-2xl px-4 py-3 hover:border-[#134A43] transition-colors duration-200 bg-white"
               >
-                <span className="inline-flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center rounded-full bg-[var(--orange)] text-[var(--white)]">
-                  💬
+                <img
+                  src="/images/icon-3.svg"
+                  alt="review-icon"
+                  className="w-11 h-11 md:w-10 md:h-10"
+                />
+                <span className="text-sm md:text-[15px] font-medium text-[#134A43] leading-snug">
+                  <span className="inline-flex items-center gap-2">
+                    Write your honest review
+                    <i className="fa-solid fa-arrow-right-long text-xs" />
+                  </span>
                 </span>
-                Write your honest review
-                <span className="translate-x-0 group-hover:translate-x-0.5 transition">
-                  ➜
-                </span>
-              </button>
+              </a>
             </div>
           </div>
 
-          {/* Right  */}
-          <div
-            className="relative h-auto sm:h-[380px] md:h-[440px] flex items-center order-2 tablet-h-card"
-            onMouseEnter={() => setPaused(true)}
-            onMouseLeave={() => setPaused(false)}
-            onTouchStart={() => setPaused(true)}
-            onTouchEnd={() => setPaused(false)}
-          >
-            <GhostCard
-              t={testimonials[prev]}
-              side="left"
-              className="hidden lg:block"
-            />
-            <GhostCard
-              t={testimonials[next]}
-              side="right"
-              className="hidden lg:block"
-            />
+          {/* RIGHT: stacked auto slider */}
+          <div className="w-full lg:w-[48%]">
+            <div className="relative h-[360px] md:h-[400px] lg:h-[430px] flex items-center justify-end overflow-visible">
+              {testimonials.map((item, index) => {
+                const offset = getOffset(index); // 0 = active, 1/2 = behind, others hidden
+                let translateX = 0;
+                let scale = 1;
+                let opacity = 1;
+                let zIndex = 30;
+                let bgOpacity = 1;
 
-            <ActiveCard t={testimonials[idx]} />
+                if (offset === 1) {
+                  // 1st card behind
+                  translateX = -70;
+                  scale = 0.96;
+                  opacity = 0.7;
+                  zIndex = 20;
+                  bgOpacity = 0.75;
+                } else if (offset === 2) {
+                  // 2nd card behind
+                  translateX = -140;
+                  scale = 0.9;
+                  opacity = 0.5;
+                  zIndex = 10;
+                  bgOpacity = 0.55;
+                } else if (offset !== 0) {
+                  // hide others
+                  opacity = 0;
+                  zIndex = 0;
+                  scale = 0.9;
+                  translateX = -140;
+                }
 
-            {/* Controls */}
-            {len > 1 && (
-              <>
-                <button
-                  aria-label="Previous testimonial"
-                  onClick={() => go(-1)}
-                  className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/90 text-[var(--navy)] p-2 shadow-soft ring-1 ring-black/10 hover:bg-white"
-                >
-                  ←
-                </button>
-                <button
-                  aria-label="Next testimonial"
-                  onClick={() => go(1)}
-                  className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/90 text-[var(--navy)] p-2 shadow-soft ring-1 ring-black/10 hover:bg-white"
-                >
-                  →
-                </button>
-
-                {/* Dots */}
-                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2">
-                  {testimonials.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setIdx(i)}
-                      aria-label={`Go to testimonial ${i + 1}`}
-                      className="h-2.5 w-2.5 rounded-full"
+                return (
+                  <div
+                    key={item.id}
+                    className="absolute inset-y-0 right-0 flex items-center justify-end transition-all duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)]"
+                    style={{
+                      transform: `translateX(${translateX}px) scale(${scale})`,
+                      opacity,
+                      zIndex,
+                    }}
+                  >
+                    <div
+                      className="rounded-[26px] md:rounded-[30px] bg-[#134A43] flex flex-col md:flex-row items-center gap-6 md:gap-8 shadow-xl overflow-hidden w-full max-w-[720px]"
                       style={{
                         backgroundColor:
-                          i === idx ? COLORS.india : "rgba(0,0,128,0.25)",
+                          offset === 0
+                            ? "#134A43"
+                            : `rgba(19, 74, 67, ${bgOpacity})`,
                       }}
-                    />
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
-        </div>
+                    >
+                      {/* Thumb with play button + ripple */}
+                      <div className="relative w-full md:w-[280px] lg:w-[200px] h-[260px] md:h-[280px] pl-5 rounded-xl flex-shrink-0 overflow-hidden">
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="w-full h-full object-cover"
+                        />
 
-        <div className="mt-10 sm:mt-14 border-t border-slate-200" />
+                        {/* outer frosted circle */}
+                        <button
+                          type="button"
+                          onClick={() => handlePlay(item.videoUrl)}
+                          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-full border-[3px] border-white/80 w-[120px] h-[120px] md:w-[132px] md:h-[132px] bg-white/10 backdrop-blur-[9px] text-white text-lg font-medium relative overflow-hidden"
+                        >
+                          {/* ripple ring */}
+                          <span
+                            className="absolute inset-0 rounded-full"
+                            style={{
+                              boxShadow:
+                                "0 0 0 0 rgba(255,255,255,0.7), 0 0 0 24px rgba(255,255,255,0.0)",
+                              animation: "testimonial-ripple 2.4s infinite",
+                            }}
+                          />
+                          <span className="relative">Play</span>
+                        </button>
+                      </div>
 
-        <div className="mt-6 sm:mt-8">
-          <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-[var(--navy)]">
-            Major Partners
-          </h3>
+                      {/* Content */}
+                      <div className="flex-1 px-6 py-5 md:py-8 md:pr-5">
+                        {/* Rating pill */}
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/35 bg-white/10 shadow-inner mb-5">
+                          <p className="text-xs md:text-sm font-medium text-white m-0">
+                            Rating
+                          </p>
+                          <i className="fa-solid fa-star-sharp text-[#FFCC40] text-xs md:text-sm" />
+                          <span className="text-xs md:text-sm font-medium text-[#FFCC40]">
+                            {item.rating}
+                          </span>
+                        </div>
 
-          <div
-            className="relative mt-4 sm:mt-6 fade-mask"
-            onMouseEnter={() => (marqueePaused.current = true)}
-            onMouseLeave={() => (marqueePaused.current = false)}
-            onTouchStart={() => (marqueePaused.current = true)}
-            onTouchEnd={() => (marqueePaused.current = false)}
-          >
-            <div
-              ref={trackRef}
-              className="no-scrollbar overflow-x-auto marquee-track"
-              style={{ scrollBehavior: "auto" }}
-              role="group"
-              aria-label="Partner logos"
-            >
-              <div className="flex gap-4 sm:gap-6 md:gap-8 min-w-full">
-                <div className="flex gap-4 sm:gap-6 md:gap-8 w-[200%]">
-                  {looped.map((p, i) => (
-                    <PartnerCard
-                      key={`${p.name}-${i}`}
-                      name={p.name}
-                      logoUrl={p.logoUrl}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
+                        {/* Review text */}
+                        <p className="text-[15px] md:text-base text-white leading-relaxed mb-8">
+                          {item.review}
+                        </p>
 
-            <div className="mt-6 sm:mt-8 flex justify-center">
-              <button
-                onClick={onBecomePartner}
-                className="group inline-flex items-center gap-2 sm:gap-3 rounded-full bg-[var(--india)] px-4 py-2 sm:px-6 sm:py-3 text-[var(--white)] text-sm sm:text-base font-semibold hover:opacity-90 transition"
-              >
-                Become a Partner
-                <span className="inline-flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-[var(--orange)] group-hover:translate-x-0.5 transition">
-                  ➜
-                </span>
-              </button>
+                        {/* Author */}
+                        <div className="space-y-1">
+                          <h5 className="text-white text-[18px] md:text-[20px] font-semibold">
+                            {item.name}
+                            <span className="text-sm font-normal ml-1">
+                              {item.nick}
+                            </span>
+                          </h5>
+                          <h6 className="text-white/80 text-sm font-light">
+                            {item.role}
+                          </h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
       </div>
+
+      {/* Ripple keyframes */}
+      <style>{`
+        @keyframes testimonial-ripple {
+          0% {
+            box-shadow:
+              0 0 0 0 rgba(255,255,255,0.75),
+              0 0 0 0 rgba(255,255,255,0.0);
+          }
+          60% {
+            box-shadow:
+              0 0 0 18px rgba(255,255,255,0.05),
+              0 0 0 40px rgba(255,255,255,0.0);
+          }
+          100% {
+            box-shadow:
+              0 0 0 26px rgba(255,255,255,0.0),
+              0 0 0 65px rgba(255,255,255,0.0);
+          }
+        }
+      `}</style>
     </section>
-  );
-}
-
-function ActiveCard({ t }) {
-  return (
-    <article className="relative z-10 mx-auto w-full max-w-[720px] md:max-w-[820px] rounded-2xl sm:rounded-3xl bg-[var(--india)] text-[var(--white)] card-glow overflow-hidden">
-      <div className="grid grid-cols-1 md:grid-cols-2">
-        <div className="relative h-60 sm:h-80 md:h-full p-3 sm:p-4">
-          <div className="h-full w-full overflow-hidden rounded-xl sm:rounded-2xl">
-            <img
-              src={t.imageUrl}
-              alt={t.name}
-              loading="lazy"
-              className="h-full w-full object-cover"
-            />
-          </div>
-
-          <button
-            aria-label="Play"
-            className="absolute inset-0 m-auto h-12 w-12 sm:h-16 sm:w-16 rounded-full bg-[var(--white)]/90 backdrop-blur flex items-center justify-center text-[var(--navy)] font-semibold ring-4 ring-[var(--white)] shadow-soft"
-          >
-            Play
-          </button>
-        </div>
-
-        <div className="relative p-5 sm:p-6 md:p-8">
-          <div className="mb-3 sm:mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-2.5 py-1 text-[10px] sm:text-xs font-semibold ring-1 ring-white/30">
-            Rating <span className="text-yellow-300">★</span>
-            {t.rating.toFixed(1)}
-          </div>
-
-          <p className="text-white/90 text-sm sm:text-base leading-6 sm:leading-7">
-            {t.text}
-          </p>
-
-          <div className="mt-4 sm:mt-6">
-            <p className="text-sm sm:text-base font-bold">
-              {t.name}
-              <span className="ml-1 align-middle text-[10px] sm:text-xs text-white/70">
-                (Arjun)
-              </span>
-            </p>
-            <p className="text-[11px] sm:text-xs text-white/70">{t.role}</p>
-          </div>
-        </div>
-      </div>
-    </article>
-  );
-}
-
-function GhostCard({ t, side, className = "" }) {
-  const base =
-    "absolute inset-y-0 my-auto h-[86%] w-[88%] rounded-3xl bg-slate-300/70 blur-[0.2px]";
-  const pos = side === "left" ? "-left-6 sm:-left-10" : "-right-6 sm:-right-10";
-  return (
-    <div className={`${base} ${pos} ${className}`} aria-hidden="true"></div>
-  );
-}
-
-function PartnerCard({ name, logoUrl }) {
-  const hasLogo = Boolean(logoUrl);
-  return (
-    <div className="flex h-16 sm:h-20 md:h-24 w-[140px] sm:w-[180px] md:w-[200px] shrink-0 items-center justify-center rounded-xl sm:rounded-2xl bg-[var(--navy)] text-[var(--white)] shadow-soft tablet-partner transition hover:scale-[1.02]">
-      {hasLogo ? (
-        <img
-          src={logoUrl}
-          alt={name}
-          loading="lazy"
-          className="max-h-10 sm:max-h-12 max-w-[120px] sm:max-w-[160px] object-contain"
-        />
-      ) : (
-        <span className="px-3 sm:px-4 text-base sm:text-lg font-bold tracking-wide">
-          {name}
-        </span>
-      )}
-    </div>
   );
 }

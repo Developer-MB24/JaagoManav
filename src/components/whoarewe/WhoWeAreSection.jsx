@@ -1,126 +1,285 @@
-import React from "react";
-import { CheckCircle, ArrowRightCircle, DollarSign } from "lucide-react";
+// src/components/whoweare/WhoWeAreSection.jsx
+import React, { useRef, useEffect, useState } from "react";
+import { motion, useInView } from "framer-motion";
+import { Check, TrendingUp, Lightbulb, ThumbsUp, Users } from "lucide-react";
+
+/* ---------- COUNT-UP + STAT (same idea as your working code) ---------- */
+
+function useCountUp(target = 0, start = false, { duration = 1500 } = {}) {
+  const [value, setValue] = useState(0);
+  const rafRef = useRef(null);
+
+  useEffect(() => {
+    if (!start) return;
+
+    const startTs = performance.now();
+    const from = 0;
+    const to = Number(target) || 0;
+    const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+
+    function tick(now) {
+      const p = Math.min(1, (now - startTs) / duration);
+      const eased = easeOutCubic(p);
+      setValue(Math.round(from + (to - from) * eased));
+      if (p < 1) rafRef.current = requestAnimationFrame(tick);
+    }
+
+    rafRef.current = requestAnimationFrame(tick);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [start, target, duration]);
+
+  return value;
+}
+
+function splitNumberAndSuffix(v) {
+  const s = String(v);
+  let i = 0;
+  while (i < s.length && s[i] >= "0" && s[i] <= "9") i++;
+  const num = Number(s.slice(0, i) || "0");
+  const suffix = s.slice(i);
+  return [num, suffix];
+}
+
+function Stat({ icon: Icon, value = "0", label = "" }) {
+  const [num, suffix] = splitNumberAndSuffix(value);
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-20% 0px -20% 0px" });
+  const rolled = useCountUp(num, inView, { duration: 1500 });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="flex flex-col items-center text-center"
+    >
+      {/* icon circle – white bg as you asked */}
+      <div
+        className="h-[70px] w-[70px] md:h-[60px] md:w-[60px] rounded-full flex items-center justify-center shadow-md"
+        style={{
+          background: "#FFFFFF",
+          boxShadow: "0 0 0 2px rgba(19,136,8,0.18)",
+        }}
+      >
+        <Icon size={24} color="#138808" />
+      </div>
+      {/* animated number */}
+      <div className="mt-2 text-4xl md:text-3xl font-bold text-[#138808] leading-none">
+        {rolled}
+        <span>{suffix}</span>
+      </div>
+      <div className="mt-1 text-sm md:text-base font-medium text-[#138808]">
+        {label}
+      </div>
+    </motion.div>
+  );
+}
+
+/* ---------- MAIN SECTION ---------- */
+
+const services = [
+  "Specialized Company",
+  "Licensed & Insured",
+  "Dependable Services",
+  "Day Scheduling",
+];
+
+const achievements = [
+  { icon: TrendingUp, value: "98%", label: "Company Success" },
+  { icon: Lightbulb, value: "565+", label: "Company Strategies" },
+  { icon: ThumbsUp, value: "36k", label: "Complete Projects" },
+  { icon: Users, value: "100+", label: "Experienced Members" },
+];
 
 export default function WhoWeAreSection() {
   return (
-    <section className="relative flex flex-col md:flex-row items-center justify-between px-4 md:px-16 py-16 bg-[#FAFBF5] overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-[#FF9933] to-transparent opacity-30 animate-slideDown" />
-        <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-[#138808] to-transparent opacity-30 animate-slideUp" />
-      </div>
+    <section
+      className="relative py-24 md:py-20 px-4"
+      style={{
+        backgroundImage:
+          "url(/images/why-us-bg.webp), url(/images/who-we-are-bg.webp)",
+        backgroundPosition: "right, left",
+        backgroundRepeat: "no-repeat, no-repeat",
+        backgroundSize: "contain, contain",
+      }}
+    >
+      <div className="max-w-6xl mx-auto">
+        {/* Top content row */}
+        <div className="flex flex-col xl:flex-row items-center gap-14 pb-16 md:pb-10">
+          {/* LEFT: stacked thumbs (same as before) */}
+          <div className="w-full xl:w-1/2">
+            <div className="relative h-[420px] md:h-[480px] lg:h-[520px]">
+              {/* thumb-1 */}
+              <div className="absolute right-0 top-0 z-10 text-right">
+                <img
+                  src="/images/thumb-24.webp"
+                  alt="thumb-1"
+                  className="rounded-xl w-[260px] md:w-[320px] lg:w-[360px] shadow-xl"
+                />
+                <div className="absolute -z-10 left-1/3 top-10">
+                  <img
+                    src="/images/shape-14.webp"
+                    alt="shape"
+                    className="w-40 md:w-48"
+                  />
+                </div>
+              </div>
 
-      {/* IMAGE CLUSTER */}
-      <div className="relative w-[370px] h-[360px] md:w-[420px] md:h-[400px]">
-        <img
-          src="/images/about-two-img-1.jpg"
-          alt="Volunteers main"
-          className="absolute top-0 left-64 md:left-96 -translate-x-1/2 w-[230px] h-[270px] md:w-[260px] md:h-[300px] rounded-2xl object-cover shadow-lg ring-1 ring-black/5 bg-neutral-200 z-10"
-        />
-        <img
-          src="/images/about-two-img-2.jpg"
-          alt="Volunteers"
-          className="absolute top-[140px] left-1 w-[150px] h-[190px] md:w-[230px] md:h-[350px] rounded-2xl object-cover shadow-lg ring-1 ring-black/5 bg-neutral-200 z-20"
-        />
-        <img
-          src="/images/about-two-img-3.jpg"
-          alt="Tree planting"
-          className="absolute bottom-0 top-[22rem] md:left-80 md:top-80 w-[370px] h-[150px] md:w-[200px] md:h-[160px] rounded-2xl object-cover shadow-lg ring-1 ring-black/5 bg-neutral-200 z-20"
-        />
+              {/* thumb-2 */}
+              <div className="absolute z-20 top-[48%] -left-4 md:left-5 lg:left-10 w-[180px] md:w-[220px] lg:w-[240px]">
+                <img
+                  src="/images/thumb-25.webp"
+                  alt="thumb-2"
+                  className="rounded-xl border-[5px] border-white shadow-xl"
+                />
+              </div>
 
-        <div className="absolute left-64 md:left-80 -translate-x-1/2 top-[275px] md:top-[255px] flex items-center gap-4 rounded-2xl border-4 border-white bg-[#FFE08A] px-5 py-3 md:px-6 md:py-3.5 shadow-xl z-30">
-          <span className="text-emerald-900 text-4xl md:text-5xl font-extrabold leading-none">
-            29+
-          </span>
-          <span className="text-emerald-900 text-base md:text-lg font-semibold leading-tight">
-            Years of
-            <br />
-            experience
-          </span>
-        </div>
-      </div>
+              {/* thumb-3 + experience badge */}
+              <div className="absolute z-20 -bottom-20 right-1 md:-bottom-24 md:right-5 w-[210px] md:w-[250px] lg:w-[270px]">
+                <div className="relative">
+                  <img
+                    src="/images/thumb-26.webp"
+                    alt="thumb-3"
+                    className="rounded-xl shadow-xl"
+                  />
 
-      {/* TEXT SIDE */}
-      <div className="md:w-1/2 mt-60 md:mt-0 pl-0 md:pl-24 pb-8 md:pb-0 z-10">
-        <div className="mb-4 flex items-center gap-3">
-          <span className="text-[#138808]">
-            <svg width="28" height="28" fill="none">
-              <path
-                d="M14 27C20.6274 27 26 21.6274 26 15C26 8.37258 20.6274 3 14 3C7.37258 3 2 8.37258 2 15C2 21.6274 7.37258 27 14 27Z"
-                stroke="#138808"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+                  {/* Experience badge */}
+                  <div className="absolute -top-16 -left-32 md:-left-44 bg-[#138808] text-[#138808] border-4 border-white rounded-xl px-6 py-4 flex items-center gap-4 shadow-2xl">
+                    <h3 className="text-4xl md:text-5xl font-extrabold leading-none text-white">
+                      29<span className="align-top text-2xl">+</span>
+                    </h3>
+                    <p className="max-w-[110px] text-sm md:text-base font-semibold leading-snug text-white">
+                      Years of experience
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT: content */}
+          <div className="w-full xl:w-1/2">
+            {/* subtitle */}
+            <div className="flex items-center gap-3 mb-4">
+              <img
+                src="/images/icon-2.svg"
+                alt="icon-2"
+                className="w-10 h-10"
               />
-              <path
-                d="M14 9V21M9 14H19"
-                stroke="#138808"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </span>
-          <span className="uppercase font-semibold text-white text-lg tracking-widest">
-            Who We Are
-          </span>
-        </div>
-
-        <h2 className="text-4xl md:text-5xl font-extrabold text-[#138808] mb-5">
-          Some Reasons to Choose <br />
-          (Econest Organization)
-        </h2>
-
-        <p className="text-gray-500 mb-6 max-w-2xl leading-relaxed">
-          The implant fixture is first placed, so that it ilikely to then a
-          dental prosthetic is added then dental prosthetic occaecat laborum.
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <div className="flex items-center gap-3">
-            <CheckCircle className="text-[#138808]" size={28} />
-            <span className="text-[#2d4947]">Specialized Company</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <CheckCircle className="text-[#138808]" size={28} />
-            <span className="text-[#2d4947]">Dependable Services</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <CheckCircle className="text-[#138808]" size={28} />
-            <span className="text-[#2d4947]">Licensed & Insured</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <CheckCircle className="text-[#138808]" size={28} />
-            <span className="text-[#2d4947]">Day Scheduling</span>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-8 mt-7 flex-wrap">
-          <button className="flex items-center gap-2 px-9 py-5 rounded-full bg-[#FF9933] text-white text-xl font-semibold shadow hover:bg-[#ffd344] transition">
-            Explore More
-            <ArrowRightCircle className="ml-1 text-[#138808]" size={34} />
-          </button>
-          <div className="flex items-center gap-2">
-            <span className="p-3 rounded-full border border-[#dbe7e6] bg-white shadow">
-              <DollarSign className="text-[#138808]" size={28} />
-            </span>
-            <div>
-              <span className="block text-gray-500 text-md">
-                Annual Donation
+              <span className="uppercase tracking-wide text-sm font-semibold text-[#138808]">
+                Who We Are
               </span>
-              <span className="block font-bold text-2xl text-[#138808]">
-                $2,056.00
-              </span>
+            </div>
+
+            {/* title */}
+            <div className="mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-black leading-tight">
+                Some Reasons to Choose Econest Organization
+              </h2>
+            </div>
+
+            {/* description */}
+            <p className="text-gray-500 mb-6 max-w-xl text-base leading-relaxed">
+              The implant fixture is first placed, so that it is likely to then
+              a dental prosthetic is added, creating a strong, lasting solution
+              for better smiles and healthier lives.
+            </p>
+
+            {/* services list */}
+            <div className="flex flex-col sm:flex-row gap-8 mb-8">
+              <div className="flex flex-col gap-3">
+                {services.slice(0, 2).map((item) => (
+                  <div key={item} className="flex items-center gap-3">
+                    <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#138808] text-[#FF9933]">
+                      <Check size={16} />
+                    </span>
+                    <p className="text-[#138808] font-medium text-sm md:text-base">
+                      {item}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <div className="flex flex-col gap-3">
+                {services.slice(2).map((item) => (
+                  <div key={item} className="flex items-center gap-3">
+                    <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#138808] text-[#FF9933]">
+                      <Check size={16} />
+                    </span>
+                    <p className="text-[#138808] font-medium text-sm md:text-base">
+                      {item}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* CTA + Annual donation */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
+              {/* EXPLORE BUTTON – gradient + hover color change */}
+              <motion.a
+                href="/project"
+                className="group inline-flex items-center gap-3 rounded-full px-7 py-3 text-sm md:text-base font-semibold text-[#FF9933] overflow-hidden"
+                initial={{ backgroundPosition: "0% 0%" }}
+                whileHover={{ backgroundPosition: "100% 0%" }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
+                style={{
+                  backgroundImage:
+                    "linear-gradient(120deg,#138808 0%,#138808 50%,#0f5950 100%)",
+                  backgroundSize: "200% 100%",
+                  backgroundPosition: "0% 0%",
+                }}
+              >
+                <span>Explore More</span>
+                <span className="relative flex items-center justify-center w-8 h-8 rounded-full bg-[#FF9933] text-[#138808] transition-colors duration-300 group-hover:bg-white group-hover:text-[#FF9933]">
+                  <span className="flex items-center gap-[2px]">
+                    <span className="block text-xs leading-none group-hover:-translate-x-[1px] transition-transform duration-200">
+                      →
+                    </span>
+                    <span className="block text-xs leading-none group-hover:translate-x-[1px] transition-transform duration-200 delay-75">
+                      →
+                    </span>
+                  </span>
+                </span>
+              </motion.a>
+
+              {/* Annual donation */}
+              <div className="flex items-center gap-4">
+                <img
+                  src="/images/icon-4.svg"
+                  alt="icon-4"
+                  className="w-14 h-14 md:w-12 md:h-12 p-3 rounded-full border border-[#0045401A]"
+                />
+                <div>
+                  <p className="text-sm text-[#138808]/80 mb-1">
+                    Annual Donation
+                  </p>
+                  <h5 className="text-lg md:text-xl font-semibold text-[#138808]">
+                    $2,056,00
+                  </h5>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <style>{`
-        @keyframes slideDown {0%{transform: translateY(-60px); opacity:0;} 100%{transform: translateY(0); opacity:1;}}
-        .animate-slideDown {animation: slideDown 1.3s 750ms cubic-bezier(.44,.52,.57,1) forwards;}
-        @keyframes slideUp {0%{transform: translateY(60px); opacity:0;} 100%{transform: translateY(0); opacity:1;}}
-        .animate-slideUp {animation: slideUp 1.3s 850ms cubic-bezier(.44,.52,.57,1) forwards;}
-      `}</style>
+        {/* COMPANY ACHIEVEMENTS using the same Stat logic */}
+        <div className="mt-10 md:mt-28 mb-10 md:mb-0">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+            {achievements.map((item) => (
+              <Stat
+                key={item.label}
+                icon={item.icon}
+                value={item.value}
+                label={item.label}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

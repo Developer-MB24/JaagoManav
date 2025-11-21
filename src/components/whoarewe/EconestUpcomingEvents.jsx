@@ -1,144 +1,155 @@
+// src/components/whoweare/EconestUpcomingEvents.jsx
 import React from "react";
-import { ArrowRight } from "lucide-react";
 
 const events = [
   {
-    img: "/images/about-two-img-1.jpg",
-    date: "12 Jan-20 Jan, 2025",
+    id: 1,
+    image: "/images/thumb-36.webp",
+    dateRange: "12 Jan–20 Jan, 2025",
     title: "The forest is our life, it is our job to keep the forest clean",
     time: "8:30am - 4:00pm",
     location: "Jones Street, New York",
     joined: 236,
-    avatars: [
-      "/images/about-two-img-1.jpg",
-      "/images/about-two-img-2.jpg",
-      "/images/about-two-img-3.jpg",
-      "/images/about-two-img-2.jpg",
-    ],
   },
   {
-    img: "/images/about-two-img-2.jpg",
-    date: "12 Jan-20 Jan, 2025",
+    id: 2,
+    image: "/images/thumb-37.webp",
+    dateRange: "12 Jan–20 Jan, 2025",
     title: "The forest is our life, it is our job to keep the forest clean",
     time: "9:00am - 6:00pm",
     location: "85 Great Portland Street, London",
     joined: 162,
-    avatars: [
-      "/images/about-two-img-1.jpg",
-      "/images/about-two-img-2.jpg",
-      "/images/about-two-img-3.jpg",
-      "/images/about-two-img-2.jpg",
-    ],
   },
 ];
 
-const EconestUpcomingEvents = () => (
-  <section className="relative px-6 md:px-16 py-14 bg-[#FAFBEF] overflow-hidden">
-    {/* Gradient bg consistent with brand */}
-    <div className="absolute inset-0 pointer-events-none z-0">
-      <div className="absolute top-0 left-0 w-full h-40 bg-gradient-to-b from-[#FF9933] to-transparent opacity-20" />
-      <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-[#138808] to-transparent opacity-20" />
-    </div>
-    <div className="relative z-10 max-w-5xl mx-auto">
-      <div className="flex items-center justify-between mb-2">
-        <div>
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-[#138808]">
-              <svg width="18" height="18" viewBox="0 0 22 22" fill="none">
-                <circle
-                  cx="11"
-                  cy="11"
-                  r="10"
-                  stroke="#138808"
-                  strokeWidth="2"
-                />
-                <path
-                  d="M11 8v4l2 2"
-                  stroke="#138808"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </span>
-            <span className="font-medium text-[#FF9933] text-lg">
-              Our Arrange
-            </span>
+export default function EconestUpcomingEvents() {
+  return (
+    <section className="our-events-section-2 relative bg-[#F8F7F0] pt-24 pb-24 md:pt-20 md:pb-20 mb-24">
+      <div className="mx-auto max-w-6xl px-4">
+        {/* Top row */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
+          <div className="md:w-2/3">
+            <div className="flex items-center gap-3 mb-3">
+              <img src="/images/icon-2.svg" alt="icon-2" className="w-9 h-9" />
+              <span className="text-sm font-semibold text-[#134A43]">
+                Our Arrange
+              </span>
+            </div>
+            <h2 className="text-[2.1rem] md:text-[2.4rem] font-bold leading-tight text-[#134A43]">
+              Econest Upcoming Events
+            </h2>
           </div>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-[#138808]">
-            Econest Upcoming Events
-          </h2>
-        </div>
-        {/* Top-right button */}
-        <button className="bg-[#FF9933] text-white hover:bg-[#138808] hover:text-white transition px-7 py-3 rounded-full font-bold shadow-lg flex items-center gap-2 text-base">
-          View All Events
-          <span className="bg-[#138808] text-white rounded-full p-1 ml-2">
-            <ArrowRight size={20} />
-          </span>
-        </button>
-      </div>
-      <div className="grid grid-cols-1 gap-8 mt-6">
-        {events.map((event, idx) => (
-          <div
-            key={idx}
-            className="bg-white rounded-2xl shadow p-4 flex flex-col md:flex-row items-start gap-6 transition group hover:shadow-xl"
-          >
-            <img
-              src={event.img}
-              alt={event.title}
-              className="rounded-2xl object-cover w-full md:w-72 h-52"
-            />
-            <div className="flex-1 flex flex-col py-2 justify-between">
-              <div>
-                <span className="inline-block mb-3 px-4 py-1 font-medium bg-[#FF9933] text-white rounded-full text-sm">
-                  {event.date}
+
+          <div className="md:w-1/3 flex md:justify-end">
+            <a
+              href="/camping"
+              className="inline-flex items-center gap-3 rounded-full bg-[#134A43] text-white px-7 py-3 text-sm md:text-base font-semibold relative overflow-hidden group shadow-md"
+            >
+              <span className="relative z-10">View All Events</span>
+              <span className="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-[#FF9933] text-[#134A43] transition-colors duration-300 group-hover:bg-white group-hover:text-[#FF9933]">
+                <span className="flex items-center gap-[2px]">
+                  <span className="block text-xs leading-none group-hover:-translate-x-[1px] transition-transform duration-200">
+                    →
+                  </span>
+                  <span className="block text-xs leading-none group-hover:translate-x-[1px] transition-transform duration-200 delay-75">
+                    →
+                  </span>
                 </span>
-                <h3 className="font-extrabold text-xl md:text-2xl text-[#138808] mb-1">
-                  {event.title}
-                </h3>
-                <div className="flex flex-wrap items-center gap-5 mb-3 mt-2 text-gray-600 text-sm">
-                  <span>🕒 {event.time}</span>
-                  <span>📍 {event.location}</span>
-                </div>
+              </span>
+              <span className="absolute inset-0 bg-[#FF9933]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+            </a>
+          </div>
+        </div>
+
+        {/* Event cards */}
+        <div className="space-y-6">
+          {events.map((event) => (
+            <div
+              key={event.id}
+              className="event-card-2 flex flex-col md:flex-row bg-white rounded-[10px] p-2 md:p-2 relative z-[2]"
+            >
+              {/* Thumb */}
+              <div className="relative md:w-[48%] w-full flex-none z-[1] group">
+                <a className="block rounded-[10px] overflow-hidden">
+                  <img
+                    src={event.image}
+                    alt={event.title}
+                    className="w-full rounded-[10px] transition-transform duration-300 group-hover:scale-105"
+                  />
+                </a>
               </div>
-              {/* Button and avatars */}
-              <div className="flex items-end justify-between mt-auto">
-                <button className="bg-[#FF9933] text-white hover:bg-[#138808] hover:text-white transition px-5 py-2 rounded-full font-bold shadow flex items-center gap-2 text-base mt-3">
-                  Join Event
-                  <span className="bg-[#138808] text-white rounded-full p-1 ml-1">
-                    <ArrowRight size={17} />
-                  </span>
-                </button>
-                <div className="flex items-center gap-2">
-                  <div className="flex -space-x-3">
-                    {event.avatars.map((a, i) => (
-                      <img
-                        src={a}
-                        key={i}
-                        alt="joined"
-                        className="w-8 h-8 rounded-full border-2 border-white shadow"
-                      />
-                    ))}
+
+              {/* Content */}
+              <div className="md:w-[52%] w-full md:pt-10 md:pb-4 md:px-10 px-5 py-6">
+                {/* Date ABOVE title */}
+                <div className="inline-flex mb-5 px-5 py-3 bg-[#F8F7F0] border border-[#FF9933] rounded-full shadow-[0_6px_16px_-3px_rgba(0,69,64,0.11)]">
+                  <h5 className="m-0 text-[14px] md:text-[16px] font-semibold text-[#134A43] whitespace-nowrap">
+                    {event.dateRange}
+                  </h5>
+                </div>
+
+                {/* Title */}
+                <div className="mb-3">
+                  <h2 className="text-[1.6rem] md:text-[2rem] leading-snug font-medium text-[#134A43]">
+                    <a href="/camping-details">{event.title}</a>
+                  </h2>
+                </div>
+
+                {/* Address row */}
+                <div className="address flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 mb-5">
+                  <div className="time flex items-center gap-2 text-sm text-[#4B5563]">
+                    <i className="fa-regular fa-clock text-[#134A43]" />
+                    <span>{event.time}</span>
                   </div>
-                  <span className="ml-2 text-[#138808] font-bold">
-                    {event.joined}
-                  </span>
-                  <span className="text-gray-400 text-sm">Joined People</span>
+                  <div className="location flex items-center gap-2 text-sm text-[#4B5563]">
+                    <i className="fa-regular fa-location-dot text-[#134A43]" />
+                    <span>{event.location}</span>
+                  </div>
+                </div>
+
+                {/* Bottom row */}
+                <div className="join-event flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 pt-1">
+                  <div>
+                    <a
+                      href="/camping-details"
+                      className="inline-flex items-center gap-3 rounded-full bg-[#134A43] text-[#FF9933] px-7 py-2.5 text-sm md:text-base font-semibold relative overflow-hidden group shadow-md"
+                    >
+                      <span className="relative z-10">Join Event</span>
+                      <span className="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-[#FF9933] text-[#134A43] transition-colors duration-300 group-hover:bg-white group-hover:text-[#FF9933]">
+                        <span className="flex items-center gap-[2px]">
+                          <span className="block text-xs leading-none group-hover:-translate-x-[1px] transition-transform duration-200">
+                            →
+                          </span>
+                          <span className="block text-xs leading-none group-hover:translate-x-[1px] transition-transform duration-200 delay-75">
+                            →
+                          </span>
+                        </span>
+                      </span>
+                      <span className="absolute inset-0 bg-[#FF9933]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                    </a>
+                  </div>
+
+                  {/* Joined people */}
+                  <div className="flex items-center gap-3">
+                    <img
+                      src="/images/author-1.webp"
+                      className="max-w-[90px] w-full"
+                    />
+                    <div className="text-left">
+                      <h5 className="text-[18px] font-semibold text-[#134A43] leading-tight mb-0">
+                        {event.joined}
+                      </h5>
+                      <span className="text-sm text-[#4B5563]">
+                        Joined People
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-    <style>
-      {`
-        @keyframes slideDown {0%{transform: translateY(-60px); opacity:0;} 100%{transform: translateY(0); opacity:1;}}
-        @keyframes slideUp {0%{transform: translateY(60px); opacity:0;} 100%{transform: translateY(0); opacity:1;}}
-        .animate-slideDown {animation: slideDown 1.3s 750ms cubic-bezier(.44,.52,.57,1) forwards;}
-        .animate-slideUp {animation: slideUp 1.3s 850ms cubic-bezier(.44,.52,.57,1) forwards;}
-      `}
-    </style>
-  </section>
-);
-
-export default EconestUpcomingEvents;
+    </section>
+  );
+}
