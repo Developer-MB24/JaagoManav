@@ -31,7 +31,7 @@ export default function ContactBar() {
   const [activeIndex, setActiveIndex] = useState(1);
 
   return (
-    <section className="relative contact-info-section z-50 -mb-10 md:-mb-14 lg:-mb-16">
+    <section className="relative contact-info-section z-50 -mb-10 md:-mb-14 lg:-mb-5">
       <div className="mx-auto max-w-6xl px-4">
         <div className="bg-[#FFE47D] rounded-2xl md:rounded-[18px] shadow-[0_18px_40px_rgba(0,69,64,0.18)]">
           <div className="grid grid-cols-1 md:grid-cols-3">
@@ -49,8 +49,8 @@ export default function ContactBar() {
                     "px-6 sm:px-8 lg:px-10 py-6 sm:py-8 lg:py-9",
                     "border-transparent",
                     isActive
-                      ? "bg-[#134A43] text-white rounded-2xl md:rounded-[18px] shadow-[0_26px_55px_rgba(0,69,64,0.45)] translate-y-[-18px] md:translate-y-[-22px] z-10"
-                      : "bg-transparent text-[#134A43] md:hover:bg-[#134A43] md:hover:text-white",
+                      ? "bg-[#138808] text-white rounded-2xl md:rounded-[18px] shadow-[0_26px_55px_rgba(0,69,64,0.45)] translate-y-[-18px] md:translate-y-[-22px] z-10"
+                      : "bg-transparent text-[#138808] md:hover:bg-[#138808] md:hover:text-white",
                     idx === 0 ? "md:rounded-l-[18px]" : "",
                     idx === cards.length - 1 ? "md:rounded-r-[18px]" : "",
                   ].join(" ")}
@@ -62,15 +62,15 @@ export default function ContactBar() {
                       className={`h-px flex-1 ${
                         isActive
                           ? "bg-gradient-to-r from-transparent to-[#FFBF4B]"
-                          : "bg-gradient-to-r from-transparent to-[#134A43]"
+                          : "bg-gradient-to-r from-transparent to-[#138808]"
                       }`}
                     />
                     <div
                       className={[
                         "icon flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full border",
                         isActive
-                          ? "bg-[#0F3A35] border-white/30 text-[#FFBF4B]"
-                          : "bg-[#134A43] border-[#134A43]/40 text-[#FFBF4B]",
+                          ? "bg-[#138808] border-white/30 text-[#FFBF4B]"
+                          : "bg-[#138808] border-[#134A43]/40 text-[#FFBF4B]",
                       ].join(" ")}
                     >
                       <Icon size={20} />

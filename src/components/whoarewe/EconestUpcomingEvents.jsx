@@ -35,7 +35,7 @@ export default function EconestUpcomingEvents() {
                 Our Arrange
               </span>
             </div>
-            <h2 className="text-[2.1rem] md:text-[2.4rem] font-bold leading-tight text-[#134A43]">
+            <h2 className="text-[2.1rem] md:text-[2.4rem] font-bold leading-tight text-black">
               Econest Upcoming Events
             </h2>
           </div>
@@ -43,10 +43,10 @@ export default function EconestUpcomingEvents() {
           <div className="md:w-1/3 flex md:justify-end">
             <a
               href="/camping"
-              className="inline-flex items-center gap-3 rounded-full bg-[#134A43] text-white px-7 py-3 text-sm md:text-base font-semibold relative overflow-hidden group shadow-md"
+              className="inline-flex items-center gap-3 rounded-full bg-[#138808] text-white px-7 py-3 text-sm md:text-base font-semibold relative overflow-hidden group shadow-md"
             >
               <span className="relative z-10">View All Events</span>
-              <span className="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-[#FF9933] text-[#134A43] transition-colors duration-300 group-hover:bg-white group-hover:text-[#FF9933]">
+              <span className="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-[#FF9933] text-[#fff] transition-colors duration-300 group-hover:bg-white group-hover:text-[#FF9933]">
                 <span className="flex items-center gap-[2px]">
                   <span className="block text-xs leading-none group-hover:-translate-x-[1px] transition-transform duration-200">
                     →
@@ -83,14 +83,14 @@ export default function EconestUpcomingEvents() {
               <div className="md:w-[52%] w-full md:pt-10 md:pb-4 md:px-10 px-5 py-6">
                 {/* Date ABOVE title */}
                 <div className="inline-flex mb-5 px-5 py-3 bg-[#F8F7F0] border border-[#FF9933] rounded-full shadow-[0_6px_16px_-3px_rgba(0,69,64,0.11)]">
-                  <h5 className="m-0 text-[14px] md:text-[16px] font-semibold text-[#134A43] whitespace-nowrap">
+                  <h5 className="m-0 text-[14px] md:text-[16px] font-semibold text-black whitespace-nowrap">
                     {event.dateRange}
                   </h5>
                 </div>
 
                 {/* Title */}
                 <div className="mb-3">
-                  <h2 className="text-[1.6rem] md:text-[2rem] leading-snug font-medium text-[#134A43]">
+                  <h2 className="text-[1.6rem] md:text-[2rem] leading-snug font-medium text-black">
                     <a href="/camping-details">{event.title}</a>
                   </h2>
                 </div>
@@ -112,10 +112,10 @@ export default function EconestUpcomingEvents() {
                   <div>
                     <a
                       href="/camping-details"
-                      className="inline-flex items-center gap-3 rounded-full bg-[#134A43] text-[#FF9933] px-7 py-2.5 text-sm md:text-base font-semibold relative overflow-hidden group shadow-md"
+                      className="inline-flex items-center gap-3 rounded-full bg-[#138808] text-[#fff] px-7 py-2.5 text-sm md:text-base font-semibold relative overflow-hidden group shadow-md"
                     >
                       <span className="relative z-10">Join Event</span>
-                      <span className="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-[#FF9933] text-[#134A43] transition-colors duration-300 group-hover:bg-white group-hover:text-[#FF9933]">
+                      <span className="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-[#FF9933] text-[#fff] transition-colors duration-300 group-hover:bg-white group-hover:text-[#FF9933]">
                         <span className="flex items-center gap-[2px]">
                           <span className="block text-xs leading-none group-hover:-translate-x-[1px] transition-transform duration-200">
                             →

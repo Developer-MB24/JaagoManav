@@ -39,7 +39,7 @@ export default function VolunteersSection() {
                 We Are Volunteer
               </span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#134A43]">
+            <h2 className="text-3xl md:text-4xl font-bold text-black">
               Together For The Planet
             </h2>
           </div>
@@ -49,10 +49,10 @@ export default function VolunteersSection() {
             {/* View all volunteer button */}
             <a
               href="/volunteer"
-              className="group inline-flex items-center gap-3 rounded-full px-7 py-3 text-sm md:text-base font-semibold text-[#FF9933] bg-[#134A43] overflow-hidden relative"
+              className="group inline-flex items-center gap-3 rounded-full px-7 py-3 text-sm md:text-base font-semibold text-[#fff] bg-[#138808] overflow-hidden relative"
             >
               <span className="relative z-10">View All Volunteer</span>
-              <span className="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-[#FF9933] text-[#134A43] transition-colors duration-300 group-hover:bg-white group-hover:text-[#FF9933]">
+              <span className="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-[#FF9933] text-[#fff] transition-colors duration-300 group-hover:bg-white group-hover:text-[#FF9933]">
                 <span className="flex items-center gap-[2px]">
                   <ArrowRight
                     size={16}
@@ -74,7 +74,7 @@ export default function VolunteersSection() {
                 href="/be-volunteer"
                 className="flex items-center gap-3 sm:gap-2 border-2 border-[#0045401A] sm:border-none rounded-full sm:rounded-none px-4 py-2 sm:px-0 sm:py-0"
               >
-                <span className="text-sm font-semibold text-[#134A43] max-w-[120px] leading-snug">
+                <span className="text-sm font-semibold text-black max-w-[120px] leading-snug">
                   If you want can join us
                 </span>
                 <span className="border-2 border-[#0045401A] rounded-full p-2 hover:bg-[#FF9933] hover:border-[#FF9933] hover:text-white transition-colors duration-200 flex items-center justify-center">
@@ -103,8 +103,8 @@ export default function VolunteersSection() {
                 </div>
 
                 {/* Author info */}
-                <div className="mt-2.5 text-center rounded-[10px] bg-[#F8F7F0] px-4 py-3 transition-colors duration-300 group-hover:bg-[#134A43]">
-                  <h5 className="text-[20px] md:text-[22px] font-semibold leading-[32px] text-[#134A43] mb-1 transition-colors duration-300 group-hover:text-[#FF9933]">
+                <div className="mt-2.5 text-center rounded-[10px] bg-[#F8F7F0] px-4 py-3 transition-colors duration-300 group-hover:bg-[#138808]">
+                  <h5 className="text-[20px] md:text-[22px] font-semibold leading-[32px] text-[#138808] mb-1 transition-colors duration-300 group-hover:text-[#fff]">
                     {v.name}
                   </h5>
                   <p className="text-sm text-[#4B5563] leading-[22px] transition-colors duration-300 group-hover:text-white">
@@ -116,7 +116,7 @@ export default function VolunteersSection() {
               {/* Socials */}
               <div className="absolute top-4 right-4 flex flex-col gap-2">
                 {/* Share button */}
-                <button className="w-10 h-10 rounded-full bg-[#FF9933] border-2 border-white flex items-center justify-center text-[#134A43] hover:bg-[#134A43] hover:border-[#FF9933] hover:text-[#FF9933] transition-colors duration-200">
+                <button className="w-10 h-10 rounded-full bg-[#FF9933] border-2 border-white flex items-center justify-center text-[#fff] hover:bg-[#138808] hover:border-[#FF9933] hover:text-[#fff] transition-colors duration-200">
                   <Share2 size={18} />
                 </button>
 

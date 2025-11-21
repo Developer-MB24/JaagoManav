@@ -98,7 +98,7 @@ const achievements = [
 export default function WhoWeAreSection() {
   return (
     <section
-      className="relative py-24 md:py-20 px-4"
+      className="relative py-10 md:py-20 px-4"
       style={{
         backgroundImage:
           "url(/images/why-us-bg.webp), url(/images/who-we-are-bg.webp)",
@@ -109,7 +109,7 @@ export default function WhoWeAreSection() {
     >
       <div className="max-w-6xl mx-auto">
         {/* Top content row */}
-        <div className="flex flex-col xl:flex-row items-center gap-14 pb-16 md:pb-10">
+        <div className="flex flex-col xl:flex-row items-center gap-36 sm:gap-14 pb-16 md:pb-10">
           {/* LEFT: stacked thumbs (same as before) */}
           <div className="w-full xl:w-1/2">
             <div className="relative h-[420px] md:h-[480px] lg:h-[520px]">
@@ -118,7 +118,7 @@ export default function WhoWeAreSection() {
                 <img
                   src="/images/thumb-24.webp"
                   alt="thumb-1"
-                  className="rounded-xl w-[260px] md:w-[320px] lg:w-[360px] shadow-xl"
+                  className="rounded-xl w-[360px] md:w-[320px] lg:w-[360px] shadow-xl"
                 />
                 <div className="absolute -z-10 left-1/3 top-10">
                   <img
@@ -130,7 +130,7 @@ export default function WhoWeAreSection() {
               </div>
 
               {/* thumb-2 */}
-              <div className="absolute z-20 top-[48%] -left-4 md:left-5 lg:left-10 w-[180px] md:w-[220px] lg:w-[240px]">
+              <div className="absolute z-20 top-[48%] -left-4 md:top-[20%] md:left-12 lg:left-10 w-[180px] md:w-[420px] lg:w-[240px]">
                 <img
                   src="/images/thumb-25.webp"
                   alt="thumb-2"
@@ -139,12 +139,12 @@ export default function WhoWeAreSection() {
               </div>
 
               {/* thumb-3 + experience badge */}
-              <div className="absolute z-20 -bottom-20 right-1 md:-bottom-24 md:right-5 w-[210px] md:w-[250px] lg:w-[270px]">
+              <div className="absolute z-20 -bottom-32 right-1  md:-bottom-24 md:right-5 w-[210px] md:w-[250px] lg:w-[270px]">
                 <div className="relative">
                   <img
                     src="/images/thumb-26.webp"
                     alt="thumb-3"
-                    className="rounded-xl shadow-xl"
+                    className="rounded-xl shadow-xl "
                   />
 
                   {/* Experience badge */}
@@ -170,7 +170,7 @@ export default function WhoWeAreSection() {
                 alt="icon-2"
                 className="w-10 h-10"
               />
-              <span className="uppercase tracking-wide text-sm font-semibold text-[#138808]">
+              <span className="uppercase tracking-wide text-sm font-semibold text-black">
                 Who We Are
               </span>
             </div>
@@ -194,10 +194,10 @@ export default function WhoWeAreSection() {
               <div className="flex flex-col gap-3">
                 {services.slice(0, 2).map((item) => (
                   <div key={item} className="flex items-center gap-3">
-                    <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#138808] text-[#FF9933]">
+                    <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#138808] text-[#fff]">
                       <Check size={16} />
                     </span>
-                    <p className="text-[#138808] font-medium text-sm md:text-base">
+                    <p className="text-black font-medium text-sm md:text-base">
                       {item}
                     </p>
                   </div>
@@ -206,10 +206,10 @@ export default function WhoWeAreSection() {
               <div className="flex flex-col gap-3">
                 {services.slice(2).map((item) => (
                   <div key={item} className="flex items-center gap-3">
-                    <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#138808] text-[#FF9933]">
+                    <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#138808] text-[#fff]">
                       <Check size={16} />
                     </span>
-                    <p className="text-[#138808] font-medium text-sm md:text-base">
+                    <p className="text-black font-medium text-sm md:text-base">
                       {item}
                     </p>
                   </div>
@@ -222,7 +222,7 @@ export default function WhoWeAreSection() {
               {/* EXPLORE BUTTON – gradient + hover color change */}
               <motion.a
                 href="/project"
-                className="group inline-flex items-center gap-3 rounded-full px-7 py-3 text-sm md:text-base font-semibold text-[#FF9933] overflow-hidden"
+                className="group inline-flex items-center gap-3 rounded-full px-7 py-3 text-sm md:text-base font-semibold text-[#fff] overflow-hidden"
                 initial={{ backgroundPosition: "0% 0%" }}
                 whileHover={{ backgroundPosition: "100% 0%" }}
                 transition={{ duration: 0.4, ease: "easeInOut" }}
@@ -254,10 +254,8 @@ export default function WhoWeAreSection() {
                   className="w-14 h-14 md:w-12 md:h-12 p-3 rounded-full border border-[#0045401A]"
                 />
                 <div>
-                  <p className="text-sm text-[#138808]/80 mb-1">
-                    Annual Donation
-                  </p>
-                  <h5 className="text-lg md:text-xl font-semibold text-[#138808]">
+                  <p className="text-sm text-black mb-1">Annual Donation</p>
+                  <h5 className="text-lg md:text-xl font-semibold text-black">
                     $2,056,00
                   </h5>
                 </div>

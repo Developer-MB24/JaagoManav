@@ -23,7 +23,7 @@ export default function MajorPartnersSection() {
               className="w-full h-auto"
             />
           </div>
-          <h3 className="text-2xl md:text-3xl font-semibold text-[#134A43]">
+          <h3 className="text-2xl md:text-3xl font-semibold text-black">
             Major Partners
           </h3>
           <div className="hidden sm:block w-20 md:w-28">
@@ -75,10 +75,10 @@ export default function MajorPartnersSection() {
         <div className="text-center mt-8">
           <a
             href="/contact"
-            className="inline-flex items-center gap-3 rounded-full bg-[#134A43] text-[#FF9933] px-8 py-3 text-sm md:text-base font-semibold overflow-hidden relative group shadow-md"
+            className="inline-flex items-center gap-3 rounded-full bg-[#138808] text-[#fff] px-8 py-3 text-sm md:text-base font-semibold overflow-hidden relative group shadow-md"
           >
             <span className="relative z-10">Become a Partner</span>
-            <span className="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-[#FF9933] text-[#134A43] transition-colors duration-300 group-hover:bg-white group-hover:text-[#FF9933]">
+            <span className="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-[#FF9933] text-[#fff] transition-colors duration-300 group-hover:bg-white group-hover:text-[#FF9933]">
               <span className="flex items-center gap-[2px]">
                 <span className="block text-xs leading-none group-hover:-translate-x-[1px] transition-transform duration-200">
                   →

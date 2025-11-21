@@ -38,7 +38,7 @@ export default function JourneySection() {
           </div>
 
           {/* Title */}
-          <h2 className="text-3xl md:text-4xl font-bold text-[#134A43] mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
             Journey Was Started
           </h2>
 
@@ -57,7 +57,7 @@ export default function JourneySection() {
                       active
                         ? {
                             backgroundColor: "#F8F7F0",
-                            color: "#134A43",
+                            color: "black",
                             borderColor: "#138808",
                             boxShadow: "0 6px 16px -3px rgba(0, 69, 64, 0.11)",
                           }
@@ -78,12 +78,12 @@ export default function JourneySection() {
           {/* Active tab content */}
           <div>
             <div className="mb-2">
-              <h6 className="text-[18px] leading-[30px] font-medium text-[#134A43]">
+              <h6 className="text-[18px] leading-[30px] font-medium text-black">
                 Year {activeYear}
               </h6>
             </div>
             <div className="mb-3">
-              <h5 className="text-[22px] md:text-[24px] leading-[32px] md:leading-[36px] font-semibold text-[#134A43]">
+              <h5 className="text-[22px] md:text-[24px] leading-[32px] md:leading-[36px] font-semibold text-black">
                 Got First Reward From (NYC)
               </h5>
             </div>
@@ -93,7 +93,7 @@ export default function JourneySection() {
             <div className="flex items-center">
               <a
                 href="/project"
-                className="inline-flex items-center gap-3 rounded-full bg-[#134A43] text-[#FF9933] px-7 py-3 text-sm md:text-base font-semibold overflow-hidden relative group"
+                className="inline-flex items-center gap-3 rounded-full bg-[#138808] text-[#fff] px-7 py-3 text-sm md:text-base font-semibold overflow-hidden relative group"
               >
                 <span className="relative z-10">See Our Achievement</span>
                 <span className="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-[#FF9933] text-[#134A43] transition-colors duration-300 group-hover:bg-white group-hover:text-[#FF9933]">

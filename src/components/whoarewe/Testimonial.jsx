@@ -84,10 +84,10 @@ export default function Testimonial() {
 
               {/* Title */}
               <div>
-                <h2 className="text-[2.3rem] md:text-[2.7rem] font-bold leading-tight text-[#134A43]">
+                <h2 className="text-[2.3rem] md:text-[2.7rem] font-bold leading-tight text-black">
                   Why They Believe{" "}
                   <span className="inline-flex items-center gap-3">
-                    <span className="inline-flex items-center justify-center rounded-full bg-[#134A43] text-[#FFCC40] px-3 py-1">
+                    <span className="inline-flex items-center justify-center rounded-full bg-black text-[#FFCC40] px-3 py-1">
                       <i className="fa-solid fa-quote-right text-base" />
                     </span>
                     In Us
@@ -117,7 +117,7 @@ export default function Testimonial() {
                   alt="favicon"
                   className="w-10 h-10 md:w-11 md:h-11"
                 />
-                <h5 className="text-[20px] md:text-[22px] font-semibold text-[#134A43]">
+                <h5 className="text-[20px] md:text-[22px] font-semibold text-black/40">
                   Positive Reviews
                 </h5>
               </div>
@@ -186,12 +186,12 @@ export default function Testimonial() {
                     }}
                   >
                     <div
-                      className="rounded-[26px] md:rounded-[30px] bg-[#134A43] flex flex-col md:flex-row items-center gap-6 md:gap-8 shadow-xl overflow-hidden w-full max-w-[720px]"
+                      className="rounded-[26px] md:rounded-[30px] bg-[#138808] flex flex-col md:flex-row items-center gap-6 md:gap-8 shadow-xl overflow-hidden w-full max-w-[720px]"
                       style={{
                         backgroundColor:
                           offset === 0
-                            ? "#134A43"
-                            : `rgba(19, 74, 67, ${bgOpacity})`,
+                            ? "#138808"
+                            : `rgba(19, 136, 8, ${bgOpacity})`,
                       }}
                     >
                       {/* Thumb with play button + ripple */}
