@@ -29,10 +29,10 @@ const slides = [
 ];
 
 const socialLinks = [
-  { href: "https://facebook.com", icon: "fa-brands fa-facebook-f" },
-  { href: "https://twitter.com", icon: "fa-brands fa-x-twitter" },
-  { href: "https://www.instagram.com", icon: "fa-brands fa-instagram" },
-  { href: "https://linkedin.com", icon: "fa-brands fa-linkedin-in" },
+  { href: "https://facebook.com", label: "Facebook", short: "f" },
+  { href: "https://twitter.com", label: "X", short: "X" },
+  { href: "https://www.instagram.com", label: "Instagram", short: "IG" },
+  { href: "https://linkedin.com", label: "LinkedIn", short: "in" },
 ];
 
 export default function ServiceHero() {
@@ -189,8 +189,9 @@ export default function ServiceHero() {
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center justify-center w-10 h-10 rounded-full bg-white/30 border border-white/30 text-[#004540] backdrop-blur-md hover:bg-[#FFB347] hover:text-[#004540] transition-colors duration-200"
+                aria-label={item.label}
               >
-                <i className={item.icon} />
+                <span className="text-xs font-semibold">{item.short}</span>
               </a>
             ))}
           </div>

@@ -1,6 +1,5 @@
-"use client";
-
 import React, { useState } from "react";
+import { FaPlay, FaArrowRight, FaStar } from "react-icons/fa";
 
 const ServiceAbout = () => {
   const [activeTab, setActiveTab] = useState("history");
@@ -21,10 +20,10 @@ const ServiceAbout = () => {
             {/* Experience box */}
             <div
               className="absolute top-20 right-10 flex items-center gap-3 bg-[#FF9933] px-5 py-4 rounded-xl shadow-lg z-20
-                            xl:right-3
-                            lg:right-[-80px]
-                            md:right-[70px]
-                            sm:top-[-8%] sm:right-1/2 sm:translate-x-1/2"
+                         xl:right-3
+                         lg:right-[-80px]
+                         md:right-[70px]
+                         sm:top-[-8%] sm:right-1/2 sm:translate-x-1/2"
             >
               <h3
                 className="m-0 text-[56px] md:text-[44px] sm:text-[40px] font-semibold leading-none text-transparent"
@@ -37,11 +36,14 @@ const ServiceAbout = () => {
               </p>
             </div>
 
-            {/* Award shape */}
+            {/* Award shape + text (positioned like the reference) */}
             <div
-              className="absolute  left-[-60px] inline-flex items-center gap-4 px-6 py-4 rounded-md bg-[#004540] z-20
-                         2xl:left-[-20px] xl:left-[-40px] md:left-[-40px]
-                         sm:left-[15%] sm:bottom-[-34%]"
+              className="absolute inline-flex items-center gap-4 px-6 py-4 rounded-md bg-[#004540] z-20
+                         bottom-6 left-[-40px]
+                         sm:bottom-4 sm:left-4
+                         md:bottom-6 md:left-[-40px]
+                         xl:left-[-40px] 
+                         2xl:left-[-20px]"
               style={{
                 backgroundImage: "url('/images/shape-18.webp')",
                 backgroundPosition: "left",
@@ -67,7 +69,7 @@ const ServiceAbout = () => {
             {/* Positioned video thumb */}
             <div
               className="absolute top-1/2 right-[70px] rounded-[150px_150px_12px_12px] sm:right-[6%] sm:w-[88%]
-                            xl:right-[-20px] lg:right-[-60px] md:right-[50px]"
+                         xl:right-[-20px] lg:right-[-60px] md:right-[50px]"
             >
               <div className="relative w-full xl:w-[85%] lg:w-full">
                 <div className="relative w-fit">
@@ -84,7 +86,8 @@ const ServiceAbout = () => {
                                bg-white/5 backdrop-blur-[13px] transition hover:bg-[#FF9933] hover:text-[#004540] hover:border-[#FF9933]
                                animate-pulse"
                   >
-                    <i className="fa-solid fa-play" />
+                    {/* React icon instead of Font Awesome */}
+                    <FaPlay className="text-[20px]" />
                   </a>
                 </div>
 
@@ -184,18 +187,17 @@ const ServiceAbout = () => {
             </div>
 
             {/* CTA + Rating */}
-            <div className="annual-donation-wrap flex items-center gap-6 sm:flex-col sm:items-start sm:gap-4 mt-4">
+            <div className="annual-donation-wrap flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mt-4">
               <a
                 href="/econest/about"
-                className="inline-flex items-center gap-3 rounded-full bg-[#004540] text-[#FFFBEB] px-7 py-3 text-sm font-semibold shadow hover:bg-[#FF9933] hover:text-[#004540] transition relative overflow-hidden
-                           before:content-[''] before:absolute before:inset-0 before:bg-[#FF9933] before:scale-0 before:origin-left before:transition-transform before:duration-300 hover:before:scale-100"
+                className="inline-flex items-center gap-3 rounded-full bg-[#004540] text-[#FFFBEB] px-7 py-3 text-sm font-semibold shadow hover:bg-[#FF9933] hover:text-[#004540] transition relative overflow-hidden"
               >
                 <span className="relative z-[1] flex items-center gap-3">
                   Explore More
                   <span className="icon-wrap relative inline-flex items-center justify-center w-8 h-8 rounded-full bg-[#FFFBEB] text-[#004540]">
                     <span className="icon flex items-center">
-                      <i className="fa-regular fa-arrow-right text-[11px]" />
-                      <i className="fa-regular fa-arrow-right text-[11px] -ml-0.5 opacity-70" />
+                      <FaArrowRight className="text-[11px]" />
+                      <FaArrowRight className="text-[11px] -ml-0.5 opacity-70" />
                     </span>
                   </span>
                 </span>
@@ -214,7 +216,7 @@ const ServiceAbout = () => {
                         key={n}
                         className="flex items-center justify-center w-5 h-5 bg-[#004540] text-[#FF9933]"
                       >
-                        <i className="fa-solid fa-star-sharp text-[11px]" />
+                        <FaStar className="text-[11px]" />
                       </span>
                     ))}
                   </div>
@@ -262,8 +264,17 @@ const BenefitsList = () => (
         <li key={idx} className="relative pl-9 flex items-center sm:pl-8">
           {/* Outer bullet */}
           <span className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-white shadow-[0_6px_10px_-3px_rgba(0,69,64,0.11)]" />
-          {/* Inner gradient dot */}
-          <span className="absolute left-[7px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[radial-gradient(circle_at_86.3%_87.5%,rgba(0,0,0,0.23)_0%,rgba(0,0,0,0)_86.18%),radial-gradient(circle_at_26.39%_20.83%,rgba(255,255,255,0.413)_0%,rgba(255,255,255,0)_69.79%),#004540]" />
+
+          {/* ✅ Inner dot with gradient using inline style */}
+          <span
+            className="absolute left-[7px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full"
+            style={{
+              background:
+                "radial-gradient(circle at 26% 20%, rgba(255,255,255,0.5) 0, rgba(255,255,255,0) 70%), #004540",
+              boxShadow: "0 0 8px rgba(0,69,64,0.35)",
+            }}
+          />
+
           <span className="text-slate-800 leading-relaxed">{item}</span>
         </li>
       ))}
