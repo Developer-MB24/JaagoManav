@@ -4,7 +4,7 @@ import MainLayout from "./layout/MainLayout.jsx";
 import Account from "./pages/Account.jsx";
 import Service from "./pages/Service.jsx";
 import About from "./pages/About.jsx";
-
+import RegisterForEducation from "./pages/RegisterForEducation.jsx";
 import BlogDetails from "./pages/BlogDetails.jsx";
 import Contact from "./pages/Contact.jsx";
 
@@ -57,7 +57,10 @@ export default function App() {
           <Route path="/about" element={<About />} />
           <Route path="/whoarewe" element={<Whoarewe />} />
           {/* <Route path="/whoweare" element={<Whoweare />} /> */}
-
+          <Route
+            path="/register/education"
+            element={<RegisterForEducation />}
+          />
           <Route path="/blogdetails" element={<BlogDetails />} />
           <Route path="/contact" element={<Contact />} />
 

@@ -155,10 +155,19 @@ export default function Header() {
   const [blogOpen, setBlogOpen] = useState(false);
   const blogButtonRef = useRef(null);
 
-  useOnClickOutside([servicesButtonRef, blogButtonRef], () => {
-    setServicesOpen(false);
-    setBlogOpen(false);
-  });
+  // NEW: Register dropdown state + ref
+  const [registerOpen, setRegisterOpen] = useState(false);
+  const registerButtonRef = useRef(null);
+
+  // include registerButtonRef in outside click handler
+  useOnClickOutside(
+    [servicesButtonRef, blogButtonRef, registerButtonRef],
+    () => {
+      setServicesOpen(false);
+      setBlogOpen(false);
+      setRegisterOpen(false);
+    }
+  );
 
   useEffect(() => {
     const mql = window.matchMedia("(min-width: 1024px)");
@@ -228,6 +237,7 @@ export default function Header() {
                   e.stopPropagation();
                   setServicesOpen((v) => !v);
                   setBlogOpen(false);
+                  setRegisterOpen(false);
                 }}
               >
                 <span>Services</span>
@@ -272,6 +282,7 @@ export default function Header() {
                   e.stopPropagation();
                   setBlogOpen((v) => !v);
                   setServicesOpen(false);
+                  setRegisterOpen(false);
                 }}
               >
                 <span>Blog</span>
@@ -293,12 +304,70 @@ export default function Header() {
               )}
             </div>
 
+            {/* NEW: Register dropdown (replaces Shop) */}
+            <div className="relative">
+              <button
+                ref={registerButtonRef}
+                className="flex items-center gap-2 hover:text-[#FFE9CC] focus:outline-none"
+                aria-haspopup="true"
+                aria-expanded={registerOpen}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setRegisterOpen((v) => !v);
+                  setServicesOpen(false);
+                  setBlogOpen(false);
+                }}
+              >
+                <span>Register</span>
+                <ChevronDown
+                  className={`h-5 w-5 transition-transform ${
+                    registerOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+              {registerOpen && (
+                <SimplePortalDropdown
+                  anchorRef={registerButtonRef}
+                  onClose={() => setRegisterOpen(false)}
+                  items={[
+                    {
+                      label: "Volunteer Register - Education",
+                      to: "/register/education",
+                    },
+                    {
+                      label: "Volunteer Register - Health",
+                      to: "/register/health",
+                    },
+                    {
+                      label: "Volunteer Register - Agriculture",
+                      to: "/register/agriculture",
+                    },
+                    {
+                      label: "Volunteer Register - Employment",
+                      to: "/register/employment",
+                    },
+                    {
+                      label: "Volunteer Register - Geographical",
+                      to: "/register/geographical",
+                    },
+                    {
+                      label: "Volunteer Register - Social & Political",
+                      to: "/register/social-political",
+                    },
+                  ]}
+                />
+              )}
+            </div>
+
             <Link to="/whoarewe" className="hover:text-[#FFE9CC]">
               WhoWeAre
             </Link>
-            <Link to="/shop" className="hover:text-[#FFE9CC]">
+
+            {/* Shop link removed here as requested */}
+            {/* <Link to="/shop" className="hover:text-[#FFE9CC]">
               Shop
-            </Link>
+            </Link> */}
+
             <Link to="/contact" className="hover:text-[#FFE9CC]">
               Contact
             </Link>
@@ -315,7 +384,7 @@ export default function Header() {
             </button>
 
             {/* Cart with badge */}
-            <button
+            {/* <button
               aria-label="Cart"
               className="relative grid h-10 w-10 place-items-center rounded-full text-white hover:bg-white/10 ring-1 ring-white/20"
             >
@@ -323,7 +392,7 @@ export default function Header() {
               <span className="absolute -right-2 -top-2 grid h-6 w-6 place-items-center rounded-full bg-[#FF5A1F] text-[10px] font-black text-white ring-2 ring-black/30">
                 02
               </span>
-            </button>
+            </button> */}
 
             {/* Donate */}
             <Link
@@ -384,7 +453,7 @@ export default function Header() {
                   <li key={item.label}>
                     <Link
                       to={item.to}
-                      className="block rounded-md px-3 py-2 text-base hover:bg-white/10"
+                      className="block rounded-md px-3 py-2 text-base hover:bg:white/10 hover:bg-white/10"
                       onClick={() => setMobileOpen(false)}
                     >
                       {item.label}
@@ -418,6 +487,52 @@ export default function Header() {
               </ul>
             </details>
 
+            {/* NEW: Register group in mobile (replaces Shop link) */}
+            <details className="group rounded-lg bg-white/10 p-2 ring-1 ring-white/20 open:bg-white/15">
+              <summary className="flex cursor-pointer list-none items-center justify-between text-lg font-semibold">
+                <span>Register</span>
+                <ChevronDown className="h-5 w-5 transition group-open:rotate-180" />
+              </summary>
+              <ul className="mt-2 space-y-1">
+                {[
+                  {
+                    label: "Volunteer Register - Education",
+                    to: "/register/education",
+                  },
+                  {
+                    label: "Volunteer Register - Health",
+                    to: "/register/health",
+                  },
+                  {
+                    label: "Volunteer Register - Agriculture",
+                    to: "/register/agriculture",
+                  },
+                  {
+                    label: "Volunteer Register - Employment",
+                    to: "/register/employment",
+                  },
+                  {
+                    label: "Volunteer Register - Geographical",
+                    to: "/register/geographical",
+                  },
+                  {
+                    label: "Volunteer Register - Social & Political",
+                    to: "/register/social-political",
+                  },
+                ].map((item) => (
+                  <li key={item.label}>
+                    <Link
+                      to={item.to}
+                      className="block rounded-md px-3 py-2 text-base hover:bg:white/10 hover:bg-white/10"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </details>
+
             <Link
               to="/donations"
               className="block py-2 text-lg font-semibold hover:text-[#FFE9CC]"
@@ -425,13 +540,16 @@ export default function Header() {
             >
               Donations
             </Link>
-            <Link
+
+            {/* Old Shop link removed */}
+            {/* <Link
               to="/shop"
               className="block py-2 text-lg font-semibold hover:text-[#FFE9CC]"
               onClick={() => setMobileOpen(false)}
             >
               Shop
-            </Link>
+            </Link> */}
+
             <Link
               to="/contact"
               className="block py-2 text-lg font-semibold hover:text-[#FFE9CC]"
